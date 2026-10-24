@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>STINGER PC — Кастомные игровые ПК в Великом Новгороде | Витрина сборок</title>
+  <title>STINGER PC — Кастомный конфигуратор и игровые ПК в Великом Новгороде</title>
   
   <!-- SEO & OpenGraph -->
-  <meta name="description" content="Купить готовый игровой компьютер в Великом Новгороде. Честные цены, реальные фото, стресс-тесты FurMark/OCCT, гарантия 3 месяца. Заказ через Авито." />
-  <meta property="og:title" content="STINGER PC — Кастомные игровые ПК в наличии" />
-  <meta property="og:description" content="Сборки на RTX 3080, RX 5700 XT, i5, Ryzen 5. Проверка на месте, гарантия 3 месяца. Заказ на Авито." />
+  <meta name="description" content="Интерактивный конфигуратор ПК, сравнение FPS в играх и готовые игровые компьютеры в Великом Новгороде. Честные сборки, тесты FurMark/OCCT, гарантия 3 месяца. Заказ на Авито." />
+  <meta property="og:title" content="STINGER PC — Кастомные игровые ПК | Конфигуратор и Графики FPS" />
+  <meta property="og:description" content="Собери свою сборку в конфигураторе или выбери готовый ПК с тестами. Прямой переход в диалог на Авито." />
   <meta property="og:image" content="image/logo.jpg" />
   <meta property="og:type" content="website" />
 
@@ -25,9 +25,9 @@
             stinger: {
               cyan: '#00f0ff',
               gold: '#ffaa00',
-              purple: '#8b5cf6',
-              dark: '#090b10',
-              card: '#0f141f'
+              purple: '#9d4edd',
+              dark: '#07080b',
+              card: '#0e121c'
             }
           }
         }
@@ -41,7 +41,10 @@
   <!-- Custom Styles -->
   <link rel="stylesheet" href="css/custom.css" />
 </head>
-<body class="bg-mesh bg-grid-pattern min-h-screen text-slate-200">
+<body class="bg-mesh-dark bg-grid-cyber min-h-screen text-slate-200 relative selection:bg-cyan-500/30 selection:text-white">
+
+  <!-- Интерактивное световое пятно под курсором -->
+  <div class="mouse-glow"></div>
 
   <!-- ==================== ШАПКА САЙТА (HEADER) ==================== -->
   <header class="sticky top-0 z-40 w-full backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/80 transition-all">
@@ -53,7 +56,7 @@
           <img src="image/logo.jpg" alt="STINGER PC Логотип" class="w-full h-full object-cover rounded-lg" />
         </div>
         <div>
-          <span class="font-brand text-xl font-bold tracking-wider text-white flex items-center gap-1.5">
+          <span class="font-brand text-lg sm:text-xl font-bold tracking-wider text-white flex items-center gap-1.5">
             STINGER <span class="text-cyan-400">PC</span>
           </span>
           <span class="block text-[11px] text-slate-400 tracking-tight">г. Великий Новгород</span>
@@ -61,16 +64,23 @@
       </a>
 
       <!-- Навигация (Десктоп) -->
-      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-        <a href="#catalog" class="hover:text-cyan-400 transition-colors">Сборки в наличии</a>
+      <nav class="hidden lg:flex items-center gap-6 text-xs xl:text-sm font-semibold text-slate-300">
+        <a href="#configurator" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 transition-colors">
+          <i data-lucide="sliders" class="w-4 h-4"></i>
+          <span>Конфигуратор</span>
+        </a>
+        <a href="#benchmarks" class="hover:text-cyan-400 flex items-center gap-1.5 transition-colors">
+          <i data-lucide="bar-chart-2" class="w-4 h-4 text-purple-400"></i>
+          <span>Сравнение FPS</span>
+        </a>
+        <a href="#catalog" class="hover:text-cyan-400 transition-colors">Готовые ПК</a>
         <a href="#advantages" class="hover:text-cyan-400 transition-colors">Преимущества</a>
-        <a href="#location" class="hover:text-cyan-400 transition-colors">Где забрать / Тесты</a>
+        <a href="#location" class="hover:text-cyan-400 transition-colors">Тесты / Адрес</a>
         <a href="#faq" class="hover:text-cyan-400 transition-colors">FAQ</a>
       </nav>
 
-      <!-- Контакты и Быстрая кнопка на Авито -->
-      <div class="flex items-center gap-3">
-        <!-- Соцсети -->
+      <!-- Соцсети и Быстрая кнопка на Авито -->
+      <div class="flex items-center gap-2 sm:gap-3">
         <a href="#" class="link-tg w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 flex items-center justify-center text-slate-400 hover:text-cyan-400 transition-all" title="Telegram">
           <i data-lucide="send" class="w-4 h-4"></i>
         </a>
@@ -78,13 +88,14 @@
           <i data-lucide="share-2" class="w-4 h-4"></i>
         </a>
 
-        <!-- Главная кнопка перехода на Авито -->
+        <!-- Кнопка перехода в диалог на Авито -->
         <a 
           href="#" 
-          class="link-avito btn-avito px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white flex items-center gap-2"
+          class="link-avito btn-avito-direct px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white flex items-center gap-2 shadow-lg"
         >
           <i data-lucide="message-circle" class="w-4 h-4"></i>
-          <span>Чат на Авито</span>
+          <span class="hidden sm:inline">Чат на Авито</span>
+          <span class="sm:hidden">Авито</span>
         </a>
       </div>
 
@@ -93,74 +104,346 @@
 
   <!-- ==================== ГЛАВНЫЙ ЭКРАН (HERO) ==================== -->
   <section class="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
-    <!-- Фоновые неоновые круги -->
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute top-1/3 right-10 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Фоновые световые эффекты -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="absolute top-1/3 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
       
       <!-- Локация / Статус плашка -->
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-xs sm:text-sm text-slate-300 mb-6 backdrop-blur-md shadow-inner">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-indicator"></span>
-        <span>📍 Великий Новгород • ул. Псковская, 33 • Тесты на месте</span>
+        <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>
+        <span>📍 Великий Новгород • ул. Псковская, 33 • Тестирование на месте</span>
       </div>
 
       <!-- Главный оффер -->
-      <h1 class="font-brand text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white max-w-4xl mx-auto mb-6 leading-tight">
-        МОЩНЫЕ ИГРОВЫЕ ПК <br class="hidden sm:inline" />
+      <h1 class="font-brand text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-5xl mx-auto mb-6 leading-tight">
+        ТВОЙ КАСТОМНЫЙ <br class="hidden sm:inline" />
         <span class="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-          С ЧЕСТНОЙ ЦЕНОЙ И ГАРАНТИЕЙ
+          ИГРОВОЙ ПК STINGER
         </span>
       </h1>
 
-      <p class="max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-slate-400 mb-10 leading-relaxed">
-        Сборки в наличии с реальными фотографиями и прозрачными комплектующими. 
-        Установлена Windows, система проверена в стресс-тестах FurMark и OCCT. Включил в розетку и сразу играешь!
+      <p class="max-w-3xl mx-auto text-sm sm:text-base md:text-lg text-slate-400 mb-10 leading-relaxed font-normal">
+        Подбери комплектующие в интерактивном конфигураторе, сравни графики FPS в популярных играх и скопируй готовую сборку для заказа в чате Авито в один клик.
       </p>
 
-      <!-- Главные кнопки -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto mb-16">
+      <!-- Главные кнопки действий -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg mx-auto mb-16">
         <a 
-          href="#catalog" 
-          class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-sm tracking-wide shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105 transition-all flex items-center justify-center gap-2"
+          href="#configurator" 
+          class="w-full sm:w-auto px-8 py-4 rounded-xl btn-primary-gaming text-slate-950 font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2"
         >
-          <i data-lucide="monitor" class="w-4 h-4"></i>
-          <span>Смотреть сборки в наличии</span>
+          <i data-lucide="sliders" class="w-4 h-4 text-slate-950"></i>
+          <span>Собрать в конфигураторе</span>
         </a>
         <a 
-          href="#" 
-          class="link-avito w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-900/90 border border-slate-700 hover:border-slate-500 text-white font-semibold text-sm hover:bg-slate-800 transition-all flex items-center justify-center gap-2"
+          href="#benchmarks" 
+          class="w-full sm:w-auto px-7 py-4 rounded-xl glass-panel text-white font-bold text-sm hover:border-cyan-500/50 transition-all flex items-center justify-center gap-2"
         >
-          <i data-lucide="message-square" class="w-4 h-4 text-cyan-400"></i>
-          <span>Написать на Авито</span>
+          <i data-lucide="bar-chart-2" class="w-4 h-4 text-cyan-400"></i>
+          <span>Сравнить графики FPS</span>
         </a>
       </div>
 
       <!-- Статистика / УТП карточки -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
-        <div class="glass-card p-4 rounded-xl border border-slate-800/80">
-          <div class="text-2xl sm:text-3xl font-extrabold text-cyan-400 font-tech">5 ПК</div>
-          <div class="text-xs text-slate-400">В наличии сегодня с тестами</div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto text-left">
+        <div class="glass-panel p-4 sm:p-5 rounded-2xl">
+          <div class="text-2xl sm:text-3xl font-black text-cyan-400 font-tech">0 ₽</div>
+          <div class="text-xs text-slate-400 mt-1">Никаких скрытых доплат и накруток</div>
         </div>
-        <div class="glass-card p-4 rounded-xl border border-slate-800/80">
-          <div class="text-2xl sm:text-3xl font-extrabold text-amber-400 font-tech">100%</div>
-          <div class="text-xs text-slate-400">Честные фото и цены без скрытых доплат</div>
+        <div class="glass-panel p-4 sm:p-5 rounded-2xl">
+          <div class="text-2xl sm:text-3xl font-black text-amber-400 font-tech">100%</div>
+          <div class="text-xs text-slate-400 mt-1">Стресс-тесты FurMark + OCCT</div>
         </div>
-        <div class="glass-card p-4 rounded-xl border border-slate-800/80">
-          <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-tech">3 МЕС.</div>
-          <div class="text-xs text-slate-400">Личная гарантия и полная поддержка</div>
+        <div class="glass-panel p-4 sm:p-5 rounded-2xl">
+          <div class="text-2xl sm:text-3xl font-black text-emerald-400 font-tech">3 МЕС.</div>
+          <div class="text-xs text-slate-400 mt-1">Личная гарантия и полная поддержка</div>
         </div>
-        <div class="glass-card p-4 rounded-xl border border-slate-800/80">
-          <div class="text-2xl sm:text-3xl font-extrabold text-purple-400 font-tech">24Ч</div>
-          <div class="text-xs text-slate-400">Стресс-тесты FurMark + OCCT</div>
+        <div class="glass-panel p-4 sm:p-5 rounded-2xl">
+          <div class="text-2xl sm:text-3xl font-black text-purple-400 font-tech">1 КЛИК</div>
+          <div class="text-xs text-slate-400 mt-1">Копирование спеки сразу в чат Авито</div>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- ==================== КАТАЛОГ СБОРОК (CATALOG) ==================== -->
-  <section id="catalog" class="py-16 md:py-24 relative">
+  <!-- ==================== ИНТЕРАКТИВНЫЙ КОНФИГУРАТОР ПК ==================== -->
+  <section id="configurator" class="py-16 md:py-24 relative border-t border-slate-800/80 bg-slate-950/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Заголовок секции -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2 font-tech">
+          <i data-lucide="cpu" class="w-4 h-4"></i>
+          <span>Интерактивный конструктор</span>
+        </div>
+        <h2 class="text-2xl sm:text-4xl md:text-5xl font-black text-white font-brand mb-4">
+          СОБЕРИ СВОЙ ИГРОВОЙ ПК
+        </h2>
+        <p class="text-xs sm:text-base text-slate-400">
+          Выберите сценарий и желаемые комплектующие. Справа сразу обновится расчетный FPS и индекс мощности. 
+          Нажмите <strong class="text-cyan-400">«Заказать сборку на Авито»</strong> — мы автоматически скопируем вашу сборку и откроем диалог с продавцом.
+        </p>
+      </div>
+
+      <!-- Конструктор (2 колонки: Опции слева, Живой Дашборд справа) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Левая колонка: Шаги подбора (7 колонок) -->
+        <div class="lg:col-span-7 space-y-8">
+          
+          <!-- Шаг 1: Сценарий -->
+          <div>
+            <div class="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+              <span class="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs">1</span>
+              <span>Для каких задач собираем ПК?</span>
+            </div>
+            <div id="config-tasks" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <!-- JS -->
+            </div>
+          </div>
+
+          <!-- Шаг 2: Видеокарта (GPU) -->
+          <div>
+            <div class="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+              <span class="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs">2</span>
+              <span>Видеокарта (Главная графическая мощь)</span>
+            </div>
+            <div id="config-gpus" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <!-- JS -->
+            </div>
+          </div>
+
+          <!-- Шаг 3: Процессор (CPU) -->
+          <div>
+            <div class="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+              <span class="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs">3</span>
+              <span>Процессор (Стабильный фреймрейт без просадок)</span>
+            </div>
+            <div id="config-cpus" class="grid grid-cols-1 gap-2.5">
+              <!-- JS -->
+            </div>
+          </div>
+
+          <!-- Шаг 4: Память и Накопители -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <div class="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+                <span class="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs">4</span>
+                <span>Оперативная память RAM</span>
+              </div>
+              <div id="config-ram" class="space-y-2">
+                <!-- JS -->
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+                <span class="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs">5</span>
+                <span>Скоростной SSD NVMe</span>
+              </div>
+              <div id="config-ssd" class="space-y-2">
+                <!-- JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Шаг 5: Корпус и стиль -->
+          <div>
+            <div class="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+              <span class="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs">6</span>
+              <span>Внешний вид и охлаждение</span>
+            </div>
+            <div id="config-cases" class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <!-- JS -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Правая колонка: Live Результат и Графики FPS (5 колонок, Sticky) -->
+        <div class="lg:col-span-5 lg:sticky lg:top-24">
+          <div class="glow-border-card p-6 sm:p-7 space-y-6 shadow-2xl">
+            
+            <!-- Шапка дашборда -->
+            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+              <div>
+                <span class="text-xs uppercase font-bold text-slate-500 tracking-wider block">Индекс сборки</span>
+                <h3 class="text-lg font-bold text-white font-tech">Производительность</h3>
+              </div>
+              <div class="text-right">
+                <div class="text-3xl font-black text-cyan-400 font-tech">
+                  <span id="cfg-score-value">98</span><span class="text-sm text-slate-500">/100</span>
+                </div>
+                <div id="cfg-score-level" class="text-xs font-bold text-amber-400">Ультимативный 2K/4K</div>
+              </div>
+            </div>
+
+            <!-- Шкала мощности -->
+            <div>
+              <div class="w-full h-3 bg-slate-900 rounded-full overflow-hidden p-0.5 border border-slate-800 mb-1">
+                <div id="cfg-score-bar" class="h-full rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-amber-400 transition-all duration-500" style="width: 95%;"></div>
+              </div>
+              <div class="flex justify-between text-[11px] text-slate-500 font-medium">
+                <span>1080p Средние</span>
+                <span>1080p Ультра</span>
+                <span>2K / 4K Экстрим</span>
+              </div>
+            </div>
+
+            <!-- Расчетный FPS в играх -->
+            <div class="space-y-3 bg-slate-900/50 p-4 rounded-xl border border-slate-800/80">
+              <div class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5 mb-2">
+                <i data-lucide="gamepad-2" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <span>Ожидаемый FPS в играх:</span>
+              </div>
+
+              <!-- CS2 -->
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="text-slate-400 font-medium">Counter-Strike 2 (Киберспорт)</span>
+                  <span id="cfg-fps-val-cs2" class="text-cyan-400 font-bold font-tech text-sm">340 FPS</span>
+                </div>
+                <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden">
+                  <div id="cfg-fps-bar-cs2" class="h-full bg-cyan-400 rounded-full transition-all duration-500" style="width: 94%;"></div>
+                </div>
+              </div>
+
+              <!-- Cyberpunk 2077 -->
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="text-slate-400 font-medium">Cyberpunk 2077 (Ультра / FSR)</span>
+                  <span id="cfg-fps-val-cyberpunk" class="text-amber-400 font-bold font-tech text-sm">105 FPS</span>
+                </div>
+                <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden">
+                  <div id="cfg-fps-bar-cyberpunk" class="h-full bg-amber-400 rounded-full transition-all duration-500" style="width: 88%;"></div>
+                </div>
+              </div>
+
+              <!-- GTA V -->
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="text-slate-400 font-medium">GTA V (Максимальные)</span>
+                  <span id="cfg-fps-val-gta5" class="text-purple-400 font-bold font-tech text-sm">175 FPS</span>
+                </div>
+                <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden">
+                  <div id="cfg-fps-bar-gta5" class="h-full bg-purple-400 rounded-full transition-all duration-500" style="width: 87%;"></div>
+                </div>
+              </div>
+
+              <!-- Dota 2 -->
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="text-slate-400 font-medium">Dota 2 / Valorant</span>
+                  <span id="cfg-fps-val-dota2" class="text-emerald-400 font-bold font-tech text-sm">280 FPS</span>
+                </div>
+                <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden">
+                  <div id="cfg-fps-bar-dota2" class="h-full bg-emerald-400 rounded-full transition-all duration-500" style="width: 88%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Сводка комплектующих -->
+            <div>
+              <span class="text-xs uppercase font-bold text-slate-500 tracking-wider block mb-2">Выбранная сборка:</span>
+              <div id="cfg-summary-specs" class="space-y-1.5 text-xs text-slate-300 bg-slate-900/30 p-3 rounded-lg border border-slate-800/50">
+                <!-- JS -->
+              </div>
+            </div>
+
+            <!-- ГЛАВНАЯ КНОПКА: Скопировать и сразу открыть Авито -->
+            <div>
+              <button 
+                onclick="copyConfigAndGoToAvito()"
+                class="w-full btn-primary-gaming py-4 px-5 rounded-2xl text-slate-950 font-black text-sm uppercase tracking-wide flex items-center justify-center gap-2 shadow-2xl transition-all"
+              >
+                <i data-lucide="send" class="w-4 h-4 text-slate-950"></i>
+                <span>Скопировать и открыть Авито</span>
+                <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-80"></i>
+              </button>
+              <p class="text-[11px] text-center text-slate-500 mt-2">
+                Параметры сборки скопируются в буфер, и откроется диалог на Авито.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== ИНТЕРАКТИВНЫЕ ГРАФИКИ СРАВНЕНИЯ (BENCHMARKS) ==================== -->
+  <section id="benchmarks" class="py-16 md:py-24 relative border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Заголовок -->
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 text-purple-400 text-xs font-bold uppercase tracking-wider mb-2 font-tech">
+          <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
+          <span>Сравнение производительности</span>
+        </div>
+        <h2 class="text-2xl sm:text-4xl md:text-5xl font-black text-white font-brand mb-4">
+          ГРАФИКИ СРАВНЕНИЯ FPS
+        </h2>
+        <p class="text-xs sm:text-base text-slate-400">
+          Сравните игровую мощь сборок STINGER PC в реальных играх при разных разрешениях монитора без лишней воды.
+        </p>
+      </div>
+
+      <!-- Панель управления графиками -->
+      <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 max-w-5xl mx-auto space-y-8">
+        
+        <!-- Верхние переключатели: Разрешение и Игры -->
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 pb-6 border-b border-slate-800">
+          
+          <!-- Табы игр -->
+          <div id="bm-games-tabs" class="flex flex-wrap items-center gap-2">
+            <!-- JS -->
+          </div>
+
+          <!-- Табы разрешения -->
+          <div id="bm-res-tabs" class="flex items-center gap-2 shrink-0">
+            <!-- JS -->
+          </div>
+        </div>
+
+        <!-- Подзаголовок текущей игры -->
+        <div class="flex items-center justify-between">
+          <div id="bm-game-badge" class="text-xs sm:text-sm font-semibold text-slate-400">
+            Cyberpunk 2077 • Разрешение: FULL HD
+          </div>
+          <div class="text-[11px] text-slate-500 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+            <span>Тесты в реальном геймплее</span>
+          </div>
+        </div>
+
+        <!-- Сами графики (Полосы FPS с анимацией) -->
+        <div id="bm-chart-bars" class="space-y-4">
+          <!-- JS генерирует полосы -->
+        </div>
+
+        <div class="text-center pt-4">
+          <a 
+            href="#catalog"
+            class="inline-flex items-center gap-2 text-xs font-bold text-cyan-400 hover:text-cyan-300 underline underline-offset-4"
+          >
+            <span>Посмотреть характеристики и фото этих сборок ниже</span>
+            <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== ГОТОВЫЕ СБОРКИ В НАЛИЧИИ (CATALOG) ==================== -->
+  <section id="catalog" class="py-16 md:py-24 relative border-t border-slate-800/80 bg-slate-950/40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Заголовок каталога -->
@@ -168,32 +451,32 @@
         <div>
           <div class="flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2 font-tech">
             <i data-lucide="layers" class="w-4 h-4"></i>
-            <span>Каталог компьютеров</span>
+            <span>Витрина готовых ПК</span>
           </div>
           <h2 class="text-2xl sm:text-4xl font-extrabold text-white font-brand">
-            СБОРКИ В НАЛИЧИИ
+            СБОРКИ В НАЛИЧИИ В ВЕЛИКОМ НОВГОРОДЕ
           </h2>
         </div>
-        <p class="text-sm text-slate-400 max-w-md">
-          Нажмите <strong class="text-slate-200">«Скопировать спеки»</strong>, чтобы мгновенно получить готовый запрос для диалога на Авито.
+        <p class="text-xs sm:text-sm text-slate-400 max-w-md">
+          Реальные фотографии конкретных системных блоков. Нажмите <strong class="text-slate-200">«Заказать через Авито»</strong>, чтобы скопировать параметры и сразу открыть диалог.
         </p>
       </div>
 
       <!-- Табы / Категории -->
       <div id="categories-tabs" class="flex flex-wrap items-center gap-2 mb-10">
-        <!-- Генерируется через app.js -->
+        <!-- JS -->
       </div>
 
       <!-- Сетка с карточками ПК -->
       <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Карточки генерируются динамически через app.js -->
+        <!-- JS -->
       </div>
 
     </div>
   </section>
 
   <!-- ==================== ПРЕИМУЩЕСТВА (ADVANTAGES) ==================== -->
-  <section id="advantages" class="py-16 md:py-24 bg-slate-950/50 border-y border-slate-800/60 relative">
+  <section id="advantages" class="py-16 md:py-24 border-t border-slate-800/80 relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-3xl mx-auto mb-16">
         <div class="inline-flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2 font-tech">
@@ -203,24 +486,22 @@
         <h2 class="text-2xl sm:text-4xl font-extrabold text-white font-brand mb-4">
           ПОЧЕМУ ВЫБИРАЮТ STINGER PC
         </h2>
-        <p class="text-sm sm:text-base text-slate-400">
+        <p class="text-xs sm:text-base text-slate-400">
           Мы собираем компьютеры как для себя — с качественным кабель-менеджментом, оригинальными комплектующими и обязательным многочасовым тестированием.
         </p>
       </div>
 
       <div id="features-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Генерируется через app.js -->
+        <!-- JS -->
       </div>
     </div>
   </section>
 
   <!-- ==================== ГДЕ ЗАБРАТЬ И ТЕСТЫ (LOCATION) ==================== -->
-  <section id="location" class="py-16 md:py-24 relative">
+  <section id="location" class="py-16 md:py-24 bg-slate-950/60 border-t border-slate-800/80 relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="glass-card rounded-3xl p-8 sm:p-12 border border-slate-800/80 relative overflow-hidden">
+      <div class="glow-border-card rounded-3xl p-8 sm:p-12 border border-slate-800/80 relative overflow-hidden">
         
-        <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div>
             <div class="inline-flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-3 font-tech">
@@ -230,12 +511,12 @@
             <h2 class="text-2xl sm:text-3xl font-extrabold text-white font-brand mb-4">
               ПРИЕЗЖАЙТЕ И ТЕСТИРУЙТЕ ЛИЧНО
             </h2>
-            <p class="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">
+            <p class="text-slate-300 text-xs sm:text-base mb-6 leading-relaxed">
               Мы находимся в Великом Новгороде по адресу: <strong class="text-cyan-400">ул. Псковская, д. 33</strong>. 
               Перед покупкой вы можете запустить абсолютно любые стресс-тесты (FurMark, AIDA64, OCCT) и свои любимые игры. Мы не торопим и даем спокойно всё проверить.
             </p>
 
-            <div class="space-y-3 mb-8 text-sm">
+            <div class="space-y-3 mb-8 text-xs sm:text-sm">
               <div class="flex items-center gap-3 text-slate-300">
                 <i data-lucide="check" class="w-5 h-5 text-emerald-400 shrink-0"></i>
                 <span>Самовывоз в день обращения по предварительной договоренности</span>
@@ -246,20 +527,20 @@
               </div>
               <div class="flex items-center gap-3 text-slate-300">
                 <i data-lucide="check" class="w-5 h-5 text-emerald-400 shrink-0"></i>
-                <span>Авито Доставка / СДЭК по всей России в бронебойной коробке</span>
+                <span>Авито Доставка / СДЭК по всей России в бронебойной упаковке</span>
               </div>
             </div>
 
             <a 
               href="#" 
-              class="link-avito inline-flex items-center gap-2 px-6 py-3.5 rounded-xl btn-avito text-white font-bold text-sm"
+              class="link-avito inline-flex items-center gap-2 px-6 py-3.5 rounded-xl btn-avito-direct text-white font-bold text-sm shadow-xl"
             >
               <i data-lucide="calendar" class="w-4 h-4"></i>
               <span>Договориться о встрече на Авито</span>
             </a>
           </div>
 
-          <!-- Плашка с адресом и гарантией -->
+          <!-- Карточка информации -->
           <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 sm:p-8 flex flex-col justify-between">
             <div class="mb-6">
               <div class="text-xs uppercase text-slate-500 font-semibold tracking-wider mb-1">Город и адрес</div>
@@ -288,7 +569,7 @@
   </section>
 
   <!-- ==================== FAQ ==================== -->
-  <section id="faq" class="py-16 md:py-24 bg-slate-950/40 border-t border-slate-800/60 relative">
+  <section id="faq" class="py-16 md:py-24 border-t border-slate-800/80 relative">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
         <div class="inline-flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2 font-tech">
@@ -301,16 +582,15 @@
       </div>
 
       <div id="faq-accordion" class="space-y-4">
-        <!-- Генерируется через app.js -->
+        <!-- JS -->
       </div>
     </div>
   </section>
 
   <!-- ==================== ПОДВАЛ САЙТА (FOOTER) ==================== -->
-  <footer class="bg-slate-950 border-t border-slate-800/80 py-12 text-xs text-slate-500">
+  <footer class="bg-slate-950 border-t border-slate-800 py-12 text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
       
-      <!-- Лого и копирайт -->
       <div class="flex items-center gap-3">
         <img src="image/logo.jpg" alt="STINGER PC" class="w-8 h-8 rounded-lg object-cover border border-slate-800" />
         <div>
@@ -319,7 +599,6 @@
         </div>
       </div>
 
-      <!-- Контакты в футере -->
       <div class="flex items-center gap-4">
         <a href="#" class="link-avito hover:text-cyan-400 transition-colors flex items-center gap-1.5 font-medium text-slate-300">
           <i data-lucide="message-square" class="w-4 h-4"></i>
@@ -335,22 +614,21 @@
         </a>
       </div>
 
-      <!-- Примечание -->
       <div class="text-slate-500 text-center md:text-right">
-        Сайт-витрина для подбора ПК и заказа через Авито
+        Сайт-витрина и конфигуратор для заказа через Авито
       </div>
 
     </div>
   </footer>
 
   <!-- ==================== МОДАЛЬНОЕ ОКНО ТОВАРА (MODAL) ==================== -->
-  <div id="product-modal" class="modal-overlay fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
-    <div class="modal-content glass-card bg-slate-950 border border-slate-800 w-full max-w-4xl max-h-[90vh] rounded-3xl overflow-hidden flex flex-col shadow-2xl">
+  <div id="product-modal" class="modal-overlay fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
+    <div class="modal-content glass-panel bg-slate-950 border border-slate-800 w-full max-w-4xl max-h-[90vh] rounded-3xl overflow-hidden flex flex-col shadow-2xl">
       
       <!-- Шапка модалки -->
       <div class="p-4 sm:p-6 border-b border-slate-800/80 flex items-center justify-between">
         <div>
-          <h3 id="modal-title" class="font-tech text-2xl font-bold text-white tracking-wide"></h3>
+          <h3 id="modal-title" class="font-tech text-xl sm:text-2xl font-bold text-white tracking-wide"></h3>
           <p id="modal-subtitle" class="text-xs text-slate-400"></p>
         </div>
         <button 
@@ -369,23 +647,22 @@
           <div class="h-64 sm:h-96 w-full rounded-2xl overflow-hidden bg-slate-900 border border-slate-800">
             <img id="modal-main-image" src="" alt="ПК" class="w-full h-full object-contain bg-slate-950" />
           </div>
-          <!-- Миниатюры фото -->
           <div id="modal-thumbnails" class="flex gap-2 overflow-x-auto pb-2">
-            <!-- Генерируются через JS -->
+            <!-- JS -->
           </div>
         </div>
 
         <!-- Описание -->
         <div>
           <h4 class="text-xs uppercase text-slate-500 font-semibold tracking-wider mb-2">О сборке</h4>
-          <p id="modal-description" class="text-sm text-slate-300 leading-relaxed"></p>
+          <p id="modal-description" class="text-xs sm:text-sm text-slate-300 leading-relaxed"></p>
         </div>
 
-        <!-- Характеристики комплектующих -->
+        <!-- Характеристики -->
         <div>
           <h4 class="text-xs uppercase text-slate-500 font-semibold tracking-wider mb-3">Полная спецификация</h4>
           <div id="modal-specs-list" class="bg-slate-900/60 rounded-2xl p-4 border border-slate-800/60">
-            <!-- Генерируется через JS -->
+            <!-- JS -->
           </div>
         </div>
 
@@ -393,18 +670,18 @@
         <div>
           <h4 class="text-xs uppercase text-slate-500 font-semibold tracking-wider mb-3">FPS в популярных играх</h4>
           <div id="modal-fps-list" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <!-- Генерируется через JS -->
+            <!-- JS -->
           </div>
         </div>
 
       </div>
 
-      <!-- Подвал модалки (Цены + Кнопки действий) -->
+      <!-- Подвал модалки -->
       <div class="p-4 sm:p-6 border-t border-slate-800 bg-slate-900/80 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <span class="text-xs text-slate-400 block">Стоимость:</span>
           <div class="flex items-baseline gap-2">
-            <span id="modal-price" class="text-2xl sm:text-3xl font-extrabold text-white font-tech text-glow-cyan"></span>
+            <span id="modal-price" class="text-2xl sm:text-3xl font-extrabold text-white font-tech"></span>
             <span id="modal-old-price" class="text-sm text-slate-500 line-through hidden"></span>
           </div>
         </div>
@@ -412,22 +689,19 @@
         <div class="flex items-center gap-3 w-full sm:w-auto">
           <button 
             id="modal-copy-btn"
-            class="btn-spec flex-1 sm:flex-initial py-3 px-5 rounded-xl text-xs sm:text-sm font-semibold text-slate-200 flex items-center justify-center gap-2"
+            class="py-3 px-5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 bg-slate-900 border border-slate-800 hover:border-slate-700 flex items-center justify-center gap-2"
           >
             <i data-lucide="copy" class="w-4 h-4"></i>
-            <span>Скопировать спецификацию</span>
+            <span>Скопировать спеки</span>
           </button>
           
-          <a 
+          <button 
             id="modal-avito-btn"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-avito flex-1 sm:flex-initial py-3 px-6 rounded-xl text-xs sm:text-sm font-bold text-white flex items-center justify-center gap-2"
+            class="btn-avito-direct flex-1 sm:flex-initial py-3 px-6 rounded-xl text-xs sm:text-sm font-bold text-white flex items-center justify-center gap-2"
           >
             <i data-lucide="message-square" class="w-4 h-4"></i>
-            <span>Написать на Авито</span>
-          </a>
+            <span>Заказать через Авито</span>
+          </button>
         </div>
       </div>
 

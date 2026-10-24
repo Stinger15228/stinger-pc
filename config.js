@@ -1,12 +1,5 @@
 /**
- * STINGER PC — Главный конфигурационный файл магазина
- * 
- * В этом файле вы можете легко менять:
- * 1. Контакты и ссылки на соцсети/Авито
- * 2. Цены сборок
- * 3. Характеристики, описания и статус наличия
- * 
- * Все изменения автоматически отобразятся на сайте!
+ * STINGER PC — Главный конфигурационный файл магазина и конфигуратора
  */
 
 const CONFIG = {
@@ -22,25 +15,16 @@ const CONFIG = {
     warrantyMonths: 3,
   },
 
-  // Ссылки на контакты (замените на свои реальные адреса)
+  // Ссылки на контакты
   contacts: {
-    // Основная ссылка на Авито (сообщения или профиль)
-    // Например: "https://www.avito.ru/profile/messenger/channel/..." или ссылка на ваш профиль
     avitoUrl: "https://www.avito.ru", 
-
-    // Ссылка на Telegram (канал, группа или лс)
     telegramUrl: "https://t.me/stinger_pc", 
-
-    // Ссылка на группу ВКонтакте
     vkUrl: "https://vk.com/stinger_pc",
-
-    // Контактный телефон для звонков и WhatsApp
     phone: "+7 (999) 000-00-00",
     phoneDisplay: "+7 (999) 000-00-00"
   },
 
-  // Шаблон текста, который копируется в буфер обмена для Авито
-  // Переменные: {name}, {price}, {cpu}, {gpu}, {ram}, {ssd}
+  // Шаблон для копирования из каталога готовых сборок
   avitoMessageTemplate: 
 `Здравствуйте! Меня заинтересовал ПК «{name}» за {price} ₽.
 Характеристики:
@@ -51,7 +35,110 @@ const CONFIG = {
 
 Подскажите, актуальна ли сборка и когда можно подъехать на проверку / оформить заказ?`,
 
-  // Категории для фильтрации
+  // Шаблон для копирования из КОНФИГУРАТОРА
+  configuratorMessageTemplate:
+`Здравствуйте! Я подобрал кастомную конфигурацию в конфигураторе STINGER PC:
+
+🎯 Сценарий: {task}
+🎮 Видеокарта: {gpu}
+⚡ Процессор: {cpu}
+🧠 Оперативная память: {ram}
+💾 Накопитель: {ssd}
+✨ Корпус и стиль: {case}
+
+🚀 Ожидаемая мощность: {score}/100 в играх ({res})
+Подскажите, пожалуйста, стоимость сборки и сроки готовности?`,
+
+  // Опции для интерактивного конфигуратора
+  configuratorOptions: {
+    tasks: [
+      { id: "esports", name: "Киберспорт", sub: "CS2, Valorant, Dota 2, Apex", icon: "crosshair", scoreBoost: 10 },
+      { id: "aaa", name: "AAA-Гейминг (2K / 4K)", sub: "Cyberpunk, GTA V, RDR 2", icon: "flame", scoreBoost: 20 },
+      { id: "content", name: "Стриминг и Монтаж", sub: "OBS, Premiere Pro, Blender", icon: "video", scoreBoost: 25 }
+    ],
+    gpus: [
+      { id: "rtx3080", name: "NVIDIA GeForce RTX 3080 10GB", tier: "Экстрим 2K/4K", score: 98, defCpu: "r5_5600x", defRes: "2K / 4K Ultra" },
+      { id: "rx5700xt", name: "MSI Radeon RX 5700 XT 8GB", tier: "Ультра 1080p / 2K", score: 78, defCpu: "r5_5600", defRes: "1080p Ultra" },
+      { id: "rx5700", name: "GIGABYTE Radeon RX 5700 6GB", tier: "Баланс High", score: 70, defCpu: "r5_3600", defRes: "1080p High" },
+      { id: "rx6500xt", name: "Radeon RX 6500 XT 4GB", tier: "Старт в игры", score: 55, defCpu: "i5_11400f", defRes: "1080p Medium-High" },
+      { id: "rtx3050", name: "MSI GeForce RTX 3050 8GB", tier: "Доступный гейминг", score: 52, defCpu: "i3_10100f", defRes: "1080p Medium" }
+    ],
+    cpus: [
+      { id: "r5_5600x", name: "AMD Ryzen 5 5600X (6/12 до 4.6 GHz)", tag: "Максимальный FPS", score: 30 },
+      { id: "r5_5600", name: "AMD Ryzen 5 5600 (6/12 до 4.4 GHz)", tag: "Топ баланс", score: 26 },
+      { id: "i5_11400f", name: "Intel Core i5-11400F (6/12 до 4.3 GHz)", tag: "Надежный Intel", score: 24 },
+      { id: "r5_3600", name: "AMD Ryzen 5 3600 (6/12 до 4.4 GHz)", tag: "Выгодный 6-ядерник", score: 20 },
+      { id: "i3_10100f", name: "Intel Core i3-10100F (4/8 до 4.3 GHz)", tag: "Базовый старт", score: 14 }
+    ],
+    ram: [
+      { id: "ram16", name: "16 GB DDR4 Dual Channel 3200MHz", tag: "Идеально для всех игр" },
+      { id: "ram32", name: "32 GB DDR4 Dual Channel 3200MHz", tag: "С запасом для стримов и модов" }
+    ],
+    ssd: [
+      { id: "ssd512", name: "512 GB M.2 NVMe SSD", tag: "Система + 3-4 любимые игры" },
+      { id: "ssd1000", name: "1024 GB (1 TB) M.2 NVMe SSD", tag: "Для большой библиотеки игр" }
+    ],
+    cases: [
+      { id: "stinger_black", name: "Stinger Cyber Black ARGB (Стекло + кулеры)", icon: "box" },
+      { id: "stinger_white", name: "Snow White Edition (Белый стиль)", icon: "sparkles" },
+      { id: "stinger_stealth", name: "Stealth Minimal (Строгий без яркого света)", icon: "eye-off" }
+    ]
+  },
+
+  // Данные для интерактивных графиков сравнения FPS
+  benchmarks: {
+    games: [
+      { id: "cyberpunk", name: "Cyberpunk 2077", badge: "Тяжелая графика / DLSS / FSR", maxFps: 120 },
+      { id: "cs2", name: "Counter-Strike 2", badge: "Киберспорт / 144Hz-240Hz", maxFps: 360 },
+      { id: "gta5", name: "GTA V", badge: "Ультра настройки", maxFps: 200 },
+      { id: "dota2", name: "Dota 2 / Valorant", badge: "Высокий фреймрейт", maxFps: 320 },
+      { id: "rdr2", name: "Red Dead Redemption 2", badge: "Высокое качество", maxFps: 130 }
+    ],
+    resolutions: [
+      { id: "1080p", name: "Full HD (1080p)" },
+      { id: "1440p", name: "2K Quad HD (1440p)" }
+    ],
+    // FPS показатели каждой сборки
+    scores: {
+      "pc-4": {
+        name: "STINGER Power (RTX 3080)",
+        color: "from-amber-400 to-orange-500",
+        badge: "Флагман",
+        "1080p": { cyberpunk: 110, cs2: 340, gta5: 180, dota2: 300, rdr2: 110 },
+        "1440p": { cyberpunk: 85, cs2: 280, gta5: 145, dota2: 250, rdr2: 85 }
+      },
+      "pc-1": {
+        name: "STINGER Balance (RX 5700 XT)",
+        color: "from-cyan-400 to-blue-500",
+        badge: "Хит",
+        "1080p": { cyberpunk: 75, cs2: 240, gta5: 110, dota2: 230, rdr2: 75 },
+        "1440p": { cyberpunk: 52, cs2: 180, gta5: 80, dota2: 170, rdr2: 52 }
+      },
+      "pc-3": {
+        name: "STINGER Gamer v2 (RX 5700)",
+        color: "from-purple-400 to-indigo-500",
+        badge: "Оптимум",
+        "1080p": { cyberpunk: 68, cs2: 220, gta5: 100, dota2: 210, rdr2: 68 },
+        "1440p": { cyberpunk: 46, cs2: 160, gta5: 72, dota2: 150, rdr2: 45 }
+      },
+      "pc-2": {
+        name: "STINGER Start i5 (RX 6500 XT)",
+        color: "from-blue-400 to-cyan-500",
+        badge: "Старт",
+        "1080p": { cyberpunk: 60, cs2: 200, gta5: 90, dota2: 190, rdr2: 55 },
+        "1440p": { cyberpunk: 38, cs2: 130, gta5: 60, dota2: 120, rdr2: 38 }
+      },
+      "pc-5": {
+        name: "STINGER Entry (RTX 3050)",
+        color: "from-slate-400 to-slate-500",
+        badge: "Базовый",
+        "1080p": { cyberpunk: 55, cs2: 160, gta5: 80, dota2: 160, rdr2: 50 },
+        "1440p": { cyberpunk: 35, cs2: 110, gta5: 55, dota2: 110, rdr2: 34 }
+      }
+    }
+  },
+
+  // Категории готовых сборок
   categories: [
     { id: "all", name: "Все сборки", count: 5 },
     { id: "power", name: "🔥 Power (RTX 3080)" },
@@ -59,7 +146,7 @@ const CONFIG = {
     { id: "start", name: "🎮 Старт (до 45 000 ₽)" }
   ],
 
-  // Преимущества магазина (показываются в блоке "Почему мы")
+  // Преимущества
   features: [
     {
       icon: "check-circle",
@@ -93,7 +180,7 @@ const CONFIG = {
     }
   ],
 
-  // Часто задаваемые вопросы (FAQ)
+  // FAQ
   faq: [
     {
       q: "Можно ли проверить компьютер перед покупкой?",
@@ -150,7 +237,7 @@ const CONFIG = {
         { game: "GTA V / Witcher 3 / PUBG", fps: "140–180+ FPS", quality: "2K Ультра" },
         { game: "Cyberpunk 2077 / RDR 2", fps: "80–110+ FPS", quality: "Ультра + DLSS" }
       ],
-      avitoUrl: "https://www.avito.ru", // Ссылка на объявление этого ПК
+      avitoUrl: "https://www.avito.ru",
       description: "Топовая сборка для бескомпромиссного гейминга в 2K и 4K на ультра-настройках с трассировкой лучей."
     },
 
