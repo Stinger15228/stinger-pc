@@ -175,13 +175,24 @@ function typeText(element, text) {
 
 const userBuildState = {
   task: "aaa",
-  gpu: "rtx3080",
-  cpu: "r5_5600x",
+  gpu: "rtx3060",
+  cpu: "r5_5600",
   ram: "ram16_d4",
   ssd: "ssd1000",
-  case: "stinger_black",
+  case: "case_mesh",
   compareGame: "cyberpunk"
 };
+
+// Функция динамического расчета платформы (материнка + кулер + БП + сборка/тесты)
+function getDynamicBaseCost(gpuPrice, cpuPrice) {
+  if (gpuPrice < 30000 && cpuPrice < 15000) {
+    return 14000; // Доступная база: матплата A520M/H510M + кулер + БП 500-600W + стресс-тесты
+  } else if (gpuPrice < 70000 && cpuPrice < 30000) {
+    return 18500; // Средняя база: B550/B760 + кулер 4-6 трубок + БП 650-700W Bronze + стресс-тесты
+  } else {
+    return 26000; // Топовая база: B650/Z790 + БП 850W Gold + СЖО/топ кулер + стресс-тесты
+  }
+}
 
 function initCustomConfigurator() {
   renderConfiguratorControls();
@@ -200,13 +211,13 @@ function renderConfiguratorControls() {
         onclick="setUserBuildOption('task', '${t.id}', this)"
         class="cfg-option-item p-3.5 rounded-2xl flex items-center justify-between gap-3 ${userBuildState.task === t.id ? 'active' : ''}"
       >
-        <div class="flex items-center gap-3 min-w-0">
-          <div class="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0">
+        <div class="flex items-center gap-2.5 min-w-0 flex-1">
+          <div class="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0">
             <i data-lucide="${t.icon}" class="w-4 h-4"></i>
           </div>
-          <div class="truncate">
-            <div class="text-xs sm:text-sm font-bold text-white truncate">${t.name}</div>
-            <div class="text-[11px] text-slate-400 truncate">${t.sub}</div>
+          <div class="min-w-0">
+            <div class="text-xs sm:text-sm font-bold text-white break-words leading-tight">${t.name}</div>
+            <div class="text-[11px] text-slate-400 leading-tight mt-0.5">${t.sub}</div>
           </div>
         </div>
         <span class="w-2.5 h-2.5 rounded-full bg-purple-400 shrink-0 ${userBuildState.task === t.id ? 'opacity-100 scale-100' : 'opacity-0 scale-50'} transition-all"></span>
@@ -222,13 +233,13 @@ function renderConfiguratorControls() {
         onclick="setUserBuildOption('gpu', '${g.id}', this)"
         class="cfg-option-item p-3 rounded-2xl flex items-center justify-between gap-2.5 ${userBuildState.gpu === g.id ? 'active' : ''}"
       >
-        <div class="min-w-0 truncate">
-          <div class="text-xs sm:text-sm font-bold text-white truncate">${g.name}</div>
-          <div class="text-[11px] text-purple-400 font-semibold">${g.tier}</div>
+        <div class="min-w-0 flex-1">
+          <div class="text-xs sm:text-sm font-bold text-white break-words leading-snug">${g.name}</div>
+          <div class="text-[11px] text-purple-400 font-semibold mt-0.5">${g.tier}</div>
         </div>
-        <div class="text-right shrink-0">
-          <span class="text-xs font-bold text-slate-300 block font-tech">~${formatPrice(g.price)}</span>
-          <span class="w-2 h-2 rounded-full bg-purple-400 inline-block ${userBuildState.gpu === g.id ? 'opacity-100' : 'opacity-0'}"></span>
+        <div class="text-right shrink-0 pl-2">
+          <span class="text-xs sm:text-sm font-bold text-slate-200 block font-tech">~${formatPrice(g.price)}</span>
+          <span class="w-2.5 h-2.5 rounded-full bg-purple-400 inline-block mt-1 ${userBuildState.gpu === g.id ? 'opacity-100' : 'opacity-0'}"></span>
         </div>
       </div>
     `).join("");
@@ -240,13 +251,16 @@ function renderConfiguratorControls() {
     cpuEl.innerHTML = opt.cpus.map(c => `
       <div 
         onclick="setUserBuildOption('cpu', '${c.id}', this)"
-        class="cfg-option-item p-2.5 px-3.5 rounded-2xl flex items-center justify-between gap-2 ${userBuildState.cpu === c.id ? 'active' : ''}"
+        class="cfg-option-item p-3 rounded-2xl flex items-center justify-between gap-2.5 ${userBuildState.cpu === c.id ? 'active' : ''}"
       >
-        <div class="min-w-0 truncate">
-          <div class="text-xs sm:text-sm font-bold text-white truncate">${c.name}</div>
-          <div class="text-[10px] text-slate-400">${c.tag}</div>
+        <div class="min-w-0 flex-1">
+          <div class="text-xs sm:text-sm font-bold text-white break-words leading-snug">${c.name}</div>
+          <div class="text-[11px] text-slate-400 mt-0.5">${c.tag}</div>
         </div>
-        <span class="text-xs font-bold text-slate-300 shrink-0 font-tech">~${formatPrice(c.price)}</span>
+        <div class="text-right shrink-0 pl-2">
+          <span class="text-xs sm:text-sm font-bold text-slate-200 block font-tech">~${formatPrice(c.price)}</span>
+          <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 inline-block mt-1 ${userBuildState.cpu === c.id ? 'opacity-100' : 'opacity-0'}"></span>
+        </div>
       </div>
     `).join("");
   }
@@ -257,12 +271,13 @@ function renderConfiguratorControls() {
     ramEl.innerHTML = opt.ram.map(r => `
       <div 
         onclick="setUserBuildOption('ram', '${r.id}', this)"
-        class="cfg-option-item p-3 rounded-2xl flex items-center justify-between gap-2 ${userBuildState.ram === r.id ? 'active' : ''}"
+        class="cfg-option-item p-3 rounded-2xl flex items-center justify-between gap-2.5 ${userBuildState.ram === r.id ? 'active' : ''}"
       >
-        <div class="min-w-0 truncate">
-          <div class="text-xs font-bold text-white truncate">${r.name}</div>
+        <div class="min-w-0 flex-1">
+          <div class="text-xs font-bold text-white break-words leading-snug">${r.name}</div>
+          ${r.tag ? `<div class="text-[10px] text-slate-400 mt-0.5">${r.tag}</div>` : ''}
         </div>
-        <span class="text-xs font-bold text-slate-400 shrink-0 font-tech">~${formatPrice(r.price)}</span>
+        <span class="text-xs sm:text-sm font-bold text-slate-300 shrink-0 font-tech">~${formatPrice(r.price)}</span>
       </div>
     `).join("");
   }
@@ -273,12 +288,13 @@ function renderConfiguratorControls() {
     ssdEl.innerHTML = opt.ssd.map(s => `
       <div 
         onclick="setUserBuildOption('ssd', '${s.id}', this)"
-        class="cfg-option-item p-3 rounded-2xl flex items-center justify-between gap-2 ${userBuildState.ssd === s.id ? 'active' : ''}"
+        class="cfg-option-item p-3 rounded-2xl flex items-center justify-between gap-2.5 ${userBuildState.ssd === s.id ? 'active' : ''}"
       >
-        <div class="min-w-0 truncate">
-          <div class="text-xs font-bold text-white truncate">${s.name}</div>
+        <div class="min-w-0 flex-1">
+          <div class="text-xs font-bold text-white break-words leading-snug">${s.name}</div>
+          ${s.tag ? `<div class="text-[10px] text-slate-400 mt-0.5">${s.tag}</div>` : ''}
         </div>
-        <span class="text-xs font-bold text-slate-400 shrink-0 font-tech">~${formatPrice(s.price)}</span>
+        <span class="text-xs sm:text-sm font-bold text-slate-300 shrink-0 font-tech">~${formatPrice(s.price)}</span>
       </div>
     `).join("");
   }
@@ -289,13 +305,13 @@ function renderConfiguratorControls() {
     casesEl.innerHTML = opt.cases.map(cs => `
       <div 
         onclick="setUserBuildOption('case', '${cs.id}', this)"
-        class="cfg-option-item p-3 rounded-2xl flex items-center justify-between gap-2 ${userBuildState.case === cs.id ? 'active' : ''}"
+        class="cfg-option-item p-3 rounded-2xl flex items-center justify-between gap-2.5 ${userBuildState.case === cs.id ? 'active' : ''}"
       >
-        <div class="flex items-center gap-2 min-w-0 truncate">
+        <div class="flex items-center gap-2.5 min-w-0 flex-1">
           <i data-lucide="${cs.icon}" class="w-4 h-4 text-purple-400 shrink-0"></i>
-          <span class="text-xs font-bold text-white truncate">${cs.name}</span>
+          <span class="text-xs font-bold text-white break-words leading-snug">${cs.name}</span>
         </div>
-        <span class="text-xs font-bold text-slate-400 shrink-0 font-tech">~${formatPrice(cs.price)}</span>
+        <span class="text-xs sm:text-sm font-bold text-slate-300 shrink-0 font-tech">~${formatPrice(cs.price)}</span>
       </div>
     `).join("");
   }
@@ -326,8 +342,8 @@ function updateLiveCustomComparison() {
   const currentSsd = opt.ssd.find(s => s.id === userBuildState.ssd) || opt.ssd[0];
   const currentCase = opt.cases.find(c => c.id === userBuildState.case) || opt.cases[0];
 
-  // 1. Расчет бюджета сборки
-  const baseComponentsCost = 25000; // Материнка, БП, кулер, сборка и стресс-тесты
+  // 1. Расчет бюджета сборки с учетом динамической платформы
+  const baseComponentsCost = getDynamicBaseCost(currentGpu.price, currentCpu.price);
   const totalCost = currentGpu.price + currentCpu.price + currentRam.price + currentSsd.price + currentCase.price + baseComponentsCost;
   const isPrepayment = totalCost >= 100000;
 
@@ -373,7 +389,11 @@ function updateLiveCustomComparison() {
   const userBuildName = document.getElementById("cfg-compare-build-name");
   if (userBar) userBar.style.width = userPct + "%";
   if (userFpsEl) userFpsEl.textContent = `${userBuildFps} FPS`;
-  if (userBuildName) userBuildName.textContent = `ВАША СБОРКА (${currentGpu.name.replace('NVIDIA ', '').replace('GeForce ', '')} + ${currentCpu.name.split(' (')[0]})`;
+  if (userBuildName) {
+    const gpuShort = currentGpu.name.replace('NVIDIA ', '').replace('GeForce ', '').replace('AMD ', '');
+    const cpuShort = currentCpu.name.split(' (')[0];
+    userBuildName.textContent = `ВАША СБОРКА (${gpuShort} + ${cpuShort})`;
+  }
 
   const flagBar = document.getElementById("cfg-bar-flagship");
   const flagFpsEl = document.getElementById("cfg-fps-flagship");
@@ -388,14 +408,14 @@ function updateLiveCustomComparison() {
     userComfortBadge.className = `text-[11px] px-2.5 py-0.5 rounded-full border font-bold ${badge.className}`;
   }
 
-  // Обновляем список выбранных комплектующих
+  // Обновляем список выбранных комплектующих (без обрезки слов)
   const summaryEl = document.getElementById("cfg-selected-specs-summary");
   if (summaryEl) {
     summaryEl.innerHTML = `
-      <div class="flex items-center gap-2"><i data-lucide="layers" class="w-3.5 h-3.5 text-purple-400 shrink-0"></i> <span class="text-white font-medium truncate">${currentGpu.name}</span></div>
-      <div class="flex items-center gap-2"><i data-lucide="cpu" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> <span class="text-white font-medium truncate">${currentCpu.name}</span></div>
-      <div class="flex items-center gap-2"><i data-lucide="hard-drive" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i> <span class="text-white font-medium truncate">${currentRam.name} • ${currentSsd.name}</span></div>
-      <div class="flex items-center gap-2"><i data-lucide="box" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i> <span class="text-slate-300 truncate">${currentCase.name}</span></div>
+      <div class="flex items-start gap-2.5"><i data-lucide="layers" class="w-3.5 h-3.5 text-purple-400 shrink-0 mt-0.5"></i> <span class="text-white font-medium break-words leading-snug">${currentGpu.name}</span></div>
+      <div class="flex items-start gap-2.5"><i data-lucide="cpu" class="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5"></i> <span class="text-white font-medium break-words leading-snug">${currentCpu.name}</span></div>
+      <div class="flex items-start gap-2.5"><i data-lucide="hard-drive" class="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5"></i> <span class="text-white font-medium break-words leading-snug">${currentRam.name} • ${currentSsd.name}</span></div>
+      <div class="flex items-start gap-2.5"><i data-lucide="box" class="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5"></i> <span class="text-slate-300 break-words leading-snug">${currentCase.name}</span></div>
     `;
     lucide.createIcons();
   }
@@ -411,7 +431,7 @@ window.copyCustomBuildAndGoToAvito = function() {
   const currentSsd = opt.ssd.find(s => s.id === userBuildState.ssd);
   const currentCase = opt.cases.find(c => c.id === userBuildState.case);
 
-  const baseComponentsCost = 25000;
+  const baseComponentsCost = getDynamicBaseCost(currentGpu.price, currentCpu.price);
   const totalCost = currentGpu.price + currentCpu.price + currentRam.price + currentSsd.price + currentCase.price + baseComponentsCost;
   const isPrepayment = totalCost >= 100000;
 
@@ -518,8 +538,8 @@ window.switchCustomOrderTab = function(tab) {
     if (expressPage) expressPage.classList.add("hidden");
     if (configPage) configPage.classList.remove("hidden");
     if (modalBox) {
-      modalBox.classList.remove("max-w-xl");
-      modalBox.classList.add("max-w-5xl");
+      modalBox.classList.remove("max-w-xl", "max-w-5xl");
+      modalBox.classList.add("modal-config-wide");
     }
     if (btnExpress) {
       btnExpress.className = "flex-1 py-2 px-3 sm:px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all text-slate-400 hover:text-white";
@@ -533,7 +553,7 @@ window.switchCustomOrderTab = function(tab) {
     if (expressPage) expressPage.classList.remove("hidden");
     if (configPage) configPage.classList.add("hidden");
     if (modalBox) {
-      modalBox.classList.remove("max-w-5xl");
+      modalBox.classList.remove("modal-config-wide", "max-w-5xl");
       modalBox.classList.add("max-w-xl");
     }
     if (btnExpress) {

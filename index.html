@@ -821,7 +821,7 @@
           </div>
 
           <!-- Сетка 2 колонок конфигуратора -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
             <!-- Левая колонка: Опции железа (7 колонок) -->
             <div class="lg:col-span-7 space-y-6">
@@ -841,7 +841,7 @@
                   <span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-black">2</span>
                   <span>Видеокарта (Главный FPS в играх):</span>
                 </div>
-                <div id="cfg-input-gpus" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-64 overflow-y-auto pr-1"></div>
+                <div id="cfg-input-gpus" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-80 overflow-y-auto pr-1"></div>
               </div>
 
               <!-- 3. Процессор -->
@@ -850,7 +850,7 @@
                   <span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-black">3</span>
                   <span>Процессор CPU:</span>
                 </div>
-                <div id="cfg-input-cpus" class="grid grid-cols-1 gap-2 max-h-56 overflow-y-auto pr-1"></div>
+                <div id="cfg-input-cpus" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-80 overflow-y-auto pr-1"></div>
               </div>
 
               <!-- 4. RAM & SSD -->
@@ -878,7 +878,7 @@
                   <span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-xs font-black">6</span>
                   <span>Корпус и стиль:</span>
                 </div>
-                <div id="cfg-input-cases" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+                <div id="cfg-input-cases" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
               </div>
 
             </div>
@@ -933,11 +933,11 @@
                   <!-- 2. Ваша сборка -->
                   <div class="space-y-1 p-2.5 rounded-xl bg-purple-950/40 border border-purple-500/40">
                     <div class="flex items-center justify-between text-xs">
-                      <div class="flex items-center gap-1.5 min-w-0">
-                        <span class="w-2 h-2 rounded-full bg-cyan-400 pulse-dot"></span>
-                        <span id="cfg-compare-build-name" class="font-bold text-white truncate">ВАША СБОРКА</span>
+                      <div class="flex items-center gap-1.5 min-w-0 flex-1">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400 pulse-dot shrink-0"></span>
+                        <span id="cfg-compare-build-name" class="font-bold text-white break-words">ВАША СБОРКА</span>
                       </div>
-                      <span id="cfg-fps-user" class="font-black text-cyan-400 font-tech text-base">85 FPS</span>
+                      <span id="cfg-fps-user" class="font-black text-cyan-400 font-tech text-base shrink-0 pl-2">85 FPS</span>
                     </div>
                     <div class="w-full h-3.5 bg-black rounded-full overflow-hidden p-0.5 border border-purple-500/40">
                       <div id="cfg-bar-user" class="h-full rounded-full bg-gradient-to-r from-purple-500 via-indigo-500 to-cyan-400 transition-all duration-700 shadow-md shadow-purple-500/40" style="width: 65%;"></div>

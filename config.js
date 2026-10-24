@@ -106,43 +106,65 @@ const CONFIG = {
       { id: "content", name: "Стриминг и Монтаж", sub: "OBS, Premiere, Blender 3D", icon: "video", scoreBoost: 25 }
     ],
     gpus: [
-      { id: "rtx4090", name: "NVIDIA RTX 4090 24GB", tier: "Флагман 4K Extreme", score: 99, price: 185000, defRes: "4K Extreme Ultra", fpsMap: { cyberpunk: 145, cs2: 440, gta5: 210, dota2: 390, rdr2: 150, rust: 175 } },
-      { id: "rtx4080s", name: "NVIDIA RTX 4080 Super 16GB", tier: "Экстрим 4K", score: 92, price: 115000, defRes: "4K / 2K Ultra", fpsMap: { cyberpunk: 120, cs2: 380, gta5: 185, dota2: 350, rdr2: 125, rust: 145 } },
-      { id: "rtx4070tis", name: "NVIDIA RTX 4070 Ti Super 16GB", tier: "Ультра 2K 144Hz", score: 85, price: 89000, defRes: "2K Ultra", fpsMap: { cyberpunk: 102, cs2: 330, gta5: 165, dota2: 300, rdr2: 105, rust: 130 } },
+      // Доступные хиты и новинки
+      { id: "rtx5060", name: "NVIDIA RTX 5060 12GB (Next-Gen)", tier: "Next-Gen Баланс (DLSS 4)", score: 76, price: 39000, defRes: "1080p / 2K Ultra", fpsMap: { cyberpunk: 92, cs2: 310, gta5: 160, dota2: 290, rdr2: 92, rust: 120 } },
+      { id: "rtx5050", name: "NVIDIA RTX 5050 8GB (Next-Gen)", tier: "Next-Gen Старт 1080p", score: 66, price: 29000, defRes: "1080p Ultra", fpsMap: { cyberpunk: 70, cs2: 245, gta5: 130, dota2: 240, rdr2: 70, rust: 90 } },
+      { id: "rtx4060", name: "NVIDIA RTX 4060 8GB", tier: "Хит продаж (DLSS 3)", score: 70, price: 34000, defRes: "1080p Ultra / 2K", fpsMap: { cyberpunk: 78, cs2: 265, gta5: 138, dota2: 255, rdr2: 78, rust: 100 } },
+      { id: "rtx4060ti", name: "NVIDIA RTX 4060 Ti 16GB", tier: "Запас памяти 16GB", score: 73, price: 47000, defRes: "1080p Ultra / 2K", fpsMap: { cyberpunk: 85, cs2: 290, gta5: 155, dota2: 270, rdr2: 85, rust: 110 } },
+      { id: "rtx3060", name: "NVIDIA RTX 3060 12GB", tier: "Народная 12GB памяти", score: 64, price: 27500, defRes: "1080p Ultra / 2K Mid", fpsMap: { cyberpunk: 65, cs2: 235, gta5: 125, dota2: 230, rdr2: 66, rust: 88 } },
+      { id: "rtx3050", name: "MSI GeForce RTX 3050 8GB", tier: "Входной RTX (35 FPS в 2K)", score: 46, price: 17000, defRes: "1080p Medium-High", fpsMap: { cyberpunk: 35, cs2: 130, gta5: 70, dota2: 135, rdr2: 40, rust: 55 } },
+      { id: "gtx1660s", name: "GeForce GTX 1660 Super 6GB", tier: "Бюджетный хит CS2/Танки", score: 42, price: 14500, defRes: "1080p High", fpsMap: { cyberpunk: 32, cs2: 145, gta5: 80, dota2: 145, rdr2: 38, rust: 52 } },
+      
+      // Аналоги от AMD (популярный бюджетный сектор)
+      { id: "rx7600", name: "AMD Radeon RX 7600 8GB", tier: "RDNA 3 / Аналог 4060", score: 68, price: 28500, defRes: "1080p Ultra", fpsMap: { cyberpunk: 72, cs2: 255, gta5: 132, dota2: 250, rdr2: 74, rust: 94 } },
+      { id: "rx6650xt", name: "AMD Radeon RX 6650 XT 8GB", tier: "Быстрый 1080p Ультра", score: 66, price: 26000, defRes: "1080p Ultra", fpsMap: { cyberpunk: 70, cs2: 245, gta5: 128, dota2: 240, rdr2: 72, rust: 90 } },
+      { id: "rx6600", name: "AMD Radeon RX 6600 8GB", tier: "Топ цена/качество до 25к", score: 62, price: 23500, defRes: "1080p Ultra", fpsMap: { cyberpunk: 62, cs2: 225, gta5: 118, dota2: 220, rdr2: 64, rust: 84 } },
+      { id: "rx5700xt", name: "MSI Radeon RX 5700 XT 8GB", tier: "Уровень RTX 3060", score: 60, price: 21000, defRes: "1080p Ultra / 2K High", fpsMap: { cyberpunk: 55, cs2: 205, gta5: 110, dota2: 205, rdr2: 58, rust: 76 } },
+      { id: "rx5700", name: "GIGABYTE Radeon RX 5700 8GB", tier: "Баланс High 1080p", score: 55, price: 18000, defRes: "1080p High", fpsMap: { cyberpunk: 48, cs2: 180, gta5: 95, dota2: 185, rdr2: 50, rust: 68 } },
+      { id: "rx5500xt", name: "AMD Radeon RX 5500 XT 8GB", tier: "Доступный 8GB старт", score: 38, price: 12500, defRes: "1080p Medium", fpsMap: { cyberpunk: 30, cs2: 135, gta5: 75, dota2: 135, rdr2: 34, rust: 48 } },
+      { id: "rx580", name: "AMD Radeon RX 580 8GB", tier: "Ультрабюджет 8GB", score: 34, price: 9500, defRes: "1080p Low-Mid", fpsMap: { cyberpunk: 28, cs2: 120, gta5: 70, dota2: 125, rdr2: 32, rust: 42 } },
+
+      // Мощные и флагманские видеокарты (> 100к по предоплате)
       { id: "rtx4070s", name: "NVIDIA RTX 4070 Super 12GB", tier: "Хит 2K Ultra", score: 80, price: 68000, defRes: "2K Ultra", fpsMap: { cyberpunk: 92, cs2: 300, gta5: 150, dota2: 280, rdr2: 95, rust: 118 } },
-      { id: "rtx3080", name: "NVIDIA RTX 3080 10GB", tier: "Мощный 2K Баланс", score: 75, price: 42000, defRes: "2K High-Ultra", fpsMap: { cyberpunk: 85, cs2: 280, gta5: 145, dota2: 250, rdr2: 85, rust: 105 } },
-      { id: "rtx4060ti", name: "NVIDIA RTX 4060 Ti 16GB", tier: "1080p Ultra / 2K", score: 68, price: 47000, defRes: "1080p Ultra", fpsMap: { cyberpunk: 70, cs2: 230, gta5: 120, dota2: 220, rdr2: 68, rust: 90 } },
-      { id: "rx5700xt", name: "MSI Radeon RX 5700 XT 8GB", tier: "Народный 1080p Ultra", score: 60, price: 21000, defRes: "1080p Ultra", fpsMap: { cyberpunk: 52, cs2: 180, gta5: 80, dota2: 170, rdr2: 52, rust: 70 } },
-      { id: "rx5700", name: "GIGABYTE Radeon RX 5700 6GB", tier: "Баланс High", score: 55, price: 18000, defRes: "1080p High", fpsMap: { cyberpunk: 46, cs2: 160, gta5: 72, dota2: 150, rdr2: 45, rust: 62 } },
-      { id: "rtx3050", name: "MSI GeForce RTX 3050 8GB", tier: "Входной билет", score: 45, price: 17000, defRes: "1080p Medium", fpsMap: { cyberpunk: 35, cs2: 110, gta5: 55, dota2: 110, rdr2: 34, rust: 48 } }
+      { id: "rtx4070tis", name: "NVIDIA RTX 4070 Ti Super 16GB", tier: "⚡ По предоплате (>100к)", score: 85, price: 89000, defRes: "2K Ultra 144Hz", fpsMap: { cyberpunk: 102, cs2: 330, gta5: 165, dota2: 300, rdr2: 105, rust: 130 } },
+      { id: "rtx4080s", name: "NVIDIA RTX 4080 Super 16GB", tier: "⚡ По предоплате (>100к)", score: 92, price: 115000, defRes: "4K / 2K Ultra", fpsMap: { cyberpunk: 120, cs2: 380, gta5: 185, dota2: 350, rdr2: 125, rust: 145 } },
+      { id: "rtx4090", name: "NVIDIA RTX 4090 24GB", tier: "⚡ По предоплате (Флагман 4K)", score: 99, price: 185000, defRes: "4K Extreme Ultra", fpsMap: { cyberpunk: 145, cs2: 440, gta5: 210, dota2: 390, rdr2: 150, rust: 175 } }
     ],
     cpus: [
-      { id: "r7_7800x3d", name: "AMD Ryzen 7 7800X3D (8/16, Топ в мире)", price: 46000, tag: "Игровой №1", score: 35 },
-      { id: "i7_14700kf", name: "Intel Core i7-14700KF (20/28 ядер)", price: 41000, tag: "Для монтажа и игр", score: 34 },
-      { id: "r7_7700x", name: "AMD Ryzen 7 7700X (8/16 ядер, 5.4 GHz)", price: 32000, tag: "Мощная AM5 база", score: 30 },
-      { id: "i5_13400f", name: "Intel Core i5-13400F (10 ядер)", price: 18000, tag: "Современный 10-ядерник", score: 26 },
-      { id: "r5_5600x", name: "AMD Ryzen 5 5600X (6/12 ядер, 4.6 GHz)", price: 13500, tag: "Киберспортивный хит", score: 24 },
-      { id: "r5_5600", name: "AMD Ryzen 5 5600 (6/12 ядер, 4.4 GHz)", price: 11000, tag: "Народный баланс", score: 22 },
-      { id: "i5_11400f", name: "Intel Core i5-11400F (6/12 ядер)", price: 9500, tag: "Надежный Intel", score: 20 },
-      { id: "r5_3600", name: "AMD Ryzen 5 3600 (6/12 ядер)", price: 7500, tag: "Бюджетный 6-ядерник", score: 17 },
-      { id: "i3_10100f", name: "Intel Core i3-10100F (4/8 ядер)", price: 5500, tag: "Базовый старт", score: 12 }
+      // Бюджетные и народные процессоры
+      { id: "i3_10100f", name: "Intel Core i3-10100F (4/8 ядер, 4.3 GHz)", price: 5500, tag: "Базовый старт 4 ядра / 8 потоков", score: 12 },
+      { id: "r5_3600", name: "AMD Ryzen 5 3600 (6/12 ядер, 4.2 GHz)", price: 7500, tag: "Бюджетный хит 6 ядер AM4", score: 17 },
+      { id: "i3_12100f", name: "Intel Core i3-12100F (4/8 ядер, LGA1700)", price: 7500, tag: "Быстрый 4 ядра LGA1700", score: 18 },
+      { id: "r5_5500", name: "AMD Ryzen 5 5500 (6/12 ядер, 4.2 GHz)", price: 8500, tag: "Народный 6-ядерник AM4", score: 19 },
+      { id: "i5_10400f", name: "Intel Core i5-10400F (6/12 ядер, 4.3 GHz)", price: 8900, tag: "Надежный 6-ядерник Intel", score: 19 },
+      { id: "i5_11400f", name: "Intel Core i5-11400F (6/12 ядер, 4.4 GHz)", price: 9500, tag: "Хит Intel LGA1200", score: 20 },
+      { id: "r5_5600", name: "AMD Ryzen 5 5600 (6/12 ядер, 32MB кэш)", price: 11000, tag: "Главный хит продаж AM4", score: 22 },
+      { id: "i5_12400f", name: "Intel Core i5-12400F (6/12 ядер, LGA1700)", price: 12500, tag: "Топ выбор LGA1700", score: 23 },
+      { id: "r5_5600x", name: "AMD Ryzen 5 5600X (6/12 ядер, 4.6 GHz)", price: 13500, tag: "Для киберспорта 144Hz+", score: 24 },
+      { id: "r7_5700x", name: "AMD Ryzen 7 5700X (8/16 ядер, 4.6 GHz)", price: 15500, tag: "8 ядер для игр и стримов", score: 26 },
+      { id: "r5_7500f", name: "AMD Ryzen 5 7500F (6/12 ядер, AM5 DDR5)", price: 16000, tag: "Вход в новую платформу AM5", score: 27 },
+      { id: "i5_13400f", name: "Intel Core i5-13400F (10/16 ядер, 4.6 GHz)", price: 18000, tag: "10 ядер для работы и игр", score: 28 },
+      // Топовые процессоры
+      { id: "r7_7700x", name: "AMD Ryzen 7 7700X (8/16 ядер, 5.4 GHz)", price: 32000, tag: "Мощная AM5 база", score: 32 },
+      { id: "i7_14700kf", name: "Intel Core i7-14700KF (20/28 ядер)", price: 41000, tag: "Для монтажа, 3D и игр", score: 34 },
+      { id: "r7_7800x3d", name: "AMD Ryzen 7 7800X3D (8/16, 3D V-Cache)", price: 46000, tag: "Топ игровой CPU мира", score: 36 }
     ],
     ram: [
-      { id: "ram16_d4", name: "16 GB DDR4 Dual 3200MHz", price: 4500, tag: "Игры 1080p" },
-      { id: "ram32_d4", name: "32 GB DDR4 Dual 3200MHz", price: 8000, tag: "С запасом для модов" },
-      { id: "ram32_d5", name: "32 GB DDR5 Dual 6000MHz", price: 14000, tag: "Скоростная DDR5" },
-      { id: "ram64_d5", name: "64 GB DDR5 Dual 6400MHz", price: 26000, tag: "Для 3D, рендера и стримов" }
+      { id: "ram16_d4", name: "16 GB DDR4 Dual Channel 3200MHz", price: 3500, tag: "Базовый игровой стандарт" },
+      { id: "ram32_d4", name: "32 GB DDR4 Dual Channel 3200MHz", price: 6500, tag: "Оптимально под любые игры" },
+      { id: "ram32_d5", name: "32 GB DDR5 Dual Channel 6000MHz", price: 12500, tag: "Скоростная память AM5/LGA1700" },
+      { id: "ram64_d5", name: "64 GB DDR5 Dual Channel 6400MHz", price: 24000, tag: "Для 3D, рендера и стримов" }
     ],
     ssd: [
-      { id: "ssd512", name: "512 GB M.2 NVMe SSD", price: 4000, tag: "ОС + 3-4 игры" },
-      { id: "ssd1000", name: "1024 GB (1 TB) M.2 NVMe SSD", price: 7500, tag: "Оптимальный объем" },
-      { id: "ssd2000", name: "2048 GB (2 TB) Samsung NVMe", price: 16000, tag: "Максимальная скорость" }
+      { id: "ssd512", name: "512 GB M.2 NVMe SSD", price: 3500, tag: "Быстрая загрузка ОС + 3-4 игры" },
+      { id: "ssd1000", name: "1024 GB (1 TB) M.2 NVMe SSD", price: 6500, tag: "Хит по объему" },
+      { id: "ssd2000", name: "2048 GB (2 TB) M.2 NVMe SSD", price: 13500, tag: "Для большой библиотеки игр" }
     ],
     cases: [
-      { id: "stinger_black", name: "Stinger Cyber ARGB (Черный со стеклом)", price: 5500, icon: "box" },
-      { id: "stinger_white", name: "Snow White Panoramic (Белый аквариум)", price: 9500, icon: "sparkles" },
-      { id: "stinger_stealth", name: "Stealth Dark Minimal (Без яркого света)", price: 6500, icon: "eye-off" },
-      { id: "stinger_water", name: "Custom Hardline Water Showcase", price: 25000, icon: "droplet" }
+      { id: "case_mesh", name: "Stinger Airflow Mesh (Черный с продувом)", price: 3800, icon: "wind" },
+      { id: "case_glass", name: "Cyber Glass ARGB (Закаленное стекло)", price: 5200, icon: "box" },
+      { id: "case_white", name: "Snow White Panoramic (Белый аквариум)", price: 7900, icon: "sparkles" },
+      { id: "case_stealth", name: "Stealth Dark Minimal (Строгий тихий корпус)", price: 5900, icon: "eye-off" }
     ]
   },
 
