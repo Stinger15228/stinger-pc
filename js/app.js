@@ -1,26 +1,28 @@
 /**
- * STINGER PC — Высокотехнологичная интерактивная логика
- * (Конфигуратор, Графики сравнения, Анимации, Авито-интеграция)
+ * STINGER PC — Интерактивный функционал и анимации
+ * (В стиле iden-pc.ru: циклические спеки, модалка сборки на заказ, графики 8 игр, скролл-ревил)
  */
 
 document.addEventListener("DOMContentLoaded", () => {
   initStoreInfo();
   initMouseGlow();
+  initScrollReveal();
+  initCycleTicker();
   initCategories();
   renderProducts("all");
-  initConfigurator();
   initBenchmarks();
+  initCustomOrderModal();
+  initProductModal();
   initFAQ();
-  initModal();
   lucide.createIcons();
 });
 
-// Форматирование цены (71725 -> 71 725 ₽)
+// Форматирование цены (289900 -> 289 900 ₽)
 function formatPrice(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₽";
 }
 
-// Плавный световой курсор
+// Плавный неоновый курсор
 function initMouseGlow() {
   const glow = document.querySelector(".mouse-glow");
   if (!glow) return;
@@ -31,39 +33,52 @@ function initMouseGlow() {
   });
 }
 
-// Заполнение контактов и общей информации о магазине
+// Анимация появления элементов при скролле (Scroll Reveal)
+function initScrollReveal() {
+  const elements = document.querySelectorAll(".reveal-on-scroll");
+  if (!elements.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("revealed");
+      }
+    });
+  }, { threshold: 0.1 });
+
+  elements.forEach(el => observer.observe(el));
+}
+
+// Заполнение контактов и адресов
 function initStoreInfo() {
   document.querySelectorAll("[data-store-name]").forEach(el => el.textContent = CONFIG.shop.name);
   document.querySelectorAll("[data-store-tagline]").forEach(el => el.textContent = CONFIG.shop.tagline);
   document.querySelectorAll("[data-store-address]").forEach(el => el.textContent = `${CONFIG.shop.city}, ${CONFIG.shop.address}`);
-  
-  const avitoLinks = document.querySelectorAll(".link-avito");
-  avitoLinks.forEach(el => {
+
+  document.querySelectorAll(".link-avito").forEach(el => {
     el.href = CONFIG.contacts.avitoUrl;
     el.target = "_blank";
     el.rel = "noopener noreferrer";
   });
 
-  const tgLinks = document.querySelectorAll(".link-tg");
-  tgLinks.forEach(el => {
+  document.querySelectorAll(".link-tg").forEach(el => {
     el.href = CONFIG.contacts.telegramUrl;
     el.target = "_blank";
     el.rel = "noopener noreferrer";
   });
 
-  const vkLinks = document.querySelectorAll(".link-vk");
-  vkLinks.forEach(el => {
+  document.querySelectorAll(".link-vk").forEach(el => {
     el.href = CONFIG.contacts.vkUrl;
     el.target = "_blank";
     el.rel = "noopener noreferrer";
   });
 
-  // Заполнение фич
+  // Заполнение карточек преимуществ
   const featuresContainer = document.getElementById("features-grid");
   if (featuresContainer && CONFIG.features) {
-    featuresContainer.innerHTML = CONFIG.features.map(f => `
-      <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between">
-        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-4">
+    featuresContainer.innerHTML = CONFIG.features.map((f, i) => `
+      <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between reveal-on-scroll delay-${(i % 3) + 1}">
+        <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4">
           <i data-lucide="${f.icon}" class="w-6 h-6"></i>
         </div>
         <div>
@@ -76,269 +91,144 @@ function initStoreInfo() {
 }
 
 /* ========================================================
-   ИНТЕРАКТИВНЫЙ КОНФИГУРАТОР ПК (CUSTOM BUILDER)
+   ЦИКЛИЧЕСКИЙ ТИКЕР СПЕЦИФИКАЦИЙ (КАК НА IDEN-PC)
 ======================================================== */
 
-const configuratorState = {
-  task: "esports",
-  gpu: "rtx3080",
-  cpu: "r5_5600x",
-  ram: "ram16",
-  ssd: "ssd1000",
-  case: "stinger_black"
-};
+let tickerIndex = 0;
 
-function initConfigurator() {
-  renderConfigOptions();
-  updateConfiguratorPreview();
+function initCycleTicker() {
+  const examples = CONFIG.cycleExamples;
+  if (!examples || !examples.length) return;
+
+  const gpuEl = document.getElementById("ticker-gpu");
+  const cpuEl = document.getElementById("ticker-cpu");
+  const ramEl = document.getElementById("ticker-ram");
+  const coolEl = document.getElementById("ticker-cooling");
+
+  if (!gpuEl || !cpuEl) return;
+
+  function updateTicker() {
+    const item = examples[tickerIndex];
+    tickerIndex = (tickerIndex + 1) % examples.length;
+
+    // Плавная смена с мигающим курсором
+    typeText(gpuEl, item.gpu);
+    typeText(cpuEl, item.cpu);
+    typeText(ramEl, item.ram);
+    typeText(coolEl, item.cooling);
+  }
+
+  updateTicker();
+  setInterval(updateTicker, 3800);
 }
 
-function renderConfigOptions() {
-  const opt = CONFIG.configuratorOptions;
-  if (!opt) return;
-
-  // 1. Задачи
-  const tasksContainer = document.getElementById("config-tasks");
-  if (tasksContainer) {
-    tasksContainer.innerHTML = opt.tasks.map(t => `
-      <div 
-        onclick="selectConfigOption('task', '${t.id}', this)"
-        class="config-option p-4 rounded-xl flex items-start gap-3 ${configuratorState.task === t.id ? 'active' : ''}"
-      >
-        <div class="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
-          <i data-lucide="${t.icon}" class="w-5 h-5"></i>
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="font-bold text-white text-sm flex items-center justify-between">
-            <span>${t.name}</span>
-            <span class="w-2 h-2 rounded-full bg-cyan-400 check-indicator transition-all ${configuratorState.task === t.id ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}"></span>
-          </div>
-          <p class="text-xs text-slate-400 mt-0.5">${t.sub}</p>
-        </div>
-      </div>
-    `).join("");
-  }
-
-  // 2. Видеокарты (GPU)
-  const gpusContainer = document.getElementById("config-gpus");
-  if (gpusContainer) {
-    gpusContainer.innerHTML = opt.gpus.map(g => `
-      <div 
-        onclick="selectConfigOption('gpu', '${g.id}', this)"
-        class="config-option p-3 sm:p-4 rounded-xl flex items-center justify-between gap-3 ${configuratorState.gpu === g.id ? 'active' : ''}"
-      >
-        <div class="flex items-center gap-3 min-w-0">
-          <div class="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shrink-0">
-            <i data-lucide="layers" class="w-4 h-4"></i>
-          </div>
-          <div class="truncate">
-            <div class="font-bold text-white text-xs sm:text-sm truncate">${g.name}</div>
-            <div class="text-[11px] text-cyan-400">${g.tier}</div>
-          </div>
-        </div>
-        <span class="w-2 h-2 rounded-full bg-cyan-400 check-indicator shrink-0 transition-all ${configuratorState.gpu === g.id ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}"></span>
-      </div>
-    `).join("");
-  }
-
-  // 3. Процессоры (CPU)
-  const cpusContainer = document.getElementById("config-cpus");
-  if (cpusContainer) {
-    cpusContainer.innerHTML = opt.cpus.map(c => `
-      <div 
-        onclick="selectConfigOption('cpu', '${c.id}', this)"
-        class="config-option p-3 sm:p-4 rounded-xl flex items-center justify-between gap-3 ${configuratorState.cpu === c.id ? 'active' : ''}"
-      >
-        <div class="flex items-center gap-3 min-w-0">
-          <div class="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
-            <i data-lucide="cpu" class="w-4 h-4"></i>
-          </div>
-          <div class="truncate">
-            <div class="font-bold text-white text-xs sm:text-sm truncate">${c.name}</div>
-            <div class="text-[11px] text-slate-400">${c.tag}</div>
-          </div>
-        </div>
-        <span class="w-2 h-2 rounded-full bg-cyan-400 check-indicator shrink-0 transition-all ${configuratorState.cpu === c.id ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}"></span>
-      </div>
-    `).join("");
-  }
-
-  // 4. Память RAM
-  const ramContainer = document.getElementById("config-ram");
-  if (ramContainer) {
-    ramContainer.innerHTML = opt.ram.map(r => `
-      <div 
-        onclick="selectConfigOption('ram', '${r.id}', this)"
-        class="config-option p-3.5 rounded-xl flex items-center justify-between ${configuratorState.ram === r.id ? 'active' : ''}"
-      >
-        <div class="min-w-0">
-          <div class="font-bold text-white text-xs sm:text-sm truncate">${r.name}</div>
-          <div class="text-[11px] text-slate-400">${r.tag}</div>
-        </div>
-        <span class="w-2 h-2 rounded-full bg-cyan-400 check-indicator shrink-0 transition-all ${configuratorState.ram === r.id ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}"></span>
-      </div>
-    `).join("");
-  }
-
-  // 5. Накопитель SSD
-  const ssdContainer = document.getElementById("config-ssd");
-  if (ssdContainer) {
-    ssdContainer.innerHTML = opt.ssd.map(s => `
-      <div 
-        onclick="selectConfigOption('ssd', '${s.id}', this)"
-        class="config-option p-3.5 rounded-xl flex items-center justify-between ${configuratorState.ssd === s.id ? 'active' : ''}"
-      >
-        <div class="min-w-0">
-          <div class="font-bold text-white text-xs sm:text-sm truncate">${s.name}</div>
-          <div class="text-[11px] text-slate-400">${s.tag}</div>
-        </div>
-        <span class="w-2 h-2 rounded-full bg-cyan-400 check-indicator shrink-0 transition-all ${configuratorState.ssd === s.id ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}"></span>
-      </div>
-    `).join("");
-  }
-
-  // 6. Корпус
-  const casesContainer = document.getElementById("config-cases");
-  if (casesContainer) {
-    casesContainer.innerHTML = opt.cases.map(cs => `
-      <div 
-        onclick="selectConfigOption('case', '${cs.id}', this)"
-        class="config-option p-3.5 rounded-xl flex items-center justify-between ${configuratorState.case === cs.id ? 'active' : ''}"
-      >
-        <div class="flex items-center gap-2.5 min-w-0">
-          <i data-lucide="${cs.icon}" class="w-4 h-4 text-purple-400 shrink-0"></i>
-          <span class="font-semibold text-white text-xs sm:text-sm truncate">${cs.name}</span>
-        </div>
-        <span class="w-2 h-2 rounded-full bg-cyan-400 check-indicator shrink-0 transition-all ${configuratorState.case === cs.id ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}"></span>
-      </div>
-    `).join("");
-  }
-
-  lucide.createIcons();
+function typeText(element, text) {
+  element.style.opacity = "0.3";
+  setTimeout(() => {
+    element.innerHTML = `${text}<span class="typing-cursor"></span>`;
+    element.style.opacity = "1";
+  }, 200);
 }
 
-window.selectConfigOption = function(group, id, element) {
-  configuratorState[group] = id;
+/* ========================================================
+   МОДАЛКА «СБОРКА НА ЗАКАЗ» (СКРИНШОТ 3)
+======================================================== */
 
-  // Если выбрали мощный GPU, подставим подходящий CPU по умолчанию при необходимости
-  if (group === "gpu") {
-    const gpuObj = CONFIG.configuratorOptions.gpus.find(g => g.id === id);
-    if (gpuObj && gpuObj.defCpu) {
-      configuratorState.cpu = gpuObj.defCpu;
-    }
-  }
-
-  renderConfigOptions();
-  updateConfiguratorPreview();
+const customOrderState = {
+  budget: "",
+  aesthetic: "",
+  hardware: "",
+  delivery: "Самовывоз",
+  wifi: "Нужен"
 };
 
-function updateConfiguratorPreview() {
-  const opt = CONFIG.configuratorOptions;
-  const currentTask = opt.tasks.find(t => t.id === configuratorState.task);
-  const currentGpu = opt.gpus.find(g => g.id === configuratorState.gpu);
-  const currentCpu = opt.cpus.find(c => c.id === configuratorState.cpu);
-  const currentRam = opt.ram.find(r => r.id === configuratorState.ram);
-  const currentSsd = opt.ssd.find(s => s.id === configuratorState.ssd);
-  const currentCase = opt.cases.find(c => c.id === configuratorState.case);
+function initCustomOrderModal() {
+  const modal = document.getElementById("custom-order-modal");
+  if (!modal) return;
 
-  // Расчет индекса производительности (0-100)
-  let score = Math.min(100, Math.round((currentGpu.score * 0.7) + (currentCpu.score * 1.0) + (configuratorState.ram === 'ram32' ? 5 : 0)));
-  
-  // Обновляем шкалу мощности
-  const scoreEl = document.getElementById("cfg-score-value");
-  const scoreBarEl = document.getElementById("cfg-score-bar");
-  const scoreLevelEl = document.getElementById("cfg-score-level");
-  
-  if (scoreEl) scoreEl.textContent = score;
-  if (scoreBarEl) scoreBarEl.style.width = score + "%";
-  if (scoreLevelEl) {
-    if (score >= 90) {
-      scoreLevelEl.textContent = "Ультимативный 2K/4K";
-      scoreLevelEl.className = "text-amber-400 font-bold";
-    } else if (score >= 70) {
-      scoreLevelEl.textContent = "Высокий Full HD / 2K";
-      scoreLevelEl.className = "text-cyan-400 font-bold";
-    } else {
-      scoreLevelEl.textContent = "Комфортный Full HD";
-      scoreLevelEl.className = "text-emerald-400 font-bold";
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeCustomOrderModal();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("active")) {
+      closeCustomOrderModal();
     }
-  }
+  });
+}
 
-  // Обновляем расчетный FPS
-  // Базис из видеокарты
-  const baseFps = {
-    cs2: Math.round(currentGpu.score * 3.4),
-    cyberpunk: Math.round(currentGpu.score * 1.05),
-    gta5: Math.round(currentGpu.score * 1.7),
-    dota2: Math.round(currentGpu.score * 2.8)
-  };
-
-  const updateBar = (id, val, max) => {
-    const bar = document.getElementById(`cfg-fps-bar-${id}`);
-    const text = document.getElementById(`cfg-fps-val-${id}`);
-    if (text) text.textContent = `${val} FPS`;
-    if (bar) {
-      const pct = Math.min(100, Math.round((val / max) * 100));
-      bar.style.width = pct + "%";
-    }
-  };
-
-  updateBar("cs2", baseFps.cs2, 360);
-  updateBar("cyberpunk", baseFps.cyberpunk, 120);
-  updateBar("gta5", baseFps.gta5, 200);
-  updateBar("dota2", baseFps.dota2, 320);
-
-  // Текстовая сводка
-  const summaryEl = document.getElementById("cfg-summary-specs");
-  if (summaryEl) {
-    summaryEl.innerHTML = `
-      <div class="flex items-center gap-2"><i data-lucide="layers" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i> <span class="text-white font-medium truncate">${currentGpu.name}</span></div>
-      <div class="flex items-center gap-2"><i data-lucide="cpu" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> <span class="text-white font-medium truncate">${currentCpu.name}</span></div>
-      <div class="flex items-center gap-2"><i data-lucide="hard-drive" class="w-3.5 h-3.5 text-purple-400 shrink-0"></i> <span class="text-white font-medium truncate">${currentRam.name} • ${currentSsd.name}</span></div>
-      <div class="flex items-center gap-2"><i data-lucide="box" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i> <span class="text-slate-300 truncate">${currentCase.name}</span></div>
-    `;
+window.openCustomOrderModal = function() {
+  const modal = document.getElementById("custom-order-modal");
+  if (modal) {
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
     lucide.createIcons();
   }
+};
+
+window.closeCustomOrderModal = function() {
+  const modal = document.getElementById("custom-order-modal");
+  if (modal) {
+    modal.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+};
+
+window.setDeliveryOption = function(val, btn) {
+  customOrderState.delivery = val;
+  document.querySelectorAll(".delivery-toggle-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+};
+
+window.setWifiOption = function(val, btn) {
+  customOrderState.wifi = val;
+  document.querySelectorAll(".wifi-toggle-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+};
+
+// Формирование текста заявки
+function buildCustomOrderText() {
+  const budgetInput = document.getElementById("order-budget");
+  const aestheticInput = document.getElementById("order-aesthetic");
+  const hardwareInput = document.getElementById("order-hardware");
+
+  const budget = (budgetInput && budgetInput.value.trim()) || "По рекомендации мастера";
+  const aesthetic = (aestheticInput && aestheticInput.value.trim()) || "На усмотрение мастера";
+  const hardware = (hardwareInput && hardwareInput.value.trim()) || "Максимальная производительность на мой бюджет";
+
+  return CONFIG.customOrderTemplate
+    .replace("{budget}", budget)
+    .replace("{aesthetic}", aesthetic)
+    .replace("{hardware}", hardware)
+    .replace("{delivery}", customOrderState.delivery)
+    .replace("{wifi}", customOrderState.wifi);
 }
 
-// Главная фича: Скопировать сборку из конфигуратора И СРАЗУ открыть Авито
-window.copyConfigAndGoToAvito = function() {
-  const opt = CONFIG.configuratorOptions;
-  const currentTask = opt.tasks.find(t => t.id === configuratorState.task);
-  const currentGpu = opt.gpus.find(g => g.id === configuratorState.gpu);
-  const currentCpu = opt.cpus.find(c => c.id === configuratorState.cpu);
-  const currentRam = opt.ram.find(r => r.id === configuratorState.ram);
-  const currentSsd = opt.ssd.find(s => s.id === configuratorState.ssd);
-  const currentCase = opt.cases.find(c => c.id === configuratorState.case);
+window.copyCustomOrder = function() {
+  const text = buildCustomOrderText();
+  navigator.clipboard.writeText(text).then(() => {
+    showToast("✓ Заявка на сборку скопирована! Отправьте её нам в чат.");
+  });
+};
 
-  const score = document.getElementById("cfg-score-value").textContent || "90";
-  const res = currentGpu.defRes || "1080p / 2K";
-
-  const message = CONFIG.configuratorMessageTemplate
-    .replace("{task}", currentTask.name)
-    .replace("{gpu}", currentGpu.name)
-    .replace("{cpu}", currentCpu.name)
-    .replace("{ram}", currentRam.name)
-    .replace("{ssd}", currentSsd.name)
-    .replace("{case}", currentCase.name)
-    .replace("{score}", score)
-    .replace("{res}", res);
-
-  // 1. Копируем в буфер обмена
-  navigator.clipboard.writeText(message).then(() => {
-    showToast("✓ Конфигурация скопирована! Перенаправляем в диалог на Авито...");
-
-    // 2. Открываем Авито в новой вкладке
+window.sendCustomOrderTo = function(channel) {
+  const text = buildCustomOrderText();
+  navigator.clipboard.writeText(text).then(() => {
+    showToast(`✓ Заявка скопирована! Переходим в ${channel}...`);
     setTimeout(() => {
-      window.open(CONFIG.contacts.avitoUrl, "_blank");
-    }, 600);
+      if (channel === 'avito') window.open(CONFIG.contacts.avitoUrl, "_blank");
+      if (channel === 'vk') window.open(CONFIG.contacts.vkUrl, "_blank");
+      if (channel === 'tg') window.open(CONFIG.contacts.telegramUrl, "_blank");
+    }, 400);
   }).catch(() => {
-    window.open(CONFIG.contacts.avitoUrl, "_blank");
+    if (channel === 'avito') window.open(CONFIG.contacts.avitoUrl, "_blank");
+    if (channel === 'vk') window.open(CONFIG.contacts.vkUrl, "_blank");
+    if (channel === 'tg') window.open(CONFIG.contacts.telegramUrl, "_blank");
   });
 };
 
 /* ========================================================
-   ИНТЕРАКТИВНЫЕ ГРАФИКИ СРАВНЕНИЯ (BENCHMARKS)
+   ИНТЕРАКТИВНЫЕ ГРАФИКИ СРАВНЕНИЯ FPS (8 ИГР)
 ======================================================== */
 
 let benchmarkState = {
@@ -363,7 +253,7 @@ function renderBenchmarkTabs() {
         onclick="setBenchmarkRes('${r.id}', this)"
         class="bm-res-btn px-4 py-2 rounded-xl text-xs font-bold transition-all ${
           benchmarkState.res === r.id 
-            ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/25' 
+            ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30' 
             : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-white'
         }"
       >
@@ -372,15 +262,15 @@ function renderBenchmarkTabs() {
     `).join("");
   }
 
-  // Игры
+  // Игры (8 игр)
   const gamesContainer = document.getElementById("bm-games-tabs");
   if (gamesContainer) {
     gamesContainer.innerHTML = bm.games.map(g => `
       <button 
         onclick="setBenchmarkGame('${g.id}', this)"
-        class="bm-game-btn px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+        class="bm-game-btn px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
           benchmarkState.game === g.id 
-            ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-cyan-500/20' 
+            ? 'bg-gradient-to-r from-purple-600 to-cyan-500 text-white shadow-lg shadow-purple-500/25 font-black' 
             : 'bg-slate-900/90 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
         }"
       >
@@ -395,16 +285,16 @@ window.setBenchmarkRes = function(resId, btn) {
   document.querySelectorAll(".bm-res-btn").forEach(b => {
     b.className = "bm-res-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-900 border border-slate-800 text-slate-400 hover:text-white";
   });
-  btn.className = "bm-res-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/25";
+  btn.className = "bm-res-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-purple-600 text-white shadow-lg shadow-purple-600/30";
   renderBenchmarkChart();
 };
 
 window.setBenchmarkGame = function(gameId, btn) {
   benchmarkState.game = gameId;
   document.querySelectorAll(".bm-game-btn").forEach(b => {
-    b.className = "bm-game-btn px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-slate-900/90 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700";
+    b.className = "bm-game-btn px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 bg-slate-900/90 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700";
   });
-  btn.className = "bm-game-btn px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-cyan-500/20";
+  btn.className = "bm-game-btn px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 bg-gradient-to-r from-purple-600 to-cyan-500 text-white shadow-lg shadow-purple-500/25 font-black";
   renderBenchmarkChart();
 };
 
@@ -416,22 +306,21 @@ function renderBenchmarkChart() {
   const currentGame = bm.games.find(g => g.id === benchmarkState.game) || bm.games[0];
   const maxFps = currentGame.maxFps || 200;
 
-  // Описание игры
   const gameBadge = document.getElementById("bm-game-badge");
-  if (gameBadge) gameBadge.textContent = `${currentGame.name} (${currentGame.badge}) • Разрешение: ${benchmarkState.res.toUpperCase()}`;
+  if (gameBadge) {
+    gameBadge.textContent = `${currentGame.name} (${currentGame.badge}) • Разрешение: ${benchmarkState.res.toUpperCase()}`;
+  }
 
-  // Рендерим полосы сравнения всех сборок
   const builds = Object.entries(bm.scores);
 
   container.innerHTML = builds.map(([id, b]) => {
-    const fpsVal = b[benchmarkState.res][benchmarkState.game] || 60;
+    const fpsVal = (b[benchmarkState.res] && b[benchmarkState.res][benchmarkState.game]) || 60;
     const pct = Math.min(100, Math.round((fpsVal / maxFps) * 100));
 
-    // Оценка комфорта
-    let comfortBadge = "60+ FPS Плавно";
+    let comfortBadge = "60+ FPS Комфортно";
     let badgeColor = "text-emerald-400 border-emerald-500/30 bg-emerald-950/40";
     if (fpsVal >= 240) {
-      comfortBadge = "240Hz Киберспорт";
+      comfortBadge = "240Hz+ Киберспорт Топ";
       badgeColor = "text-amber-400 border-amber-500/30 bg-amber-950/40";
     } else if (fpsVal >= 144) {
       comfortBadge = "144Hz Ультра-плавно";
@@ -439,22 +328,22 @@ function renderBenchmarkChart() {
     }
 
     return `
-      <div class="space-y-2 p-3 sm:p-4 rounded-xl bg-slate-900/40 border border-slate-800/60 hover:border-slate-700 transition-all">
+      <div class="space-y-2 p-3 sm:p-4 rounded-2xl bg-slate-900/40 border border-slate-800/60 hover:border-slate-700 transition-all">
         <div class="flex items-center justify-between text-xs sm:text-sm">
           <div class="flex items-center gap-2 min-w-0">
-            <span class="font-bold text-white font-tech text-base tracking-wide truncate">${b.name}</span>
-            <span class="text-[11px] px-2 py-0.5 rounded-full border ${badgeColor} font-semibold shrink-0 hidden sm:inline-block">
+            <span class="font-bold text-white font-tech text-base sm:text-lg tracking-wide truncate">${b.name}</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full border ${badgeColor} font-semibold shrink-0 hidden sm:inline-block">
               ${comfortBadge}
             </span>
           </div>
           <div class="text-right shrink-0">
-            <span class="font-extrabold text-cyan-400 font-tech text-xl sm:text-2xl">${fpsVal}</span>
-            <span class="text-xs text-slate-500">FPS</span>
+            <span class="font-black text-cyan-400 font-tech text-xl sm:text-2xl">${fpsVal}</span>
+            <span class="text-xs text-slate-500 font-medium">FPS</span>
           </div>
         </div>
 
-        <!-- Анимированная полоса графика -->
-        <div class="w-full h-3.5 sm:h-4 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-slate-800">
+        <!-- Анимированная полоса FPS -->
+        <div class="w-full h-3.5 sm:h-4 bg-slate-950 rounded-full overflow-hidden p-0.5 border border-slate-800/90">
           <div 
             class="h-full rounded-full bg-gradient-to-r ${b.color} fps-bar-fill transition-all duration-700 ease-out"
             style="width: ${pct}%;"
@@ -466,7 +355,7 @@ function renderBenchmarkChart() {
 }
 
 /* ========================================================
-   ГОТОВЫЕ СБОРКИ В КАТАЛОГЕ
+   ГОТОВЫЕ СБОРКИ В КАТАЛОГЕ (10 ПК)
 ======================================================== */
 
 function initCategories() {
@@ -478,9 +367,9 @@ function initCategories() {
     return `
       <button 
         onclick="filterCategory('${cat.id}', this)"
-        class="category-btn px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all duration-200 flex items-center gap-2 ${
+        class="category-btn px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 flex items-center gap-2 ${
           isActive 
-            ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/20 font-semibold' 
+            ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-600/30' 
             : 'bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
         }"
       >
@@ -492,9 +381,9 @@ function initCategories() {
 
 window.filterCategory = function(catId, btnElement) {
   document.querySelectorAll(".category-btn").forEach(btn => {
-    btn.className = "category-btn px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all duration-200 flex items-center gap-2 bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700";
+    btn.className = "category-btn px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 flex items-center gap-2 bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700";
   });
-  btnElement.className = "category-btn px-5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-200 flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/20";
+  btnElement.className = "category-btn px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-600/30";
 
   renderProducts(catId);
   lucide.createIcons();
@@ -517,9 +406,9 @@ function renderProducts(catId = "all") {
     `).join("");
 
     return `
-      <div class="glow-border-card rounded-2xl overflow-hidden flex flex-col group border border-slate-800/80 hover:border-cyan-500/40">
-        <!-- Фото с плашками -->
-        <div class="relative h-64 overflow-hidden bg-slate-950 cursor-pointer" onclick="openProductModal('${product.id}')">
+      <div class="glow-card-black rounded-3xl overflow-hidden flex flex-col group border border-slate-800/80 hover:border-purple-500/40">
+        <!-- Фото -->
+        <div class="relative h-64 sm:h-72 overflow-hidden bg-slate-950 cursor-pointer" onclick="openProductModal('${product.id}')">
           <img 
             src="${product.primaryImage}" 
             alt="${product.name}" 
@@ -532,7 +421,7 @@ function renderProducts(catId = "all") {
           <!-- Бейджи -->
           <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
             ${product.badge ? `
-              <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-cyan-950/80 text-cyan-300 border border-cyan-500/30 backdrop-blur-md">
+              <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-purple-950/80 text-purple-300 border border-purple-500/30 backdrop-blur-md">
                 ${product.badge}
               </span>
             ` : ''}
@@ -544,18 +433,18 @@ function renderProducts(catId = "all") {
 
           <div class="absolute bottom-3 right-3">
             <span class="px-2.5 py-1 rounded-lg text-xs bg-slate-900/80 border border-slate-700/60 text-slate-300 backdrop-blur-md flex items-center gap-1">
-              <i data-lucide="camera" class="w-3.5 h-3.5"></i>
-              <span>${product.gallery.length} фото</span>
+              <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+              <span>Спеки</span>
             </span>
           </div>
         </div>
 
-        <!-- Контентная часть -->
+        <!-- Контент -->
         <div class="p-5 sm:p-6 flex-1 flex flex-col justify-between">
           <div>
             <div class="mb-3">
               <div class="flex items-center justify-between gap-2 mb-1">
-                <h3 class="text-xl font-bold text-white font-tech tracking-wide group-hover:text-cyan-400 transition-colors">
+                <h3 class="text-xl font-bold text-white font-tech tracking-wide group-hover:text-purple-400 transition-colors">
                   ${product.name}
                 </h3>
                 <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">
@@ -565,19 +454,19 @@ function renderProducts(catId = "all") {
               <p class="text-xs text-slate-400">${product.subtitle || ''}</p>
             </div>
 
-            <!-- Главные характеристики -->
+            <!-- Главные спеки -->
             <div class="space-y-2 mb-4 text-xs sm:text-sm">
-              <div class="p-2 rounded-lg flex items-center gap-2.5 bg-slate-900/40">
+              <div class="p-2 rounded-xl flex items-center gap-2.5 bg-slate-900/40">
                 <i data-lucide="cpu" class="w-4 h-4 text-cyan-400 shrink-0"></i>
                 <span class="text-slate-400 shrink-0">CPU:</span>
                 <span class="text-slate-200 font-medium truncate">${product.specs.cpu}</span>
               </div>
-              <div class="p-2 rounded-lg flex items-center gap-2.5 bg-slate-900/40">
+              <div class="p-2 rounded-xl flex items-center gap-2.5 bg-slate-900/40">
                 <i data-lucide="layers" class="w-4 h-4 text-amber-400 shrink-0"></i>
                 <span class="text-slate-400 shrink-0">GPU:</span>
                 <span class="text-slate-200 font-medium truncate">${product.specs.gpu}</span>
               </div>
-              <div class="p-2 rounded-lg flex items-center gap-2.5 bg-slate-900/40">
+              <div class="p-2 rounded-xl flex items-center gap-2.5 bg-slate-900/40">
                 <i data-lucide="hard-drive" class="w-4 h-4 text-purple-400 shrink-0"></i>
                 <span class="text-slate-400 shrink-0">RAM/SSD:</span>
                 <span class="text-slate-200 font-medium truncate">${product.specs.ram} • ${product.specs.ssd}</span>
@@ -587,7 +476,7 @@ function renderProducts(catId = "all") {
             <!-- FPS блок -->
             <div class="mb-5">
               <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1.5">
-                <i data-lucide="gamepad-2" class="w-3.5 h-3.5 text-cyan-400"></i>
+                <i data-lucide="gamepad-2" class="w-3.5 h-3.5 text-purple-400"></i>
                 <span>Тесты производительности:</span>
               </div>
               <div class="grid grid-cols-1 gap-1.5">
@@ -602,7 +491,7 @@ function renderProducts(catId = "all") {
               <div>
                 <span class="text-xs text-slate-500 block">Стоимость сборки</span>
                 <div class="flex items-baseline gap-2">
-                  <span class="text-2xl sm:text-3xl font-extrabold text-white font-tech tracking-tight">
+                  <span class="text-2xl sm:text-3xl font-black text-white font-tech tracking-tight">
                     ${formatPrice(product.price)}
                   </span>
                   ${product.oldPrice ? `
@@ -615,25 +504,24 @@ function renderProducts(catId = "all") {
 
               <button 
                 onclick="openProductModal('${product.id}')"
-                class="text-xs text-cyan-400 hover:text-cyan-300 underline underline-offset-4 flex items-center gap-1"
+                class="text-xs text-purple-400 hover:text-purple-300 underline underline-offset-4 flex items-center gap-1 font-semibold"
               >
                 Все спеки
                 <i data-lucide="chevron-right" class="w-3 h-3"></i>
               </button>
             </div>
 
-            <!-- Главное действие: Скопировать и сразу перейти на Авито -->
+            <!-- Кнопка заказа через Авито -->
             <button 
               onclick="copyProductAndGoToAvito('${product.id}')"
-              class="w-full btn-avito-direct py-3 px-4 rounded-xl text-xs sm:text-sm font-bold text-white flex items-center justify-center gap-2 mb-2"
-              title="Скопировать параметры сборки и сразу перейти в сообщения продавцу на Авито"
+              class="w-full btn-blue-rounded py-3 px-4 rounded-xl text-xs sm:text-sm font-bold text-white flex items-center justify-center gap-2 mb-2"
             >
               <i data-lucide="message-square" class="w-4 h-4"></i>
               <span>Заказать через Авито</span>
-              <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-70"></i>
+              <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-80"></i>
             </button>
 
-            <!-- Доп. кнопка быстрого копирования текста -->
+            <!-- Кнопка только копирования -->
             <button 
               onclick="copyProductSpecOnly('${product.id}', this)"
               class="w-full py-2 px-3 rounded-lg text-[11px] font-medium text-slate-400 hover:text-white bg-slate-900/50 hover:bg-slate-800 border border-slate-800 flex items-center justify-center gap-1.5 transition-all"
@@ -650,7 +538,6 @@ function renderProducts(catId = "all") {
   lucide.createIcons();
 }
 
-// Скопировать спецификацию товара И сразу открыть Авито
 window.copyProductAndGoToAvito = function(productId) {
   const product = CONFIG.products.find(p => p.id === productId);
   if (!product) return;
@@ -673,7 +560,6 @@ window.copyProductAndGoToAvito = function(productId) {
   });
 };
 
-// Только копирование
 window.copyProductSpecOnly = function(productId, btnElement) {
   const product = CONFIG.products.find(p => p.id === productId);
   if (!product) return;
@@ -690,7 +576,7 @@ window.copyProductSpecOnly = function(productId, btnElement) {
     showToast(`✓ Спецификация скопирована в буфер обмена!`);
     if (btnElement) {
       const orig = btnElement.innerHTML;
-      btnElement.innerHTML = `<i data-lucide="check" class="w-3 h-3 text-emerald-400"></i><span class="text-emerald-400">Скопировано!</span>`;
+      btnElement.innerHTML = `<i data-lucide="check" class="w-3 h-3 text-emerald-400"></i><span class="text-emerald-400 font-bold">Скопировано!</span>`;
       lucide.createIcons();
       setTimeout(() => {
         btnElement.innerHTML = orig;
@@ -700,26 +586,14 @@ window.copyProductSpecOnly = function(productId, btnElement) {
   });
 };
 
-// Toast
-function showToast(message) {
-  const toast = document.getElementById("toast");
-  const toastText = document.getElementById("toast-text");
-  if (!toast || !toastText) return;
+/* ========================================================
+   МОДАЛКА ТОВАРА
+======================================================== */
 
-  toastText.textContent = message;
-  toast.classList.add("show");
-
-  clearTimeout(window._toastTimeout);
-  window._toastTimeout = setTimeout(() => {
-    toast.classList.remove("show");
-  }, 4000);
-}
-
-// Модальное окно
 let currentModalGallery = [];
 let currentGalleryIdx = 0;
 
-function initModal() {
+function initProductModal() {
   const overlay = document.getElementById("product-modal");
   if (!overlay) return;
 
@@ -762,8 +636,8 @@ window.openProductModal = function(productId) {
   thumbsContainer.innerHTML = currentModalGallery.map((img, i) => `
     <button 
       onclick="setModalImageIndex(${i})"
-      class="w-16 h-16 rounded-lg overflow-hidden border-2 transition-all shrink-0 ${
-        i === 0 ? 'border-cyan-400 scale-95' : 'border-slate-800 opacity-60 hover:opacity-100'
+      class="w-16 h-16 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${
+        i === 0 ? 'border-purple-400 scale-95' : 'border-slate-800 opacity-60 hover:opacity-100'
       }"
       id="thumb-${i}"
     >
@@ -832,8 +706,8 @@ window.setModalImageIndex = function(index) {
     const thumb = document.getElementById(`thumb-${i}`);
     if (thumb) {
       thumb.className = i === index 
-        ? "w-16 h-16 rounded-lg overflow-hidden border-2 border-cyan-400 scale-95 transition-all shrink-0" 
-        : "w-16 h-16 rounded-lg overflow-hidden border-2 border-slate-800 opacity-60 hover:opacity-100 transition-all shrink-0";
+        ? "w-16 h-16 rounded-xl overflow-hidden border-2 border-purple-400 scale-95 transition-all shrink-0" 
+        : "w-16 h-16 rounded-xl overflow-hidden border-2 border-slate-800 opacity-60 hover:opacity-100 transition-all shrink-0";
     }
   });
 };
@@ -845,16 +719,31 @@ function updateModalImage() {
   }
 }
 
+// Toast
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  const toastText = document.getElementById("toast-text");
+  if (!toast || !toastText) return;
+
+  toastText.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(window._toastTimeout);
+  window._toastTimeout = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 4000);
+}
+
 // FAQ
 function initFAQ() {
   const container = document.getElementById("faq-accordion");
   if (!container || !CONFIG.faq) return;
 
   container.innerHTML = CONFIG.faq.map((item, idx) => `
-    <div class="glass-panel rounded-xl border border-slate-800/80 overflow-hidden">
+    <div class="glass-panel rounded-2xl border border-slate-800/80 overflow-hidden reveal-on-scroll">
       <button 
         onclick="toggleFAQ(${idx})"
-        class="w-full p-5 text-left flex items-center justify-between font-tech font-bold text-base sm:text-lg text-white hover:text-cyan-400 transition-colors"
+        class="w-full p-5 text-left flex items-center justify-between font-tech font-bold text-base sm:text-lg text-white hover:text-purple-400 transition-colors"
       >
         <span>${item.q}</span>
         <i id="faq-icon-${idx}" data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform duration-300"></i>
