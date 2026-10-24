@@ -1,4 +1,4 @@
-/* STINGER PC — Ultimate Gaming UI & Animations (Inspired by iden-pc.ru) */
+/* STINGER PC — High-End Gaming UI & Dynamic Animations */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,900&family=Unbounded:wght@400;600;700;800;900&family=Rajdhani:wght@600;700&display=swap');
 
 :root {
@@ -62,28 +62,45 @@ body {
   height: 700px;
   border-radius: 50%;
   pointer-events: none;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.06) 0%, rgba(0, 240, 255, 0.03) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.07) 0%, rgba(0, 240, 255, 0.03) 40%, transparent 70%);
   transform: translate(-50%, -50%);
   z-index: 1;
   transition: opacity 0.3s ease;
 }
 
-/* Scroll Reveal Animations */
+/* ========================================================
+   КАСКАДНЫЕ АНИМАЦИИ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ (STAGGER REVEAL)
+======================================================== */
+
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(35px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  transform: translateY(40px) scale(0.97);
+  filter: blur(3px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+              filter 0.8s ease;
+  will-change: opacity, transform, filter;
 }
 
 .reveal-on-scroll.revealed {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+  filter: blur(0px);
 }
 
-.delay-1 { transition-delay: 0.1s; }
-.delay-2 { transition-delay: 0.2s; }
-.delay-3 { transition-delay: 0.3s; }
+/* Поочередные задержки появления */
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+.delay-400 { transition-delay: 0.4s; }
+
+/* Каскад карточек */
+.stagger-container.revealed .stagger-card:nth-child(1) { transition-delay: 0.05s; }
+.stagger-container.revealed .stagger-card:nth-child(2) { transition-delay: 0.15s; }
+.stagger-container.revealed .stagger-card:nth-child(3) { transition-delay: 0.25s; }
+.stagger-container.revealed .stagger-card:nth-child(4) { transition-delay: 0.35s; }
+.stagger-container.revealed .stagger-card:nth-child(5) { transition-delay: 0.45s; }
+.stagger-container.revealed .stagger-card:nth-child(6) { transition-delay: 0.55s; }
 
 /* Blinking Ticker Cursor */
 .typing-cursor {
@@ -101,6 +118,29 @@ body {
   50% { opacity: 0; }
 }
 
+/* Shine effect on card hover */
+.shine-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(60deg, transparent 40%, rgba(255, 255, 255, 0.07) 50%, transparent 60%);
+  transform: rotate(25deg) translateY(-120%);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+}
+
+.shine-card:hover::after {
+  transform: rotate(25deg) translateY(120%);
+}
+
 /* Glowing Cards */
 .glow-card-black {
   background: #0c0e14;
@@ -110,8 +150,9 @@ body {
 }
 
 .glow-card-black:hover {
-  border-color: rgba(139, 92, 246, 0.4);
-  box-shadow: 0 20px 50px -15px rgba(139, 92, 246, 0.2), 0 0 25px rgba(139, 92, 246, 0.08);
+  border-color: rgba(139, 92, 246, 0.45);
+  box-shadow: 0 20px 50px -15px rgba(139, 92, 246, 0.25), 0 0 25px rgba(139, 92, 246, 0.08);
+  transform: translateY(-4px);
 }
 
 /* Glass Panels */
@@ -142,7 +183,7 @@ body {
   transform: translateY(-2px) scale(1.02);
 }
 
-/* Blue Avito Button (like in screenshot 1) */
+/* Blue Avito Button */
 .btn-blue-rounded {
   background: #1d72fe;
   box-shadow: 0 4px 20px rgba(29, 114, 254, 0.35);
@@ -153,6 +194,14 @@ body {
   background: #2b7eff;
   box-shadow: 0 6px 28px rgba(29, 114, 254, 0.55);
   transform: translateY(-2px);
+}
+
+/* Prepayment Badge */
+.badge-prepayment {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.3) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.6);
+  color: #fbbf24;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.25);
 }
 
 /* Dark action buttons in modal */
@@ -207,6 +256,26 @@ body {
 .fps-bar-fill {
   transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 0 16px currentColor;
+}
+
+/* Configurator Interactive Option */
+.cfg-option-item {
+  background: rgba(18, 22, 33, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.cfg-option-item:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+  background: rgba(24, 30, 46, 0.85);
+  transform: translateY(-2px);
+}
+
+.cfg-option-item.active {
+  border-color: #8b5cf6;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.16) 0%, rgba(0, 240, 255, 0.08) 100%);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.25), inset 0 0 15px rgba(139, 92, 246, 0.1);
 }
 
 /* Modal overlay & content */
