@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initCategories();
   renderProducts("all");
   initBenchmarks();
+  initFeatures();
   initCustomOrderModal();
   initProductModal();
   initFAQ();
@@ -748,7 +749,7 @@ function renderProducts(catId = "all") {
     const isPrepay = product.isPrepayment || product.price >= 100000;
 
     return `
-      <div class="glow-card-black rounded-3xl overflow-hidden flex flex-col group border border-white/10 hover:border-purple-500/40 shine-card reveal-on-scroll stagger-card" style="transition-delay: ${idx * 60}ms;">
+      <div class="glow-card-black rounded-3xl overflow-hidden flex flex-col group border border-white/10 hover:border-purple-500/40 shine-card product-card-anim" style="animation-delay: ${idx * 60}ms;">
         <!-- Фото -->
         <div class="relative h-64 sm:h-72 overflow-hidden bg-black cursor-pointer" onclick="openProductModal('${product.id}')">
           <img 
@@ -1120,3 +1121,30 @@ window.toggleFAQ = function(idx) {
     icon.style.transform = isHidden ? "rotate(180deg)" : "rotate(0deg)";
   }
 };
+
+// Преимущества STINGER PC
+function initFeatures() {
+  const container = document.getElementById("features-grid");
+  if (!container || !CONFIG.features) return;
+
+  container.innerHTML = CONFIG.features.map(feat => `
+    <div class="glow-card-black p-6 sm:p-7 rounded-3xl border border-white/10 hover:border-purple-500/40 shine-card transition-all group flex flex-col justify-between">
+      <div>
+        <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:scale-110 group-hover:border-purple-400 transition-all mb-5">
+          <i data-lucide="${feat.icon}" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-white font-tech tracking-wide mb-2">
+          ${feat.title}
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+          ${feat.desc}
+        </p>
+      </div>
+      <div class="pt-4 mt-4 border-t border-white/5 flex items-center gap-2 text-[11px] text-purple-400/80 font-semibold">
+        <i data-lucide="check" class="w-3.5 h-3.5"></i>
+        <span>Стандарт качества STINGER PC</span>
+      </div>
+    </div>
+  `).join("");
+}
+
