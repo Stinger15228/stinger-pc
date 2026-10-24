@@ -497,13 +497,54 @@ function initCustomOrderModal() {
   });
 }
 
-window.openCustomOrderModal = function() {
+window.openCustomOrderModal = function(initialTab = 'express') {
   const modal = document.getElementById("custom-order-modal");
   if (modal) {
+    switchCustomOrderTab(initialTab);
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
     lucide.createIcons();
   }
+};
+
+window.switchCustomOrderTab = function(tab) {
+  const expressPage = document.getElementById("modal-tab-express");
+  const configPage = document.getElementById("modal-tab-configurator");
+  const modalBox = document.getElementById("modal-container-box");
+  const btnExpress = document.getElementById("modal-tab-btn-express");
+  const btnConfig = document.getElementById("modal-tab-btn-configurator");
+
+  if (tab === 'configurator') {
+    if (expressPage) expressPage.classList.add("hidden");
+    if (configPage) configPage.classList.remove("hidden");
+    if (modalBox) {
+      modalBox.classList.remove("max-w-xl");
+      modalBox.classList.add("max-w-5xl");
+    }
+    if (btnExpress) {
+      btnExpress.className = "flex-1 py-2 px-3 sm:px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all text-slate-400 hover:text-white";
+    }
+    if (btnConfig) {
+      btnConfig.className = "flex-1 py-2 px-3 sm:px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-600/30";
+    }
+    renderConfiguratorControls();
+    updateLiveCustomComparison();
+  } else {
+    if (expressPage) expressPage.classList.remove("hidden");
+    if (configPage) configPage.classList.add("hidden");
+    if (modalBox) {
+      modalBox.classList.remove("max-w-5xl");
+      modalBox.classList.add("max-w-xl");
+    }
+    if (btnExpress) {
+      btnExpress.className = "flex-1 py-2 px-3 sm:px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-600/30";
+    }
+    if (btnConfig) {
+      btnConfig.className = "flex-1 py-2 px-3 sm:px-4 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all text-slate-400 hover:text-white";
+    }
+  }
+
+  lucide.createIcons();
 };
 
 window.closeCustomOrderModal = function() {
