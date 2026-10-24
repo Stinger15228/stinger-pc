@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STINGER PC — Кастомные игровые ПК в Великом Новгороде | Витрина сборок</title>
+  
+  <!-- SEO & OpenGraph -->
+  <meta name="description" content="Купить готовый игровой компьютер в Великом Новгороде. Честные цены, реальные фото, стресс-тесты FurMark/OCCT, гарантия 3 месяца. Заказ через Авито." />
+  <meta property="og:title" content="STINGER PC — Кастомные игровые ПК в наличии" />
+  <meta property="og:description" content="Сборки на RTX 3080, RX 5700 XT, i5, Ryzen 5. Проверка на месте, гарантия 3 месяца. Заказ на Авито." />
+  <meta property="og:image" content="image/logo.jpg" />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="image/logo.jpg" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            stinger: {
+              cyan: '#00f0ff',
+              gold: '#ffaa00',
+              purple: '#8b5cf6',
+              dark: '#090b10',
+              card: '#0f141f'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/custom.css" />
+</head>
+<body class="bg-mesh bg-grid-pattern min-h-screen text-slate-200">
+
+  <!-- ==================== ШАПКА САЙТА (HEADER) ==================== -->
+  <header class="sticky top-0 z-40 w-full backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/80 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Логотип и Бренд -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="relative w-11 h-11 rounded-xl overflow-hidden border border-cyan-500/40 p-0.5 shadow-lg shadow-cyan-500/20 group-hover:border-cyan-400 transition-all">
+          <img src="image/logo.jpg" alt="STINGER PC Логотип" class="w-full h-full object-cover rounded-lg" />
+        </div>
+        <div>
+          <span class="font-brand text-xl font-bold tracking-wider text-white flex items-center gap-1.5">
+            STINGER <span class="text-cyan-400">PC</span>
+          </span>
+          <span class="block text-[11px] text-slate-400 tracking-tight">г. Великий Новгород</span>
+        </div>
+      </a>
+
+      <!-- Навигация (Десктоп) -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#catalog" class="hover:text-cyan-400 transition-colors">Сборки в наличии</a>
+        <a href="#advantages" class="hover:text-cyan-400 transition-colors">Преимущества</a>
+        <a href="#location" class="hover:text-cyan-400 transition-colors">Где забрать / Тесты</a>
+        <a href="#faq" class="hover:text-cyan-400 transition-colors">FAQ</a>
+      </nav>
+
+      <!-- Контакты и Быстрая кнопка на Авито -->
+      <div class="flex items-center gap-3">
+        <!-- Соцсети -->
+        <a href="#" class="link-tg w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 flex items-center justify-center text-slate-400 hover:text-cyan-400 transition-all" title="Telegram">
+          <i data-lucide="send" class="w-4 h-4"></i>
+        </a>
+        <a href="#" class="link-vk w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 hover:border-blue-500/50 flex items-center justify-center text-slate-400 hover:text-blue-400 transition-all" title="ВКонтакте">
+          <i data-lucide="share-2" class="w-4 h-4"></i>
+        </a>
+
+        <!-- Главная кнопка перехода на Авито -->
+        <a 
+          href="#" 
+          class="link-avito btn-avito px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white flex items-center gap-2"
+        >
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>Чат на Авито</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==================== ГЛАВНЫЙ ЭКРАН (HERO) ==================== -->
+  <section class="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
+    <!-- Фоновые неоновые круги -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/3 right-10 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      
+      <!-- Локация / Статус плашка -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-xs sm:text-sm text-slate-300 mb-6 backdrop-blur-md shadow-inner">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-indicator"></span>
+        <span>📍 Великий Новгород • ул. Псковская, 33 • Тесты на месте</span>
+      </div>
+
+      <!-- Главный оффер -->
+      <h1 class="font-brand text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white max-w-4xl mx-auto mb-6 leading-tight">
+        МОЩНЫЕ ИГРОВЫЕ ПК <br class="hidden sm:inline" />
+        <span class="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+          С ЧЕСТНОЙ ЦЕНОЙ И ГАРАНТИЕЙ
+        </span>
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-slate-400 mb-10 leading-relaxed">
+        Сборки в наличии с реальными фотографиями и прозрачными комплектующими. 
+        Установлена Windows, система проверена в стресс-тестах FurMark и OCCT. Включил в розетку и сразу играешь!
+      </p>
+
+      <!-- Главные кнопки -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto mb-16">
+        <a 
+          href="#catalog" 
+          class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-sm tracking-wide shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105 transition-all flex items-center justify-center gap-2"
+        >
+          <i data-lucide="monitor" class="w-4 h-4"></i>
+          <span>Смотреть сборки в наличии</span>
+        </a>
+        <a 
+          href="#" 
+          class="link-avito w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-900/90 border border-slate-700 hover:border-slate-500 text-white font-semibold text-sm hover:bg-slate-800 transition-all flex items-center justify-center gap-2"
+        >
+          <i data-lucide="message-square" class="w-4 h-4 text-cyan-400"></i>
+          <span>Написать на Авито</span>
+        </a>
+      </div>
+
+      <!-- Статистика / УТП карточки -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
+        <div class="glass-card p-4 rounded-xl border border-slate-800/80">
+          <div class="text-2xl sm:text-3xl font-extrabold text-cyan-400 font-tech">5 ПК</div>
+          <div class="text-xs text-slate-400">В наличии сегодня с тестами</div>
+        </div>
+        <div class="glass-card p-4 rounded-xl border border-slate-800/80">
+          <div class="text-2xl sm:text-3xl font-extrabold text-amber-400 font-tech">100%</div>
+          <div class="text-xs text-slate-400">Честные фото и цены без скрытых доплат</div>
+        </div>
+        <div class="glass-card p-4 rounded-xl border border-slate-800/80">
+          <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-tech">3 МЕС.</div>
+          <div class="text-xs text-slate-400">Личная гарантия и полная поддержка</div>
+        </div>
+        <div class="glass-card p-4 rounded-xl border border-slate-800/80">
+          <div class="text-2xl sm:text-3xl font-extrabold text-purple-400 font-tech">24Ч</div>
+          <div class="text-xs text-slate-400">Стресс-тесты FurMark + OCCT</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== КАТАЛОГ СБОРОК (CATALOG) ==================== -->
+  <section id="catalog" class="py-16 md:py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Заголовок каталога -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+        <div>
+          <div class="flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2 font-tech">
+            <i data-lucide="layers" class="w-4 h-4"></i>
+            <span>Каталог компьютеров</span>
+          </div>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-white font-brand">
+            СБОРКИ В НАЛИЧИИ
+          </h2>
+        </div>
+        <p class="text-sm text-slate-400 max-w-md">
+          Нажмите <strong class="text-slate-200">«Скопировать спеки»</strong>, чтобы мгновенно получить готовый запрос для диалога на Авито.
+        </p>
+      </div>
+
+      <!-- Табы / Категории -->
+      <div id="categories-tabs" class="flex flex-wrap items-center gap-2 mb-10">
+        <!-- Генерируется через app.js -->
+      </div>
+
+      <!-- Сетка с карточками ПК -->
+      <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Карточки генерируются динамически через app.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== ПРЕИМУЩЕСТВА (ADVANTAGES) ==================== -->
+  <section id="advantages" class="py-16 md:py-24 bg-slate-950/50 border-y border-slate-800/60 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2 font-tech">
+          <i data-lucide="shield" class="w-4 h-4"></i>
+          <span>Надежность и сервис</span>
+        </div>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white font-brand mb-4">
+          ПОЧЕМУ ВЫБИРАЮТ STINGER PC
+        </h2>
+        <p class="text-sm sm:text-base text-slate-400">
+          Мы собираем компьютеры как для себя — с качественным кабель-менеджментом, оригинальными комплектующими и обязательным многочасовым тестированием.
+        </p>
+      </div>
+
+      <div id="features-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Генерируется через app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ГДЕ ЗАБРАТЬ И ТЕСТЫ (LOCATION) ==================== -->
+  <section id="location" class="py-16 md:py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass-card rounded-3xl p-8 sm:p-12 border border-slate-800/80 relative overflow-hidden">
+        
+        <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div>
+            <div class="inline-flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-3 font-tech">
+              <i data-lucide="map-pin" class="w-4 h-4"></i>
+              <span>Пункт проверки и самовывоза</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white font-brand mb-4">
+              ПРИЕЗЖАЙТЕ И ТЕСТИРУЙТЕ ЛИЧНО
+            </h2>
+            <p class="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">
+              Мы находимся в Великом Новгороде по адресу: <strong class="text-cyan-400">ул. Псковская, д. 33</strong>. 
+              Перед покупкой вы можете запустить абсолютно любые стресс-тесты (FurMark, AIDA64, OCCT) и свои любимые игры. Мы не торопим и даем спокойно всё проверить.
+            </p>
+
+            <div class="space-y-3 mb-8 text-sm">
+              <div class="flex items-center gap-3 text-slate-300">
+                <i data-lucide="check" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+                <span>Самовывоз в день обращения по предварительной договоренности</span>
+              </div>
+              <div class="flex items-center gap-3 text-slate-300">
+                <i data-lucide="check" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+                <span>Доставка по Великому Новгороду (привезем и поможем подключить)</span>
+              </div>
+              <div class="flex items-center gap-3 text-slate-300">
+                <i data-lucide="check" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+                <span>Авито Доставка / СДЭК по всей России в бронебойной коробке</span>
+              </div>
+            </div>
+
+            <a 
+              href="#" 
+              class="link-avito inline-flex items-center gap-2 px-6 py-3.5 rounded-xl btn-avito text-white font-bold text-sm"
+            >
+              <i data-lucide="calendar" class="w-4 h-4"></i>
+              <span>Договориться о встрече на Авито</span>
+            </a>
+          </div>
+
+          <!-- Плашка с адресом и гарантией -->
+          <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 sm:p-8 flex flex-col justify-between">
+            <div class="mb-6">
+              <div class="text-xs uppercase text-slate-500 font-semibold tracking-wider mb-1">Город и адрес</div>
+              <div class="text-xl font-bold text-white font-tech">Великий Новгород, ул. Псковская, 33</div>
+              <div class="text-xs text-slate-400 mt-1">Псковский район</div>
+            </div>
+
+            <div class="mb-6">
+              <div class="text-xs uppercase text-slate-500 font-semibold tracking-wider mb-1">Режим связи</div>
+              <div class="text-xl font-bold text-white font-tech">Ежедневно с 10:00 до 22:00</div>
+              <div class="text-xs text-slate-400 mt-1">Сообщения на Авито принимаем 24/7</div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-cyan-950/40 border border-cyan-500/30 flex items-center gap-3">
+              <i data-lucide="shield-check" class="w-8 h-8 text-cyan-400 shrink-0"></i>
+              <div class="text-xs text-slate-300">
+                <strong class="text-white block font-medium">Гарантия 3 месяца</strong>
+                Даем личную гарантию на проверку и обкатку системы у вас дома.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ ==================== -->
+  <section id="faq" class="py-16 md:py-24 bg-slate-950/40 border-t border-slate-800/60 relative">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center gap-2 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2 font-tech">
+          <i data-lucide="help-circle" class="w-4 h-4"></i>
+          <span>Вопросы и ответы</span>
+        </div>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white font-brand mb-4">
+          ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ
+        </h2>
+      </div>
+
+      <div id="faq-accordion" class="space-y-4">
+        <!-- Генерируется через app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ПОДВАЛ САЙТА (FOOTER) ==================== -->
+  <footer class="bg-slate-950 border-t border-slate-800/80 py-12 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <!-- Лого и копирайт -->
+      <div class="flex items-center gap-3">
+        <img src="image/logo.jpg" alt="STINGER PC" class="w-8 h-8 rounded-lg object-cover border border-slate-800" />
+        <div>
+          <span class="font-brand text-sm font-bold text-white tracking-wider">STINGER PC</span>
+          <p>© 2026. Кастомные игровые ПК в Великом Новгороде.</p>
+        </div>
+      </div>
+
+      <!-- Контакты в футере -->
+      <div class="flex items-center gap-4">
+        <a href="#" class="link-avito hover:text-cyan-400 transition-colors flex items-center gap-1.5 font-medium text-slate-300">
+          <i data-lucide="message-square" class="w-4 h-4"></i>
+          <span>Авито</span>
+        </a>
+        <a href="#" class="link-tg hover:text-cyan-400 transition-colors flex items-center gap-1.5 font-medium text-slate-300">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>Telegram</span>
+        </a>
+        <a href="#" class="link-vk hover:text-cyan-400 transition-colors flex items-center gap-1.5 font-medium text-slate-300">
+          <i data-lucide="share-2" class="w-4 h-4"></i>
+          <span>VK</span>
+        </a>
+      </div>
+
+      <!-- Примечание -->
+      <div class="text-slate-500 text-center md:text-right">
+        Сайт-витрина для подбора ПК и заказа через Авито
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ==================== МОДАЛЬНОЕ ОКНО ТОВАРА (MODAL) ==================== -->
+  <div id="product-modal" class="modal-overlay fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
+    <div class="modal-content glass-card bg-slate-950 border border-slate-800 w-full max-w-4xl max-h-[90vh] rounded-3xl overflow-hidden flex flex-col shadow-2xl">
+      
+      <!-- Шапка модалки -->
+      <div class="p-4 sm:p-6 border-b border-slate-800/80 flex items-center justify-between">
+        <div>
+          <h3 id="modal-title" class="font-tech text-2xl font-bold text-white tracking-wide"></h3>
+          <p id="modal-subtitle" class="text-xs text-slate-400"></p>
+        </div>
+        <button 
+          onclick="closeProductModal()"
+          class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition-colors"
+        >
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Тело модалки со скроллом -->
+      <div class="overflow-y-auto p-4 sm:p-6 space-y-6">
+        
+        <!-- Галерея фото -->
+        <div class="space-y-3">
+          <div class="h-64 sm:h-96 w-full rounded-2xl overflow-hidden bg-slate-900 border border-slate-800">
+            <img id="modal-main-image" src="" alt="ПК" class="w-full h-full object-contain bg-slate-950" />
+          </div>
+          <!-- Миниатюры фото -->
+          <div id="modal-thumbnails" class="flex gap-2 overflow-x-auto pb-2">
+            <!-- Генерируются через JS -->
+          </div>
+        </div>
+
+        <!-- Описание -->
+        <div>
+          <h4 class="text-xs uppercase text-slate-500 font-semibold tracking-wider mb-2">О сборке</h4>
+          <p id="modal-description" class="text-sm text-slate-300 leading-relaxed"></p>
+        </div>
+
+        <!-- Характеристики комплектующих -->
+        <div>
+          <h4 class="text-xs uppercase text-slate-500 font-semibold tracking-wider mb-3">Полная спецификация</h4>
+          <div id="modal-specs-list" class="bg-slate-900/60 rounded-2xl p-4 border border-slate-800/60">
+            <!-- Генерируется через JS -->
+          </div>
+        </div>
+
+        <!-- FPS в играх -->
+        <div>
+          <h4 class="text-xs uppercase text-slate-500 font-semibold tracking-wider mb-3">FPS в популярных играх</h4>
+          <div id="modal-fps-list" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <!-- Генерируется через JS -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Подвал модалки (Цены + Кнопки действий) -->
+      <div class="p-4 sm:p-6 border-t border-slate-800 bg-slate-900/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <span class="text-xs text-slate-400 block">Стоимость:</span>
+          <div class="flex items-baseline gap-2">
+            <span id="modal-price" class="text-2xl sm:text-3xl font-extrabold text-white font-tech text-glow-cyan"></span>
+            <span id="modal-old-price" class="text-sm text-slate-500 line-through hidden"></span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <button 
+            id="modal-copy-btn"
+            class="btn-spec flex-1 sm:flex-initial py-3 px-5 rounded-xl text-xs sm:text-sm font-semibold text-slate-200 flex items-center justify-center gap-2"
+          >
+            <i data-lucide="copy" class="w-4 h-4"></i>
+            <span>Скопировать спецификацию</span>
+          </button>
+          
+          <a 
+            id="modal-avito-btn"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-avito flex-1 sm:flex-initial py-3 px-6 rounded-xl text-xs sm:text-sm font-bold text-white flex items-center justify-center gap-2"
+          >
+            <i data-lucide="message-square" class="w-4 h-4"></i>
+            <span>Написать на Авито</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== ВСПЛЫВАЮЩИЙ TOAST ==================== -->
+  <div 
+    id="toast" 
+    class="fixed bottom-6 right-6 z-50 max-w-md bg-slate-900 border border-cyan-500/50 shadow-2xl shadow-cyan-500/20 text-white px-5 py-4 rounded-2xl flex items-center gap-3"
+  >
+    <div class="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0">
+      <i data-lucide="clipboard-check" class="w-5 h-5"></i>
+    </div>
+    <div id="toast-text" class="text-xs sm:text-sm font-medium text-slate-200 leading-snug">
+      Спецификация скопирована в буфер обмена!
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
