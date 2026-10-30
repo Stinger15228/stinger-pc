@@ -20,10 +20,10 @@ import SpotlightCard from "./ui/SpotlightCard";
 
 export default function QualityBentoSection() {
   return (
-    <section id="quality" className="relative py-24 sm:py-28 bg-[#040508] text-slate-100 overflow-hidden border-t border-white/[0.08]">
+    <section id="quality" className="relative py-24 sm:py-28 bg-transparent text-slate-100 overflow-hidden">
       {/* Мягкие ореолы подсветки */}
-      <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-indigo-600/[0.04] blur-[150px] pointer-events-none -z-10" />
-      <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-cyan-600/[0.04] blur-[150px] pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-indigo-600/[0.08] blur-[150px] pointer-events-none -z-10" />
+      <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-cyan-600/[0.08] blur-[150px] pointer-events-none -z-10" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         

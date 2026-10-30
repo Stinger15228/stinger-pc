@@ -155,7 +155,8 @@ export default function HeroSection({ onOpenConfigurator, onOpenCatalog }) {
           {/* ПРАВАЯ КОЛОНКА (5 КОЛОНОК): ИНТЕРАКТИВНЫЙ 3D-ПОДИУМ С HUD-ТЕЛЕМЕТРИЕЙ */}
           <div className="lg:col-span-5 relative flex items-center justify-center">
             
-            {/* Ореол подсветки подиума */}
+            {/* Мощный двойной ореол подсветки в тон водянки и ARGB ПК */}
+            <div className="absolute -inset-6 bg-gradient-to-tr from-indigo-600/35 via-cyan-500/30 to-emerald-400/20 rounded-3xl blur-2xl -z-10 animate-pulse pointer-events-none" />
             <div className="absolute inset-0 bg-gradient-to-tr from-indigo-600/30 via-purple-600/25 to-cyan-500/20 blur-[90px] rounded-full scale-90 pointer-events-none -z-10" />
 
             {/* Карточка витрины ПК */}
@@ -246,7 +247,7 @@ export default function HeroSection({ onOpenConfigurator, onOpenCatalog }) {
       </div>
 
       {/* Бегущая строка (Marquee Ticker) */}
-      <div className="mt-16 sm:mt-20 py-3 bg-[#060810]/90 border-y border-white/[0.06] backdrop-blur-lg overflow-hidden flex select-none">
+      <div className="mt-16 sm:mt-20 py-3 bg-[#060810]/60 border-y border-white/[0.08] backdrop-blur-md overflow-hidden flex select-none">
         <motion.div
           animate={{ x: [0, -1000] }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}

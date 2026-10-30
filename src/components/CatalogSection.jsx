@@ -66,11 +66,11 @@ export default function CatalogSection({ onSelectBuildForConfigurator, onShowToa
   };
 
   return (
-    <section id="catalog" className="py-20 sm:py-28 relative bg-[#040508] border-t border-white/[0.08]">
+    <section id="catalog" className="py-20 sm:py-28 relative bg-transparent">
       
       {/* Декоративные световые пятна фона */}
-      <div className="absolute top-1/3 left-0 w-96 h-96 bg-indigo-600/10 blur-[140px] pointer-events-none -z-10" />
-      <div className="absolute bottom-10 right-0 w-96 h-96 bg-cyan-500/10 blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute top-1/3 left-0 w-96 h-96 bg-indigo-600/15 blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute bottom-10 right-0 w-96 h-96 bg-cyan-500/15 blur-[140px] pointer-events-none -z-10" />
 
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         

@@ -11,9 +11,9 @@ export default function FaqSection() {
   };
 
   return (
-    <section id="faq" className="relative py-24 sm:py-28 bg-[#040508] text-slate-100 overflow-hidden border-t border-white/[0.08]">
+    <section id="faq" className="relative py-24 sm:py-28 bg-transparent text-slate-100 overflow-hidden">
       {/* Background glow */}
-      <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-indigo-600/[0.03] blur-[150px] pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-indigo-600/[0.08] blur-[150px] pointer-events-none -z-10" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">

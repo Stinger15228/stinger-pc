@@ -12,6 +12,8 @@ import Footer from "./components/Footer";
 import MobileStickyBar from "./components/MobileStickyBar";
 import ToastNotification from "./components/ui/ToastNotification";
 
+import LaserDivider from "./components/ui/LaserDivider";
+
 export default function App() {
   const [toast, setToast] = useState(null);
   const [isConfiguratorOpen, setIsConfiguratorOpen] = useState(false);
@@ -63,44 +65,57 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#040508] text-slate-100 selection:bg-indigo-500/30 selection:text-white relative">
-      {/* 0. Атмосферные фоновые эффекты (Awwwards / Linear) */}
+    <div className="relative min-h-screen bg-[#05070E] text-white overflow-x-hidden selection:bg-indigo-500/30 selection:text-white">
+      {/* 0. Атмосферные фоновые эффекты (5 слоев: купол, туманности, кибер-сетка, 3D HUD, курсор) */}
       <BackgroundEffects />
 
-      {/* 1. Парящий стеклянный остров навигации */}
-      <Navbar onOpenConfigurator={() => handleOpenStudioModal("pro")} />
+      {/* Контент сайта с z-10, чтобы живой фон просвечивал сквозь прозрачные секции */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        {/* 1. Парящий стеклянный остров навигации */}
+        <Navbar onOpenConfigurator={() => handleOpenStudioModal("pro")} />
 
-      <main>
-        {/* 2. Первый экран (Hero Section) */}
-        <HeroSection
-          onOpenConfigurator={() => handleOpenStudioModal("pro")}
-          onOpenCatalog={handleOpenCatalog}
-        />
+        <main className="flex-1">
+          {/* 2. Первый экран (Hero Section) */}
+          <HeroSection
+            onOpenConfigurator={() => handleOpenStudioModal("pro")}
+            onOpenCatalog={handleOpenCatalog}
+          />
 
-        {/* 3. Каталог готовых ПК с симулятором FPS */}
-        <CatalogSection
-          onSelectBuildForConfigurator={handleSelectBuildForConfigurator}
-          onShowToast={handleShowToast}
-        />
+          <LaserDivider />
 
-        {/* 4. Компактный тизер кастомной студии на странице (~420px) */}
-        <ConfiguratorSection
-          onOpenStudioModal={handleOpenStudioModal}
-          onOpenQuizModal={() => handleOpenStudioModal("quiz")}
-        />
+          {/* 3. Каталог готовых ПК с симулятором FPS */}
+          <CatalogSection
+            onSelectBuildForConfigurator={handleSelectBuildForConfigurator}
+            onShowToast={handleShowToast}
+          />
 
-        {/* 5. Стандарты лаборатории (Bento Grid с техновиджетами) */}
-        <QualityBentoSection />
+          <LaserDivider />
 
-        {/* 6. Реальные отзывы клиентов (Симметричная сетка 3x2) */}
-        <ReviewsSection />
+          {/* 4. Компактный тизер кастомной студии на странице (~420px) */}
+          <ConfiguratorSection
+            onOpenStudioModal={handleOpenStudioModal}
+            onOpenQuizModal={() => handleOpenStudioModal("quiz")}
+          />
 
-        {/* 7. Частые вопросы (2-колоночный layout) */}
-        <FaqSection />
-      </main>
+          <LaserDivider />
 
-      {/* 8. Темный кибер-футер */}
-      <Footer />
+          {/* 5. Стандарты лаборатории (Bento Grid с техновиджетами) */}
+          <QualityBentoSection />
+
+          <LaserDivider />
+
+          {/* 6. Реальные отзывы клиентов (Симметричная сетка 3x2) */}
+          <ReviewsSection />
+
+          <LaserDivider />
+
+          {/* 7. Частые вопросы (2-колоночный layout) */}
+          <FaqSection />
+        </main>
+
+        {/* 8. Темный кибер-футер */}
+        <Footer />
+      </div>
 
       {/* 9. Нижняя мобильная панель */}
       <MobileStickyBar onOpenConfigurator={() => handleOpenStudioModal("pro")} />

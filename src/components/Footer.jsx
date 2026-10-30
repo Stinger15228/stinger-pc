@@ -16,7 +16,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-[#030407] text-slate-400 border-t border-white/10 pt-16 pb-24 md:pb-16 overflow-hidden">
+    <footer className="relative bg-[#05070E]/85 backdrop-blur-2xl text-slate-400 border-t border-white/10 pt-16 pb-24 md:pb-16 overflow-hidden">
       {/* Top subtle glow line */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
 

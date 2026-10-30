@@ -25,9 +25,9 @@ export default function ConfiguratorSection({ onOpenStudioModal, onOpenQuizModal
   ];
 
   return (
-    <section id="configurator" className="relative py-16 sm:py-20 bg-[#040508] overflow-hidden border-t border-white/[0.08]">
+    <section id="configurator" className="relative py-16 sm:py-20 bg-transparent overflow-hidden">
       {/* Мягкие световые пятна фона */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[350px] bg-indigo-600/10 blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[350px] bg-indigo-600/15 blur-[140px] pointer-events-none -z-10" />
 
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <SpotlightCard className="p-8 sm:p-12 rounded-[2.5rem] bg-[#070914]/80 border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.8),inset_0_1px_0_0_rgba(255,255,255,0.15)] relative overflow-hidden">

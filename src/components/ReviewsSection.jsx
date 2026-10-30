@@ -96,9 +96,9 @@ export default function ReviewsSection() {
   };
 
   return (
-    <section id="reviews" className="relative py-24 sm:py-28 bg-[#040508] text-slate-100 overflow-hidden border-t border-white/[0.08]">
+    <section id="reviews" className="relative py-24 sm:py-28 bg-transparent text-slate-100 overflow-hidden">
       {/* Фоновый янтарный эмбиент */}
-      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-amber-500/[0.03] blur-[160px] pointer-events-none -z-10" />
+      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-amber-500/[0.06] blur-[160px] pointer-events-none -z-10" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
