@@ -96,3 +96,86 @@
     opacity: 0;
   }
 }
+
+/* ==========================================================================
+   БЕСКОНЕЧНЫЕ АППАРАТНЫЕ КАРУСЕЛИ (INFINITE MARQUEE) 60/120 FPS
+   ========================================================================== */
+@keyframes marquee-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 42s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 48s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-left-fast {
+  animation: marquee-left 32s linear infinite;
+  will-change: transform;
+}
+
+.pause-on-hover:hover {
+  animation-play-state: paused;
+}
+
+/* ==========================================================================
+   СТЕКЛЯННЫЙ БЛИК ПРИ НАВЕДЕНИИ НА КАРТОЧКУ (TEMPERED GLASS GLARE SWEEP)
+   ========================================================================== */
+.glare-sweep {
+  position: relative;
+  overflow: hidden;
+}
+
+.glare-sweep::after {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -80%;
+  width: 45%;
+  height: 220%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.28) 75%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(35deg);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.glare-sweep:hover::after {
+  opacity: 1;
+  animation: glareSweepAnim 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes glareSweepAnim {
+  0% {
+    left: -80%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+

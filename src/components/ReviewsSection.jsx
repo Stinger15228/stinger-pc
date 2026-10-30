@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Star,
   CheckCircle,
@@ -50,6 +49,15 @@ export default function ReviewsSection() {
     ? CLIENT_REVIEWS.filter((r) => r.city.includes("Новгород"))
     : CLIENT_REVIEWS.filter((r) => !r.city.includes("Новгород"));
 
+  // Разделяем отзывы на 2 ряда для двухрядного бесконечного паровозика
+  const midIndex = Math.ceil(filteredReviews.length / 2);
+  const row1Base = filteredReviews.slice(0, midIndex);
+  const row2Base = filteredReviews.slice(midIndex);
+
+  // Дублируем массивы для бесшовной прокрутки 100% без задержек
+  const row1 = [...row1Base, ...row1Base, ...row1Base];
+  const row2 = [...row2Base, ...row2Base, ...row2Base];
+
   // Вспомогательная функция для рендера бейджа платформы в правом верхнем углу
   const renderPlatformBadge = (review) => {
     const platform = review.platform?.toLowerCase();
@@ -95,15 +103,80 @@ export default function ReviewsSection() {
     );
   };
 
+  // Компонент карточки отзыва
+  const ReviewCard = ({ review, idx }) => (
+    <div
+      key={`${review.id}-${idx}`}
+      className="w-[330px] sm:w-[410px] shrink-0 p-5 sm:p-6 rounded-2xl bg-[#080B13]/90 border border-white/10 hover:border-amber-500/30 flex flex-col justify-between transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.6)] group/card select-none"
+    >
+      <div>
+        {/* Верхняя строка: Автор + Бейдж площадки в правом углу */}
+        <div className="flex items-start justify-between gap-3 mb-3">
+          <div>
+            <div className="font-bold text-white text-base flex items-center gap-2">
+              {review.author}
+              <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+            </div>
+            <div className="text-xs text-slate-400 font-mono mt-0.5">
+              {review.city} • {review.date}
+            </div>
+          </div>
+
+          <div className="shrink-0">
+            {renderPlatformBadge(review)}
+          </div>
+        </div>
+
+        {/* 5 звезд + Название купленного ПК */}
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <div className="flex text-amber-400">
+            {[...Array(review.rating || 5)].map((_, i) => (
+              <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
+            ))}
+          </div>
+
+          <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-white/[0.04] text-indigo-300 border border-indigo-500/20 inline-block font-medium truncate max-w-[210px]">
+            {review.build}
+          </span>
+        </div>
+
+        {/* Текст отзыва */}
+        <p className="text-slate-300 text-xs sm:text-sm leading-relaxed relative font-normal line-clamp-4">
+          <Quote className="w-5 h-5 text-white/5 absolute -top-2 -left-2 -z-10" />
+          "{review.text}"
+        </p>
+      </div>
+
+      {/* Нижняя панель: Статус сделки + Кнопка «Проверить отзыв» */}
+      <div className="mt-4 pt-3.5 border-t border-white/5 flex items-center justify-between gap-3">
+        <span className="text-emerald-400 flex items-center gap-1.5 font-semibold text-[11px] font-mono">
+          <CheckCircle className="w-3 h-3 shrink-0" />
+          <span>Сделка подтверждена</span>
+        </span>
+
+        <a
+          href={review.sourceUrl || SHOP_INFO.avitoUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/[0.05] hover:bg-indigo-600/20 text-cyan-400 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/40 transition-all shadow-[0_0_12px_rgba(6,182,212,0.08)] group/btn shrink-0"
+          title="Открыть оригинальный отзыв на платформе"
+        >
+          <span>Проверить отзыв</span>
+          <ExternalLink className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+        </a>
+      </div>
+    </div>
+  );
+
   return (
     <section id="reviews" className="relative py-24 sm:py-28 bg-transparent text-slate-100 overflow-hidden">
       {/* Фоновый янтарный эмбиент */}
       <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-amber-500/[0.06] blur-[160px] pointer-events-none -z-10" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
         
         {/* Заголовок секции */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-950/60 border border-amber-500/30 text-amber-300 text-xs font-mono uppercase tracking-wider mb-4 shadow-[0_0_20px_rgba(245,158,11,0.15)]">
             <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
             <span>Честная репутация и отзывы</span>
@@ -174,76 +247,33 @@ export default function ReviewsSection() {
           </div>
         </div>
 
-        {/* Сетка отзывов: 3 колонки на десктопе с Spotlight-подсветкой */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-          {filteredReviews.map((review) => (
-            <SpotlightCard
-              key={review.id}
-              className="p-6 rounded-2xl bg-[#080B13]/90 border border-white/10 flex flex-col justify-between h-full group/card transition-all duration-300 hover:border-indigo-500/30"
-            >
-              <div>
-                {/* Верхняя строка карточки: Автор + Бейдж площадки в правом углу */}
-                <div className="flex items-start justify-between gap-3 mb-3.5">
-                  <div>
-                    <div className="font-bold text-white text-base flex items-center gap-2">
-                      {review.author}
-                      <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                    </div>
-                    <div className="text-xs text-slate-400 font-mono mt-0.5">
-                      {review.city} • {review.date}
-                    </div>
-                  </div>
+      </div>
 
-                  {/* Плашка платформы в ПРАВОМ ВЕРХНЕМ УГЛУ */}
-                  <div className="shrink-0">
-                    {renderPlatformBadge(review)}
-                  </div>
-                </div>
-
-                {/* Рейтинг 5 звезд + Модель сборки */}
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-3.5">
-                  <div className="flex text-amber-400">
-                    {[...Array(review.rating || 5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
-                    ))}
-                  </div>
-
-                  <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-md bg-white/[0.04] text-indigo-300 border border-indigo-500/20 inline-block font-medium truncate max-w-[200px]">
-                    {review.build}
-                  </span>
-                </div>
-
-                {/* Текст отзыва */}
-                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed relative font-normal mt-2">
-                  <Quote className="w-6 h-6 text-white/5 absolute -top-2 -left-2 -z-10" />
-                  "{review.text}"
-                </p>
-              </div>
-
-              {/* Нижняя панель: Статус сделки + КНОПКА «ПРОВЕРИТЬ ОТЗЫВ» */}
-              <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between gap-3">
-                <span className="text-emerald-400 flex items-center gap-1.5 font-semibold text-[11px] font-mono">
-                  <CheckCircle className="w-3 h-3 shrink-0" />
-                  <span>Сделка подтверждена</span>
-                </span>
-
-                {/* Кнопка «Проверить отзыв ↗» с прямой ссылкой */}
-                <a
-                  href={review.sourceUrl || SHOP_INFO.avitoUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/[0.05] hover:bg-indigo-600/20 text-cyan-400 hover:text-cyan-300 border border-white/10 hover:border-cyan-500/40 transition-all shadow-[0_0_12px_rgba(6,182,212,0.08)] group/btn shrink-0"
-                  title="Открыть оригинальный отзыв на платформе"
-                >
-                  <span>Проверить отзыв</span>
-                  <ExternalLink className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                </a>
-              </div>
-            </SpotlightCard>
+      {/* =====================================================================
+          ДВУХРЯДНЫЙ БЕСКОНЕЧНЫЙ ПАРОВОЗИК ОТЗЫВОВ (2-ROW INFINITE MARQUEE)
+          Верхний ряд: едет ВЛЕВО (~42s)
+          Нижний ряд: едет ВПРАВО (~48s)
+          При наведении курсора: плавная пауза (pause-on-hover)
+          Маска растворения по краям экрана
+          ===================================================================== */}
+      <div 
+        className="relative w-full space-y-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] py-2 select-none"
+      >
+        {/* РЯД 1: Движется ВЛЕВО */}
+        <div className="flex gap-6 w-max animate-marquee-left pause-on-hover">
+          {row1.map((review, idx) => (
+            <ReviewCard key={`r1-${review.id}-${idx}`} review={review} idx={idx} />
           ))}
         </div>
 
+        {/* РЯД 2: Движется ВПРАВО */}
+        <div className="flex gap-6 w-max animate-marquee-right pause-on-hover">
+          {row2.map((review, idx) => (
+            <ReviewCard key={`r2-${review.id}-${idx}`} review={review} idx={idx} />
+          ))}
+        </div>
       </div>
+
     </section>
   );
 }

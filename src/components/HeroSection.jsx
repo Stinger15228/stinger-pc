@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Sparkles,
@@ -17,7 +17,64 @@ import {
 } from "lucide-react";
 import { SHOP_INFO } from "../data/stingerData";
 
+// Пресеты подсветки для интерактивного теста ARGB
+const ARGB_PRESETS = [
+  {
+    id: "cyan",
+    name: "Cyber Cyan",
+    hex: "#00f0ff",
+    glowClass: "from-cyan-500/40 via-indigo-600/30 to-blue-500/20",
+    overlayStyle: "rgba(6, 182, 212, 0.12)",
+    accentText: "text-cyan-400",
+    badgeGlow: "shadow-[0_0_15px_#00f0ff]",
+    borderColor: "border-cyan-400/50",
+  },
+  {
+    id: "violet",
+    name: "Hyper Violet",
+    hex: "#a855f7",
+    glowClass: "from-purple-600/45 via-violet-600/35 to-indigo-600/25",
+    overlayStyle: "rgba(168, 85, 247, 0.16)",
+    accentText: "text-purple-400",
+    badgeGlow: "shadow-[0_0_15px_#a855f7]",
+    borderColor: "border-purple-400/50",
+  },
+  {
+    id: "red",
+    name: "Crimson Red",
+    hex: "#ef4444",
+    glowClass: "from-red-600/45 via-rose-600/35 to-orange-600/25",
+    overlayStyle: "rgba(239, 68, 68, 0.15)",
+    accentText: "text-red-400",
+    badgeGlow: "shadow-[0_0_15px_#ef4444]",
+    borderColor: "border-red-400/50",
+  },
+  {
+    id: "matrix",
+    name: "Emerald Matrix",
+    hex: "#10b981",
+    glowClass: "from-emerald-500/40 via-teal-600/30 to-cyan-500/20",
+    overlayStyle: "rgba(16, 185, 129, 0.15)",
+    accentText: "text-emerald-400",
+    badgeGlow: "shadow-[0_0_15px_#10b981]",
+    borderColor: "border-emerald-400/50",
+  },
+  {
+    id: "white",
+    name: "Arctic White",
+    hex: "#f8fafc",
+    glowClass: "from-slate-200/35 via-cyan-400/25 to-blue-400/20",
+    overlayStyle: "rgba(248, 250, 252, 0.12)",
+    accentText: "text-slate-100",
+    badgeGlow: "shadow-[0_0_15px_#ffffff]",
+    borderColor: "border-white/60",
+  },
+];
+
 export default function HeroSection({ onOpenConfigurator, onOpenCatalog }) {
+  const [argbColor, setArgbColor] = useState("cyan");
+  const currentArgb = ARGB_PRESETS.find((p) => p.id === argbColor) || ARGB_PRESETS[0];
+
   const marqueeItems = [
     "NVIDIA GEFORCE RTX",
     "AMD RYZEN",
@@ -153,18 +210,18 @@ export default function HeroSection({ onOpenConfigurator, onOpenCatalog }) {
           </div>
 
           {/* ПРАВАЯ КОЛОНКА (5 КОЛОНОК): ИНТЕРАКТИВНЫЙ 3D-ПОДИУМ С HUD-ТЕЛЕМЕТРИЕЙ */}
-          <div className="lg:col-span-5 relative flex items-center justify-center">
+          <div className="lg:col-span-5 relative flex flex-col items-center justify-center">
             
-            {/* Мощный двойной ореол подсветки в тон водянки и ARGB ПК */}
-            <div className="absolute -inset-6 bg-gradient-to-tr from-indigo-600/35 via-cyan-500/30 to-emerald-400/20 rounded-3xl blur-2xl -z-10 animate-pulse pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-indigo-600/30 via-purple-600/25 to-cyan-500/20 blur-[90px] rounded-full scale-90 pointer-events-none -z-10" />
+            {/* Мощный динамический двойной ореол подсветки в тон выбранной ARGB */}
+            <div className={`absolute -inset-6 bg-gradient-to-tr ${currentArgb.glowClass} rounded-3xl blur-2xl -z-10 animate-pulse pointer-events-none transition-all duration-700`} />
+            <div className={`absolute inset-0 bg-gradient-to-tr ${currentArgb.glowClass} blur-[90px] rounded-full scale-90 pointer-events-none -z-10 transition-all duration-700`} />
 
             {/* Карточка витрины ПК */}
             <motion.div
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
-              className="relative w-full max-w-[460px] rounded-[2.5rem] bg-gradient-to-b from-white/[0.12] via-white/[0.05] to-transparent p-1 shadow-[0_30px_70px_rgba(0,0,0,0.9),inset_0_1px_0_0_rgba(255,255,255,0.25)] border border-white/10 group"
+              className={`relative w-full max-w-[460px] rounded-[2.5rem] bg-gradient-to-b from-white/[0.12] via-white/[0.05] to-transparent p-1 shadow-[0_30px_70px_rgba(0,0,0,0.9),inset_0_1px_0_0_rgba(255,255,255,0.25)] border ${currentArgb.borderColor} transition-colors duration-500 group`}
             >
               <div className="relative rounded-[2.3rem] overflow-hidden bg-[#060810] aspect-[4/5] flex items-center justify-center">
                 
@@ -175,6 +232,12 @@ export default function HeroSection({ onOpenConfigurator, onOpenCatalog }) {
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 />
 
+                {/* Динамический световой оверлей ARGB подсветки поверх корпуса */}
+                <div 
+                  className="absolute inset-0 pointer-events-none transition-colors duration-700 mix-blend-screen"
+                  style={{ backgroundColor: currentArgb.overlayStyle }}
+                />
+
                 {/* Затемнение и градиенты глубины */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#040508] via-transparent to-transparent opacity-85" />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,transparent_60%,rgba(4,5,8,0.7)_100%)]" />
@@ -182,7 +245,7 @@ export default function HeroSection({ onOpenConfigurator, onOpenCatalog }) {
                 {/* HUD Телеметрия по центру/низу стекла */}
                 <div className="absolute bottom-5 left-5 right-5 p-3.5 rounded-2xl bg-[#090C15]/90 border border-white/10 backdrop-blur-xl shadow-2xl">
                   <div className="flex items-center justify-between text-xs font-mono pb-2 border-b border-white/10">
-                    <span className="text-indigo-400 font-bold flex items-center gap-1.5">
+                    <span className={`font-bold flex items-center gap-1.5 ${currentArgb.accentText} transition-colors`}>
                       <Zap className="w-3.5 h-3.5" /> STINGER TELEMETRY
                     </span>
                     <span className="text-emerald-400 flex items-center gap-1 font-semibold">
@@ -198,7 +261,7 @@ export default function HeroSection({ onOpenConfigurator, onOpenCatalog }) {
                     </div>
                     <div className="p-1.5 rounded-lg bg-white/[0.03]">
                       <div className="text-[10px] text-slate-400">CPU Temp</div>
-                      <div className="text-xs font-bold text-cyan-400">58°C</div>
+                      <div className={`text-xs font-bold ${currentArgb.accentText} transition-colors`}>58°C</div>
                     </div>
                     <div className="p-1.5 rounded-lg bg-white/[0.03]">
                       <div className="text-[10px] text-slate-400">FAN Speed</div>
@@ -240,6 +303,42 @@ export default function HeroSection({ onOpenConfigurator, onOpenCatalog }) {
               </motion.div>
 
             </motion.div>
+
+            {/* ИНТЕРАКТИВНЫЙ ПЕРЕКЛЮЧАТЕЛЬ ARGB-ПОДСВЕТКИ КОРПУСА */}
+            <div className="mt-5 p-3 sm:p-3.5 rounded-2xl bg-[#080B13]/90 border border-white/10 backdrop-blur-xl shadow-xl flex flex-wrap items-center justify-between gap-3 max-w-[460px] w-full z-10">
+              <div className="flex items-center gap-2">
+                <Sparkles className={`w-3.5 h-3.5 ${currentArgb.accentText} transition-colors`} />
+                <span className="text-xs font-mono font-semibold text-slate-300">
+                  🎨 Тест ARGB корпуса:
+                </span>
+                <span className={`text-xs font-mono font-bold ${currentArgb.accentText} transition-colors`}>
+                  {currentArgb.name}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {ARGB_PRESETS.map((p) => {
+                  const isActive = argbColor === p.id;
+                  return (
+                    <button
+                      key={p.id}
+                      type="button"
+                      onClick={() => setArgbColor(p.id)}
+                      className={`w-6 h-6 rounded-full transition-all duration-300 relative flex items-center justify-center cursor-pointer ${
+                        isActive ? `scale-125 ${p.badgeGlow} ring-2 ring-white/60` : "opacity-75 hover:opacity-100 hover:scale-110"
+                      }`}
+                      style={{ backgroundColor: p.hex }}
+                      aria-label={`Выбрать цвет ${p.name}`}
+                      title={p.name}
+                    >
+                      {isActive && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-black/80" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
           </div>
 

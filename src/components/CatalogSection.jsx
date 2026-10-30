@@ -232,8 +232,8 @@ export default function CatalogSection({ onSelectBuildForConfigurator, onShowToa
                         </span>
                       </div>
 
-                      {/* ВИЗУАЛЬНЫЙ БЛОК: ФОТО С ГАЛЕРЕЕЙ */}
-                      <div className="relative rounded-2xl overflow-hidden bg-black/70 aspect-[4/3] border border-white/[0.08] mb-4 group/img">
+                      {/* ВИЗУАЛЬНЫЙ БЛОК: ФОТО С ГАЛЕРЕЕЙ И 3D-БЛИКОМ ЗАКАЛЕННОГО СТЕКЛА */}
+                      <div className="relative rounded-2xl overflow-hidden bg-black/70 aspect-[4/3] border border-white/[0.08] mb-4 group/img glare-sweep">
                         <img
                           src={currentImg}
                           alt={build.name}

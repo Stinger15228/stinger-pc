@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 import MobileStickyBar from "./components/MobileStickyBar";
 import ToastNotification from "./components/ui/ToastNotification";
 
+import ShowcaseMarquee from "./components/ShowcaseMarquee";
 import LaserDivider from "./components/ui/LaserDivider";
 
 export default function App() {
@@ -91,7 +92,15 @@ export default function App() {
 
           <LaserDivider />
 
-          {/* 4. Компактный тизер кастомной студии на странице (~420px) */}
+          {/* 4. Бесконечная фото-лента живых сборок из мастерской (Infinite Showcase Marquee) */}
+          <ShowcaseMarquee
+            onOpenConfigurator={() => handleOpenStudioModal("pro")}
+            onShowToast={handleShowToast}
+          />
+
+          <LaserDivider />
+
+          {/* 5. Компактный тизер кастомной студии на странице (~420px) */}
           <ConfiguratorSection
             onOpenStudioModal={handleOpenStudioModal}
             onOpenQuizModal={() => handleOpenStudioModal("quiz")}
