@@ -10,9 +10,10 @@ import {
   Flame, 
   Star, 
   ShieldCheck, 
-  Eye, 
   ChevronRight,
-  Info
+  Cpu,
+  HardDrive,
+  Zap,
 } from 'lucide-react';
 import SpotlightCard from './ui/SpotlightCard';
 import AnimatedCounter from './ui/AnimatedCounter';
@@ -65,57 +66,57 @@ export default function CatalogSection({ onSelectBuildForConfigurator, onShowToa
   };
 
   return (
-    <section id="catalog" className="py-20 sm:py-28 relative bg-[#07090F] border-t border-white/[0.08]">
+    <section id="catalog" className="py-20 sm:py-28 relative bg-[#040508] border-t border-white/[0.08]">
       
       {/* Декоративные световые пятна фона */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-purple-600/10 blur-[130px] pointer-events-none -z-10" />
-      <div className="absolute bottom-10 right-0 w-96 h-96 bg-cyan-500/10 blur-[130px] pointer-events-none -z-10" />
+      <div className="absolute top-1/3 left-0 w-96 h-96 bg-indigo-600/10 blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute bottom-10 right-0 w-96 h-96 bg-cyan-500/10 blur-[140px] pointer-events-none -z-10" />
 
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* ЗАГОЛОВОК КАТАЛОГА */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-4 border-b border-white/[0.08]">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-white/[0.08]">
           <div>
-            <div className="inline-flex items-center gap-2 text-cyber-purple text-xs font-mono font-bold uppercase tracking-wider mb-2">
-              <Layers className="w-4 h-4" />
+            <div className="inline-flex items-center gap-2 text-indigo-400 text-xs font-mono font-bold uppercase tracking-wider mb-2.5">
+              <Layers className="w-4 h-4 text-indigo-400" />
               <span>Витрина готовых ПК в наличии и под заказ</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-black text-white font-brand tracking-tight">
-              КАТАЛОГ СБОРОК <span className="text-gradient-purple">STINGER</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white font-gaming tracking-tight">
+              КАТАЛОГ СБОРОК <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">STINGER</span>
             </h2>
           </div>
 
-          <div className="text-xs sm:text-sm text-slate-400 max-w-md">
-            Основная линейка — ПК до 100 000 ₽ <strong className="text-emerald-400">в наличии на ул. Псковская, 33</strong>.
-            Флагманы от 100 000 ₽ выполняются под заказ строго с плашкой <strong className="text-amber-400">«⚡ По предоплате»</strong>.
+          <div className="text-xs sm:text-sm text-slate-400 max-w-md leading-relaxed">
+            Основная линейка — ПК до 100 000 ₽ <strong className="text-emerald-400 font-semibold">в наличии на ул. Псковская, 33</strong>.
+            Флагманы от 100 000 ₽ выполняются под заказ строго с плашкой <strong className="text-amber-400 font-semibold">«⚡ По предоплате»</strong>.
           </div>
         </div>
 
         {/* ========================================================
             ЖИВОЙ ЦЕНТР СИМУЛЯЦИИ FPS И ТАБЫ ФИЛЬТРОВ
         ======================================================== */}
-        <div className="p-6 sm:p-8 rounded-[2rem] bg-[#090B11]/90 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_0_0_rgba(255,255,255,0.15)] space-y-6">
+        <div className="p-6 sm:p-8 rounded-[2rem] bg-[#080B13]/85 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.7),inset_0_1px_0_0_rgba(255,255,255,0.12)] backdrop-blur-xl space-y-6">
           
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <span className="text-xs font-mono uppercase font-bold text-cyber-cyan tracking-wider flex items-center gap-1.5">
-                <Gamepad2 className="w-4 h-4" />
+              <span className="text-xs font-mono uppercase font-bold text-cyan-400 tracking-wider flex items-center gap-1.5">
+                <Gamepad2 className="w-4 h-4 text-cyan-400" />
                 <span>Интерактивный симулятор производительности</span>
               </span>
-              <h3 className="text-lg sm:text-xl font-bold text-white font-brand mt-0.5">
-                Выберите игру и разрешение экрана
+              <h3 className="text-lg sm:text-xl font-bold text-white font-gaming mt-1">
+                Выберите игру и целевое разрешение
               </h3>
             </div>
 
             {/* ПЕРЕКЛЮЧАТЕЛЬ РАЗРЕШЕНИЯ ЭКРАНА */}
-            <div className="flex items-center p-1.5 rounded-2xl bg-black/60 border border-white/10 self-start md:self-auto">
+            <div className="flex items-center p-1 rounded-2xl bg-black/70 border border-white/10 self-start md:self-auto shadow-inner">
               {BENCHMARK_RESOLUTIONS.map(res => (
                 <button
                   key={res.id}
                   onClick={() => setSelectedRes(res.id)}
                   className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                     selectedRes === res.id
-                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-[0_0_20px_rgba(139,92,246,0.45)]'
+                      ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-[0_0_20px_rgba(99,102,241,0.45)]'
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
@@ -126,32 +127,32 @@ export default function CatalogSection({ onSelectBuildForConfigurator, onShowToa
           </div>
 
           {/* 8 ТАБОВ ИГР */}
-          <div className="flex flex-wrap items-center gap-2 pt-2">
+          <div className="flex flex-wrap items-center gap-2 pt-1">
             {BENCHMARK_GAMES.map(game => (
               <button
                 key={game.id}
                 onClick={() => setSelectedGame(game.id)}
                 className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 border ${
                   selectedGame === game.id
-                    ? 'bg-white text-slate-950 border-white shadow-[0_0_25px_rgba(255,255,255,0.4)]'
-                    : 'bg-white/[0.03] text-slate-400 border-white/[0.08] hover:text-white hover:bg-white/[0.06]'
+                    ? 'bg-white text-slate-950 border-white shadow-[0_0_20px_rgba(255,255,255,0.35)]'
+                    : 'bg-white/[0.03] text-slate-400 border-white/[0.08] hover:text-white hover:bg-white/[0.07]'
                 }`}
               >
                 <span>{game.name}</span>
                 {selectedGame === game.id && (
-                  <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse" />
                 )}
               </button>
             ))}
           </div>
 
           {/* КАТЕГОРИИ КАТАЛОГА */}
-          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/[0.06]">
-            <span className="text-xs font-mono text-slate-500 mr-2 uppercase tracking-wider">Категория:</span>
+          <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-white/[0.06]">
+            <span className="text-xs font-mono text-slate-400 mr-2 uppercase tracking-wider">Категория:</span>
             <button
               onClick={() => setActiveCategory("all")}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                activeCategory === "all" ? 'bg-purple-600/25 text-purple-300 border border-purple-500/40' : 'text-slate-400 hover:text-white'
+                activeCategory === "all" ? 'bg-indigo-600/30 text-indigo-300 border border-indigo-500/40' : 'text-slate-400 hover:text-white'
               }`}
             >
               Все компьютеры ({READY_BUILDS.length})
@@ -185,9 +186,9 @@ export default function CatalogSection({ onSelectBuildForConfigurator, onShowToa
         </div>
 
         {/* ========================================================
-            СЕТКА 10 КАРТОЧЕК ГОТОВЫХ ПК
+            СЕТКА 10 КАРТОЧЕК ГОТОВЫХ ПК (ВЫРАВНИВАНИЕ ПО СТРУНКЕ)
         ======================================================== */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
           <AnimatePresence>
             {filteredBuilds.map((build, idx) => {
               const currentFpsMap = HONEST_FPS_SCORES[build.id] && HONEST_FPS_SCORES[build.id][selectedRes];
@@ -205,32 +206,34 @@ export default function CatalogSection({ onSelectBuildForConfigurator, onShowToa
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4, delay: idx * 0.05 }}
+                  transition={{ duration: 0.35, delay: idx * 0.04 }}
+                  className="h-full flex flex-col"
                 >
                   <SpotlightCard
                     glowColor={build.glowColor}
-                    className="h-full flex flex-col justify-between p-5 sm:p-6"
+                    className="h-full flex flex-col p-5 sm:p-6"
                   >
-                    <div>
+                    {/* ВЕРХНЯЯ ЧАСТЬ КАРТОЧКИ (FLEX-1 ДЛЯ ИДЕАЛЬНОЙ РОВНОСТИ) */}
+                    <div className="flex-1 flex flex-col">
                       
-                      {/* ШАПКА КАРТОЧКИ: СТАТУС НАЛИЧИЯ И БЕЙДЖ */}
-                      <div className="flex items-center justify-between gap-2 mb-4">
-                        <span className={`text-[11px] font-mono px-3 py-1 rounded-full font-bold border flex items-center gap-1.5 ${
+                      {/* СТАТУС НАЛИЧИЯ И БЕЙДЖ */}
+                      <div className="flex items-center justify-between gap-2 mb-3.5">
+                        <span className={`text-[11px] font-mono px-2.5 py-1 rounded-full font-bold border flex items-center gap-1.5 ${
                           build.isPrepayment 
-                            ? 'bg-amber-950/50 text-amber-300 border-amber-500/40'
-                            : 'bg-emerald-950/50 text-emerald-300 border-emerald-500/40'
+                            ? 'bg-amber-950/60 text-amber-300 border-amber-500/40'
+                            : 'bg-emerald-950/60 text-emerald-300 border-emerald-500/40'
                         }`}>
                           <span className={`w-1.5 h-1.5 rounded-full ${build.isPrepayment ? 'bg-amber-400' : 'bg-emerald-400'}`} />
-                          <span>{build.isPrepayment ? 'Под заказ (Предоплата)' : 'В наличии • Псковская 33'}</span>
+                          <span>{build.isPrepayment ? 'Сборка под заказ' : 'В наличии • Новгород'}</span>
                         </span>
 
-                        <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider font-semibold">
+                        <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">
                           {build.badge}
                         </span>
                       </div>
 
                       {/* ВИЗУАЛЬНЫЙ БЛОК: ФОТО С ГАЛЕРЕЕЙ */}
-                      <div className="relative rounded-2xl overflow-hidden bg-black/60 aspect-[4/3] border border-white/[0.08] mb-4 group/img">
+                      <div className="relative rounded-2xl overflow-hidden bg-black/70 aspect-[4/3] border border-white/[0.08] mb-4 group/img">
                         <img
                           src={currentImg}
                           alt={build.name}
@@ -238,13 +241,13 @@ export default function CatalogSection({ onSelectBuildForConfigurator, onShowToa
                         />
 
                         {/* Разрешение бейдж */}
-                        <div className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur-md border border-white/10 text-[10px] font-mono font-bold text-white">
+                        <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-black/75 backdrop-blur-md border border-white/10 text-[10px] font-mono font-bold text-white">
                           {build.targetRes}
                         </div>
 
-                        {/* Мини-превью галереи (если больше 1 фото) */}
+                        {/* Мини-превью галереи */}
                         {build.gallery && build.gallery.length > 1 && (
-                          <div className="absolute bottom-2 left-2 right-2 flex items-center gap-1.5 p-1 rounded-xl bg-black/70 backdrop-blur-md border border-white/10 opacity-90 overflow-x-auto">
+                          <div className="absolute bottom-2 left-2 right-2 flex items-center gap-1.5 p-1 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 overflow-x-auto">
                             {build.gallery.map((thumb, tIdx) => (
                               <button
                                 key={tIdx}
@@ -253,7 +256,7 @@ export default function CatalogSection({ onSelectBuildForConfigurator, onShowToa
                                   handleSelectThumbnail(build.id, thumb);
                                 }}
                                 className={`w-8 h-8 rounded-lg overflow-hidden shrink-0 border transition-all ${
-                                  currentImg === thumb ? 'border-cyber-cyan scale-105' : 'border-white/20 opacity-60 hover:opacity-100'
+                                  currentImg === thumb ? 'border-cyan-400 scale-105' : 'border-white/20 opacity-60 hover:opacity-100'
                                 }`}
                               >
                                 <img src={thumb} alt="" className="w-full h-full object-cover" />
@@ -265,14 +268,14 @@ export default function CatalogSection({ onSelectBuildForConfigurator, onShowToa
 
                       {/* НАЗВАНИЕ И ЦЕНА */}
                       <div className="space-y-1 mb-4">
-                        <h4 className="font-brand text-xl sm:text-2xl font-black text-white tracking-tight">
+                        <h4 className="font-gaming text-xl sm:text-2xl font-black text-white tracking-tight">
                           {build.name}
                         </h4>
-                        <div className="text-xs text-purple-300 font-semibold break-words">
+                        <div className="text-xs text-indigo-300 font-medium break-words">
                           {build.subtitle}
                         </div>
                         <div className="pt-2 flex items-baseline gap-2">
-                          <span className="font-brand text-2xl sm:text-3xl font-black text-white">
+                          <span className="font-gaming text-2xl sm:text-3xl font-black text-metallic">
                             {build.price.toLocaleString('ru-RU')} ₽
                           </span>
                           {build.isPrepayment && (
@@ -283,16 +286,14 @@ export default function CatalogSection({ onSelectBuildForConfigurator, onShowToa
                         </div>
                       </div>
 
-                      {/* ========================================================
-                          ЖИВОЙ HUD-ИНДИКАТОР FPS ДЛЯ ВЫБРАННОЙ ИГРЫ
-                      ======================================================== */}
+                      {/* ЖИВОЙ HUD-ИНДИКАТОР FPS */}
                       <div className="p-3.5 rounded-2xl bg-black/80 border border-white/[0.08] space-y-2 mb-5">
                         <div className="flex items-center justify-between text-xs">
-                          <span className="text-slate-400 font-mono text-[11px] truncate max-w-[160px]">
+                          <span className="text-slate-400 font-mono text-[11px] truncate max-w-[170px]">
                             {currentGameData.name} ({selectedRes}):
                           </span>
                           <span className="font-mono font-bold text-base text-white flex items-center gap-1">
-                            <AnimatedCounter value={fpsValue} className="text-cyber-cyan font-black" />
+                            <AnimatedCounter value={fpsValue} className="text-cyan-400 font-black" />
                             <span className="text-slate-400 text-xs">FPS</span>
                           </span>
                         </div>
@@ -303,7 +304,7 @@ export default function CatalogSection({ onSelectBuildForConfigurator, onShowToa
                             initial={{ width: 0 }}
                             animate={{ width: `${barPercentage}%` }}
                             transition={{ duration: 0.6 }}
-                            className="h-full rounded-full bg-gradient-to-r from-purple-500 via-indigo-500 to-cyan-400 shadow-[0_0_12px_rgba(0,240,255,0.5)]"
+                            className="h-full rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 shadow-[0_0_12px_rgba(99,102,241,0.5)]"
                           />
                         </div>
 
@@ -318,44 +319,59 @@ export default function CatalogSection({ onSelectBuildForConfigurator, onShowToa
                         </div>
                       </div>
 
-                      {/* ХАРАКТЕРИСТИКИ (БЕЗ ОБРЕЗАНИЯ СЛОВ) */}
-                      <div className="space-y-2 text-xs text-slate-300 border-t border-white/[0.06] pt-4 mb-6">
-                        <div className="flex items-start gap-2">
-                          <span className="text-slate-500 shrink-0 font-mono text-[11px]">CPU:</span>
-                          <span className="font-medium text-white break-words">{build.specs.cpu}</span>
+                      {/* ХАРАКТЕРИСТИКИ (ЧИСТЫЙ СТИЛЬ С ИКОНКАМИ) */}
+                      <div className="space-y-2.5 text-xs border-t border-white/[0.06] pt-4 mb-4">
+                        <div className="flex items-start gap-2.5">
+                          <div className="w-5 h-5 rounded-md bg-white/[0.04] border border-white/5 flex items-center justify-center shrink-0 mt-0.5 text-slate-400">
+                            <Cpu className="w-3 h-3" />
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">Процессор</span>
+                            <span className="font-medium text-white break-words text-xs leading-snug">{build.specs.cpu}</span>
+                          </div>
                         </div>
-                        <div className="flex items-start gap-2">
-                          <span className="text-slate-500 shrink-0 font-mono text-[11px]">GPU:</span>
-                          <span className="font-medium text-purple-300 break-words">{build.specs.gpu}</span>
+
+                        <div className="flex items-start gap-2.5">
+                          <div className="w-5 h-5 rounded-md bg-white/[0.04] border border-white/5 flex items-center justify-center shrink-0 mt-0.5 text-indigo-400">
+                            <Zap className="w-3 h-3" />
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">Видеокарта</span>
+                            <span className="font-medium text-indigo-300 break-words text-xs leading-snug">{build.specs.gpu}</span>
+                          </div>
                         </div>
-                        <div className="flex items-start gap-2">
-                          <span className="text-slate-500 shrink-0 font-mono text-[11px]">RAM:</span>
-                          <span className="font-medium text-slate-200 break-words">{build.specs.ram}</span>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <span className="text-slate-500 shrink-0 font-mono text-[11px]">SSD:</span>
-                          <span className="font-medium text-slate-200 break-words">{build.specs.ssd}</span>
+
+                        <div className="flex items-start gap-2.5">
+                          <div className="w-5 h-5 rounded-md bg-white/[0.04] border border-white/5 flex items-center justify-center shrink-0 mt-0.5 text-slate-400">
+                            <Layers className="w-3 h-3" />
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">Память & SSD</span>
+                            <span className="font-medium text-slate-200 break-words text-xs leading-snug">{build.specs.ram} • {build.specs.ssd}</span>
+                          </div>
                         </div>
                       </div>
 
                     </div>
 
-                    {/* КНОПКИ ДЕЙСТВИЯ */}
-                    <div className="space-y-2 pt-2 border-t border-white/[0.06]">
+                    {/* ========================================================
+                        НИЖНЯЯ ЧАСТЬ КАРТОЧКИ: КНОПКИ ДЕЙСТВИЯ (ВЫРАВНЕНЫ ПО ЛИНЕЙКЕ ЧЕРЕЗ MT-AUTO)
+                    ======================================================== */}
+                    <div className="mt-auto pt-4 border-t border-white/[0.08] space-y-2">
                       <button
                         onClick={() => handleCopyAndGoToAvito(build)}
-                        className="w-full py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-brand text-xs font-bold transition-all shadow-[0_4px_20px_rgba(37,99,235,0.35)] flex items-center justify-center gap-2 group/btn"
+                        className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 bg-[length:200%_auto] hover:bg-[position:right_center] text-white font-gaming text-xs font-bold transition-all shadow-[0_4px_20px_rgba(99,102,241,0.35)] flex items-center justify-center gap-2 group/btn cursor-pointer"
                       >
-                        <Copy className="w-4 h-4 text-blue-200 group-hover/btn:scale-110 transition-transform" />
+                        <Copy className="w-3.5 h-3.5 text-indigo-200 group-hover/btn:scale-110 transition-transform" />
                         <span>ЗАКАЗАТЬ В АВИТО</span>
-                        <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                        <ExternalLink className="w-3 h-3 opacity-70" />
                       </button>
 
                       <button
                         onClick={() => onSelectBuildForConfigurator(build)}
-                        className="w-full py-2.5 px-3 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white border border-white/[0.08] text-xs font-semibold transition-all flex items-center justify-center gap-1.5"
+                        className="w-full py-2.5 px-3 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white border border-white/[0.08] text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                       >
-                        <Sliders className="w-3.5 h-3.5 text-cyber-cyan" />
+                        <Sliders className="w-3.5 h-3.5 text-cyan-400" />
                         <span>Изменить в конфигураторе</span>
                         <ChevronRight className="w-3.5 h-3.5 opacity-60" />
                       </button>

@@ -83,8 +83,11 @@ export default function Navbar({ onOpenConfigurator }) {
               Готовые ПК
             </button>
             <button
-              onClick={() => scrollToSection("configurator")}
-              className="px-3 py-1.5 rounded-full text-xs font-semibold text-cyan-400 hover:text-white hover:bg-cyan-500/15 transition-all flex items-center gap-1.5"
+              onClick={() => {
+                if (onOpenConfigurator) onOpenConfigurator();
+                else scrollToSection("configurator");
+              }}
+              className="px-3 py-1.5 rounded-full text-xs font-semibold text-cyan-400 hover:text-white hover:bg-cyan-500/15 transition-all flex items-center gap-1.5 cursor-pointer"
             >
               <Sliders className="w-3 h-3 text-cyan-400" />
               <span>Конфигуратор</span>
@@ -163,11 +166,10 @@ export default function Navbar({ onOpenConfigurator }) {
             <button
               onClick={() => {
                 if (onOpenConfigurator) onOpenConfigurator();
-                scrollToSection("configurator");
               }}
-              className="hidden md:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-xs shadow-[0_0_20px_rgba(0,240,255,0.35)] transition-all active:scale-95 cursor-pointer ml-1"
+              className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 bg-[length:200%_auto] hover:bg-[position:right_center] text-white font-gaming font-bold text-xs shadow-[0_0_20px_rgba(99,102,241,0.4)] transition-all active:scale-95 cursor-pointer ml-1"
             >
-              <Sparkles className="w-3.5 h-3.5" />
+              <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
               <span>Собрать ПК</span>
             </button>
 
@@ -205,8 +207,12 @@ export default function Navbar({ onOpenConfigurator }) {
                 🛒 Готовые ПК
               </button>
               <button
-                onClick={() => scrollToSection("configurator")}
-                className="p-2.5 rounded-xl bg-cyan-950/40 border border-cyan-500/30 text-left text-cyan-300 font-bold transition-colors"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  if (onOpenConfigurator) onOpenConfigurator();
+                  else scrollToSection("configurator");
+                }}
+                className="p-2.5 rounded-xl bg-indigo-950/50 border border-indigo-500/40 text-left text-indigo-300 font-bold transition-colors cursor-pointer"
               >
                 🛠 Конфигуратор
               </button>

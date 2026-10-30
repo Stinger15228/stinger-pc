@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import BackgroundEffects from "./components/BackgroundEffects";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import CatalogSection from "./components/CatalogSection";
 import ConfiguratorSection from "./components/ConfiguratorSection";
+import ConfiguratorModal from "./components/ConfiguratorModal";
 import QualityBentoSection from "./components/QualityBentoSection";
 import ReviewsSection from "./components/ReviewsSection";
 import FaqSection from "./components/FaqSection";
@@ -12,6 +14,8 @@ import ToastNotification from "./components/ui/ToastNotification";
 
 export default function App() {
   const [toast, setToast] = useState(null);
+  const [isConfiguratorOpen, setIsConfiguratorOpen] = useState(false);
+  const [configuratorMode, setConfiguratorMode] = useState("pro");
   const [selectedBuildForConfigurator, setSelectedBuildForConfigurator] = useState(null);
 
   // Auto-dismiss toast after 4.5 seconds
@@ -27,13 +31,14 @@ export default function App() {
     setToast(toastData);
   };
 
-  const handleOpenConfigurator = () => {
-    const el = document.getElementById("configurator");
-    if (el) {
-      const yOffset = -70;
-      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
+  const handleOpenStudioModal = (mode = "pro") => {
+    setConfiguratorMode(mode);
+    setIsConfiguratorOpen(true);
+  };
+
+  const handleCloseStudioModal = () => {
+    setIsConfiguratorOpen(false);
+    setSelectedBuildForConfigurator(null);
   };
 
   const handleOpenCatalog = () => {
@@ -47,56 +52,69 @@ export default function App() {
 
   const handleSelectBuildForConfigurator = (build) => {
     setSelectedBuildForConfigurator(build);
-    handleOpenConfigurator();
+    setConfiguratorMode("pro");
+    setIsConfiguratorOpen(true);
     handleShowToast({
-      title: "Параметры переданы в конфигуратор",
-      message: `Загружены компоненты сборки «${build.name}». Вы можете скорректировать видеокарту, память или корпус.`,
+      title: "Сборка загружена в конфигуратор",
+      message: `Комплектующие «${build.name}» предзагружены. Вы можете изменить видеокарту, процессор или корпус.`,
       icon: "copy",
       triggerConfetti: false,
     });
   };
 
   return (
-    <div className="min-h-screen bg-[#05060A] text-slate-100 selection:bg-cyan-500/30 selection:text-white relative">
-      {/* HUD Navbar */}
-      <Navbar onOpenConfigurator={handleOpenConfigurator} />
+    <div className="min-h-screen bg-[#040508] text-slate-100 selection:bg-indigo-500/30 selection:text-white relative">
+      {/* 0. Атмосферные фоновые эффекты (Awwwards / Linear) */}
+      <BackgroundEffects />
+
+      {/* 1. Парящий стеклянный остров навигации */}
+      <Navbar onOpenConfigurator={() => handleOpenStudioModal("pro")} />
 
       <main>
-        {/* 1. Cinematic Hero Section */}
+        {/* 2. Первый экран (Hero Section) */}
         <HeroSection
-          onOpenConfigurator={handleOpenConfigurator}
+          onOpenConfigurator={() => handleOpenStudioModal("pro")}
           onOpenCatalog={handleOpenCatalog}
         />
 
-        {/* 2. Ready Builds Catalog with Real-Time Game Simulator */}
+        {/* 3. Каталог готовых ПК с симулятором FPS */}
         <CatalogSection
           onSelectBuildForConfigurator={handleSelectBuildForConfigurator}
           onShowToast={handleShowToast}
         />
 
-        {/* 3. In-Page Mega-Configurator (Pro Mode & Express Quiz) */}
+        {/* 4. Компактный тизер кастомной студии на странице (~420px) */}
         <ConfiguratorSection
-          onShowToast={handleShowToast}
-          selectedBuildFromCatalog={selectedBuildForConfigurator}
+          onOpenStudioModal={handleOpenStudioModal}
+          onOpenQuizModal={() => handleOpenStudioModal("quiz")}
         />
 
-        {/* 4. Workshop Standards & Bento Grid */}
+        {/* 5. Стандарты лаборатории (Bento Grid с техновиджетами) */}
         <QualityBentoSection />
 
-        {/* 5. Real Client Reviews & Avito 5.0 Rating */}
+        {/* 6. Реальные отзывы клиентов (Симметричная сетка 3x2) */}
         <ReviewsSection />
 
-        {/* 6. Interactive FAQ Accordion */}
+        {/* 7. Частые вопросы (2-колоночный layout) */}
         <FaqSection />
       </main>
 
-      {/* Luxury Dark Cyber Footer */}
+      {/* 8. Темный кибер-футер */}
       <Footer />
 
-      {/* Touch-Friendly Sticky HUD Bar for Mobile Screens */}
-      <MobileStickyBar />
+      {/* 9. Нижняя мобильная панель */}
+      <MobileStickyBar onOpenConfigurator={() => handleOpenStudioModal("pro")} />
 
-      {/* Floating HUD Toast Notification with Canvas Confetti */}
+      {/* 10. Полноэкранный Пошаговый Кибер-Конфигуратор & Квиз (Modal Overlay) */}
+      <ConfiguratorModal
+        isOpen={isConfiguratorOpen}
+        onClose={handleCloseStudioModal}
+        initialMode={configuratorMode}
+        selectedBuildFromCatalog={selectedBuildForConfigurator}
+        onShowToast={handleShowToast}
+      />
+
+      {/* 11. HUD Toast-уведомление с конфетти */}
       <ToastNotification toast={toast} onClose={() => setToast(null)} />
     </div>
   );

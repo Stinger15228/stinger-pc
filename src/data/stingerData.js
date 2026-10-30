@@ -20,7 +20,7 @@ export const SHOP_INFO = {
   phone: "+7 (999) 000-00-00",
   phoneDisplay: "+7 (999) 000-00-00",
   logo: "./image/logo.jpg",
-  heroImage: "./image/custom_pc_mystery.jpg",
+  heroImage: "./image/pc10.jpg",
 };
 
 // 10 ГОТОВЫХ СБОРОК В КАТАЛОГЕ
@@ -299,8 +299,8 @@ export const READY_BUILDS = [
     targetRes: "2K Ultra 144Hz",
     tierColor: "from-cyan-400/20 via-teal-400/10 to-transparent",
     glowColor: "rgba(45, 212, 191, 0.5)",
-    primaryImage: "./image/pc6.jpg",
-    gallery: ["./image/pc6.jpg"],
+    primaryImage: "./image/pc9.jpg",
+    gallery: ["./image/pc9.jpg"],
     specs: {
       cpu: "AMD Ryzen 7 7800X3D (Лучший игровой процессор мира)",
       gpu: "ZOTAC Gaming GeForce RTX 4070 Super White 12GB",
@@ -632,6 +632,15 @@ export const CLIENT_REVIEWS = [
     rating: 5,
     build: "STINGER Balance (Ryzen 5 5500 + RX 5700 XT)",
     text: "Отличный сервис на Псковской 33. Дали спокойно погонять тесты минут 40, ответили на все глупые вопросы. Компьютер бесшумный даже в тяжелых играх.",
+  },
+  {
+    id: 6,
+    author: "Илья М.",
+    city: "Великий Новгород",
+    date: "22 августа 2026",
+    rating: 5,
+    build: "STINGER Hyper eSports (Ryzen 5 5600 + RTX 4060)",
+    text: "Брал системник в основном под CS2, Rust и Тарков. На мониторе 165Hz картинка идеальная, без просадок фреймрейта и статтеров. Мастер помог с переносом данных со старого диска и дал советы по настройке. Однозначно лучший подход в городе!",
   },
 ];
 

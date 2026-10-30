@@ -12,44 +12,32 @@ import {
   Cpu,
   Zap,
   ArrowRight,
+  Wind,
+  Check,
 } from "lucide-react";
 import { QUALITY_BENTO, SHOP_INFO } from "../data/stingerData";
 import SpotlightCard from "./ui/SpotlightCard";
 
 export default function QualityBentoSection() {
-  const getIcon = (iconName) => {
-    switch (iconName) {
-      case "layers":
-        return <Layers className="w-6 h-6 text-purple-400" />;
-      case "activity":
-        return <Activity className="w-6 h-6 text-cyan-400" />;
-      case "sparkles":
-        return <Sparkles className="w-6 h-6 text-emerald-400" />;
-      case "map-pin":
-        return <MapPin className="w-6 h-6 text-amber-400" />;
-      default:
-        return <ShieldCheck className="w-6 h-6 text-cyan-400" />;
-    }
-  };
-
   return (
-    <section id="quality" className="relative py-28 bg-[#05060A] text-slate-100 overflow-hidden">
-      {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-purple-600/[0.04] blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-cyan-600/[0.04] blur-[150px] pointer-events-none" />
+    <section id="quality" className="relative py-24 sm:py-28 bg-[#040508] text-slate-100 overflow-hidden border-t border-white/[0.08]">
+      {/* Мягкие ореолы подсветки */}
+      <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-indigo-600/[0.04] blur-[150px] pointer-events-none -z-10" />
+      <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-cyan-600/[0.04] blur-[150px] pointer-events-none -z-10" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-950/40 border border-purple-500/30 text-purple-300 text-xs font-mono uppercase tracking-wider mb-4 shadow-[0_0_20px_rgba(168,85,247,0.15)]">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            Стандарты кастомной мастерской STINGER
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-950/60 border border-indigo-500/30 text-indigo-300 text-xs font-mono uppercase tracking-wider mb-4 shadow-[0_0_20px_rgba(99,102,241,0.2)]">
+            <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Стандарты кастомной мастерской STINGER</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-gaming tracking-tight text-white mb-4">
-            Почему наши компьютеры служат{" "}
-            <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              годами
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-gaming tracking-tight text-white mb-4">
+            ПОЧЕМУ НАШИ ПК СЛУЖАТ{" "}
+            <span className="bg-gradient-to-r from-indigo-400 via-purple-300 to-cyan-400 bg-clip-text text-transparent">
+              ГОДАМИ
             </span>
           </h2>
 
@@ -61,96 +49,145 @@ export default function QualityBentoSection() {
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
-          {/* Bento Item 1: Cable Management (Large 7 cols) */}
+          
+          {/* Bento Item 1: Cable Management (Large 7 cols) with Airflow Schematic */}
           <div className="lg:col-span-7">
-            <SpotlightCard className="h-full p-8 rounded-3xl bg-slate-900/60 border border-white/10 flex flex-col justify-between group overflow-hidden">
-              <div className="relative z-10">
-                <div className="flex items-center justify-between mb-6">
-                  <span className="text-xs font-mono px-3 py-1 rounded-full bg-purple-950/60 text-purple-300 border border-purple-500/30">
-                    {QUALITY_BENTO[0].badge}
+            <SpotlightCard className="h-full p-7 sm:p-8 rounded-3xl bg-[#080B13]/85 border border-white/10 flex flex-col justify-between group overflow-hidden">
+              <div className="relative z-10 space-y-5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono px-3 py-1 rounded-full bg-indigo-950/60 text-indigo-300 border border-indigo-500/30">
+                    Эстетика и продув
                   </span>
-                  <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center">
-                    {getIcon(QUALITY_BENTO[0].icon)}
+                  <div className="w-11 h-11 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+                    <Layers className="w-5 h-5" />
                   </div>
                 </div>
 
-                <h3 className="text-2xl font-bold font-gaming text-white mb-3 group-hover:text-purple-300 transition-colors">
-                  {QUALITY_BENTO[0].title}
-                </h3>
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold font-gaming text-white mb-2 group-hover:text-indigo-300 transition-colors">
+                    Кастомный кабель-менеджмент
+                  </h3>
+                  <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                    Каждый кабель уложен по линейке, закреплен тканевыми стяжками и спрятан за задней стенкой. Никаких «бород» из проводов — идеальный воздушный поток.
+                  </p>
+                </div>
 
-                <p className="text-slate-400 text-sm leading-relaxed mb-6">
-                  {QUALITY_BENTO[0].desc}
-                </p>
+                {/* SVG-виджет схемы воздушного потока (Airflow Simulation) */}
+                <div className="p-4 rounded-2xl bg-black/60 border border-white/5 space-y-2">
+                  <div className="flex items-center justify-between text-xs font-mono text-slate-400">
+                    <span className="flex items-center gap-1.5 text-cyan-400 font-semibold">
+                      <Wind className="w-3.5 h-3.5" /> Схема сквозного продува:
+                    </span>
+                    <span className="text-emerald-400 font-bold">100% Чистый поток</span>
+                  </div>
 
-                <div className="grid grid-cols-2 gap-3 pt-4 border-t border-white/5">
+                  <div className="relative h-12 bg-black/40 rounded-xl border border-white/5 overflow-hidden flex items-center justify-between px-4">
+                    <span className="text-[10px] font-mono text-cyan-400 uppercase">Фронтальный забор</span>
+                    
+                    {/* Анимированные стрелки потока */}
+                    <div className="flex items-center gap-1.5 opacity-80">
+                      {[0, 1, 2, 3, 4].map((i) => (
+                        <motion.div
+                          key={i}
+                          animate={{ x: [0, 8, 0], opacity: [0.3, 1, 0.3] }}
+                          transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
+                          className="w-2 h-2 border-t-2 border-r-2 border-cyan-400 rotate-45"
+                        />
+                      ))}
+                    </div>
+
+                    <span className="text-[10px] font-mono text-indigo-400 uppercase">Выдув назад/вверх</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2.5 pt-1">
                   <div className="flex items-center gap-2 text-xs text-slate-300">
-                    <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
                     <span>Тканевые стяжки Velcro</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-slate-300">
-                    <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" />
-                    <span>Нулевое сопротивление воздуху</span>
+                    <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
+                    <span>Нулевое сопротивление</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-slate-300">
-                    <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" />
-                    <span>Удобство будущей чистки</span>
+                    <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
+                    <span>Удобство чистки от пыли</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-slate-300">
-                    <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
                     <span>Эстетика через стекло</span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-purple-400">
-                <span>{QUALITY_BENTO[0].stats}</span>
-                <span className="text-slate-400 group-hover:text-white transition-colors flex items-center gap-1">
-                  Фото процесса в Telegram <ArrowRight className="w-3.5 h-3.5" />
-                </span>
+              <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-indigo-400">
+                <span>100% чистый продув корпуса</span>
+                <span className="text-slate-400">Фото в Telegram</span>
               </div>
             </SpotlightCard>
           </div>
 
-          {/* Bento Item 2: Stress-Testing 24h (5 cols) */}
+          {/* Bento Item 2: Stress-Testing 24h (5 cols) with FurMark Wave Graph */}
           <div className="lg:col-span-5">
-            <SpotlightCard className="h-full p-8 rounded-3xl bg-slate-900/60 border border-white/10 flex flex-col justify-between group overflow-hidden">
-              <div className="relative z-10">
-                <div className="flex items-center justify-between mb-6">
+            <SpotlightCard className="h-full p-7 sm:p-8 rounded-3xl bg-[#080B13]/85 border border-white/10 flex flex-col justify-between group overflow-hidden">
+              <div className="relative z-10 space-y-5">
+                <div className="flex items-center justify-between">
                   <span className="text-xs font-mono px-3 py-1 rounded-full bg-cyan-950/60 text-cyan-300 border border-cyan-500/30">
-                    {QUALITY_BENTO[1].badge}
+                    Надежность 24 часа
                   </span>
-                  <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center">
-                    {getIcon(QUALITY_BENTO[1].icon)}
+                  <div className="w-11 h-11 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                    <Activity className="w-5 h-5" />
                   </div>
                 </div>
 
-                <h3 className="text-2xl font-bold font-gaming text-white mb-3 group-hover:text-cyan-300 transition-colors">
-                  {QUALITY_BENTO[1].title}
-                </h3>
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold font-gaming text-white mb-2 group-hover:text-cyan-300 transition-colors">
+                    Жесткий стресс-тест в 3 бенчмарках
+                  </h3>
+                  <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                    Каждый компьютер проходит суточный прогон в FurMark, OCCT и AIDA64 Extreme. Проверяем температуры VRM и 0 ошибок по памяти.
+                  </p>
+                </div>
 
-                <p className="text-slate-400 text-sm leading-relaxed mb-6">
-                  {QUALITY_BENTO[1].desc}
-                </p>
+                {/* SVG-виджет графика стабильности FurMark */}
+                <div className="p-4 rounded-2xl bg-black/60 border border-white/5 space-y-2.5 font-mono text-xs">
+                  <div className="flex justify-between items-center text-slate-400">
+                    <span>FurMark Temp Stability:</span>
+                    <span className="text-emerald-400 font-bold">64°C (Макс)</span>
+                  </div>
 
-                {/* Sensor telemetry simulation */}
-                <div className="p-3.5 rounded-xl bg-slate-950/80 border border-white/5 space-y-2 font-mono text-xs">
-                  <div className="flex justify-between items-center text-slate-400">
-                    <span>FurMark GPU Burner:</span>
-                    <span className="text-emerald-400 font-bold">64°C (Норма до 80°C)</span>
+                  {/* SVG кривая температуры */}
+                  <div className="relative h-14 w-full bg-black/40 rounded-xl border border-white/5 p-1 flex items-end">
+                    <svg viewBox="0 0 200 40" className="w-full h-full preserve-3d">
+                      <defs>
+                        <linearGradient id="tempGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#10B981" stopOpacity="0.4" />
+                          <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                      <path
+                        d="M 0 35 Q 30 18, 60 14 T 120 12 T 200 12 L 200 40 L 0 40 Z"
+                        fill="url(#tempGrad)"
+                      />
+                      <path
+                        d="M 0 35 Q 30 18, 60 14 T 120 12 T 200 12"
+                        fill="none"
+                        stroke="#10B981"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                    <span className="absolute top-1.5 right-2 text-[10px] text-emerald-400 font-bold">Ровная полка</span>
                   </div>
-                  <div className="flex justify-between items-center text-slate-400">
-                    <span>OCCT Memory Test:</span>
-                    <span className="text-emerald-400 font-bold">0 ошибок / 24ч</span>
-                  </div>
-                  <div className="flex justify-between items-center text-slate-400">
-                    <span>AIDA64 CPU FPU:</span>
-                    <span className="text-cyan-400 font-bold">Стабильно 100%</span>
+
+                  <div className="flex justify-between text-[11px] text-slate-400 pt-1">
+                    <span>OCCT Память: <strong className="text-emerald-400">0 ошибок</strong></span>
+                    <span>VRM: <strong className="text-cyan-400">В норме</strong></span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-cyan-400">
-                <span>{QUALITY_BENTO[1].stats}</span>
+              <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-cyan-400">
+                <span>24 часа под нагрузкой</span>
                 <span className="text-slate-400">Гарантия стабильности</span>
               </div>
             </SpotlightCard>
@@ -158,43 +195,44 @@ export default function QualityBentoSection() {
 
           {/* Bento Item 3: Out-of-the-box FPS & Tuned BIOS (5 cols) */}
           <div className="lg:col-span-5">
-            <SpotlightCard className="h-full p-8 rounded-3xl bg-slate-900/60 border border-white/10 flex flex-col justify-between group overflow-hidden">
-              <div className="relative z-10">
-                <div className="flex items-center justify-between mb-6">
+            <SpotlightCard className="h-full p-7 sm:p-8 rounded-3xl bg-[#080B13]/85 border border-white/10 flex flex-col justify-between group overflow-hidden">
+              <div className="relative z-10 space-y-5">
+                <div className="flex items-center justify-between">
                   <span className="text-xs font-mono px-3 py-1 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-500/30">
-                    {QUALITY_BENTO[2].badge}
+                    Включил и играешь
                   </span>
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center">
-                    {getIcon(QUALITY_BENTO[2].icon)}
+                  <div className="w-11 h-11 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                    <Sparkles className="w-5 h-5" />
                   </div>
                 </div>
 
-                <h3 className="text-2xl font-bold font-gaming text-white mb-3 group-hover:text-emerald-300 transition-colors">
-                  {QUALITY_BENTO[2].title}
-                </h3>
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold font-gaming text-white mb-2 group-hover:text-emerald-300 transition-colors">
+                    Максимальный FPS из коробки
+                  </h3>
+                  <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                    Установлена чистая Windows 11 Pro без мусорного софта. Настроены тайминги XMP/EXPO, обновлен BIOS и накатаны актуальные драйверы.
+                  </p>
+                </div>
 
-                <p className="text-slate-400 text-sm leading-relaxed mb-6">
-                  {QUALITY_BENTO[2].desc}
-                </p>
-
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-xs text-slate-300">
+                <div className="space-y-2.5 pt-1">
+                  <div className="flex items-center gap-2.5 text-xs text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Активированный XMP/EXPO профиль 3200-6000MHz</span>
+                    <span>Активированный XMP/EXPO профиль памяти</span>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-slate-300">
+                  <div className="flex items-center gap-2.5 text-xs text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Чистая Windows 11 Pro без телеметрии и мусора</span>
+                    <span>Чистая Windows 11 Pro без телеметрии</span>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-slate-300">
+                  <div className="flex items-center gap-2.5 text-xs text-slate-300">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                     <span>Термопаста Arctic MX-4 тонким слоем</span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-emerald-400">
-                <span>{QUALITY_BENTO[2].stats}</span>
+              <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-emerald-400">
+                <span>+10-15% к плавности</span>
                 <span className="text-slate-400">Сел и играешь</span>
               </div>
             </SpotlightCard>
@@ -202,26 +240,27 @@ export default function QualityBentoSection() {
 
           {/* Bento Item 4: Local Workshop & Personal Test (7 cols) */}
           <div className="lg:col-span-7">
-            <SpotlightCard className="h-full p-8 rounded-3xl bg-slate-900/60 border border-white/10 flex flex-col justify-between group overflow-hidden">
-              <div className="relative z-10">
-                <div className="flex items-center justify-between mb-6">
+            <SpotlightCard className="h-full p-7 sm:p-8 rounded-3xl bg-[#080B13]/85 border border-white/10 flex flex-col justify-between group overflow-hidden">
+              <div className="relative z-10 space-y-5">
+                <div className="flex items-center justify-between">
                   <span className="text-xs font-mono px-3 py-1 rounded-full bg-amber-950/60 text-amber-300 border border-amber-500/30">
-                    {QUALITY_BENTO[3].badge}
+                    Великий Новгород
                   </span>
-                  <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center">
-                    {getIcon(QUALITY_BENTO[3].icon)}
+                  <div className="w-11 h-11 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+                    <MapPin className="w-5 h-5" />
                   </div>
                 </div>
 
-                <h3 className="text-2xl font-bold font-gaming text-white mb-3 group-hover:text-amber-300 transition-colors">
-                  {QUALITY_BENTO[3].title}
-                </h3>
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold font-gaming text-white mb-2 group-hover:text-amber-300 transition-colors">
+                    Личная проверка на Псковской, 33
+                  </h3>
+                  <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                    Приезжайте в мастерскую, запускайте FurMark, Киберпанк или CS2 — время проверок не ограничиваем! Даем личную гарантию 3 месяца и принимаем ПК в Trade-In.
+                  </p>
+                </div>
 
-                <p className="text-slate-400 text-sm leading-relaxed mb-6">
-                  {QUALITY_BENTO[3].desc}
-                </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-2xl bg-slate-950/70 border border-white/5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 rounded-2xl bg-black/60 border border-white/5">
                   <div className="space-y-1">
                     <div className="text-[11px] font-mono text-slate-400">Адрес мастерской:</div>
                     <div className="text-xs font-bold text-white flex items-center gap-1.5">
@@ -242,13 +281,15 @@ export default function QualityBentoSection() {
                 </div>
               </div>
 
-              <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-amber-400">
-                <span>{QUALITY_BENTO[3].stats}</span>
-                <span className="text-slate-400">Trade-In старого ПК</span>
+              <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-amber-400">
+                <span>Гарантия 3 месяца</span>
+                <span className="text-slate-400">Trade-In старого железа</span>
               </div>
             </SpotlightCard>
           </div>
+
         </div>
+
       </div>
     </section>
   );
