@@ -260,18 +260,22 @@ ${isPrepayment ? "• Статус: Сборка от 100 000 ₽ (по пред
           className="fixed inset-0 bg-[#040508]/90 backdrop-blur-2xl"
         />
 
-        {/* Modal Window Container */}
+        {/* Modal Window Container — динамически адаптирует размер: компактный для квиза, широкий студийный для про-режима */}
         <motion.div
           initial={{ opacity: 0, scale: 0.96, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 15 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
-          className="relative w-full h-full max-w-[1400px] max-h-[94vh] mx-auto sm:my-auto rounded-none sm:rounded-3xl bg-[#080B13]/95 border border-white/10 shadow-[0_25px_80px_rgba(0,0,0,0.95),inset_0_1px_0_0_rgba(255,255,255,0.15)] flex flex-col overflow-hidden z-10"
+          className={`relative w-full mx-auto sm:my-auto rounded-none sm:rounded-3xl bg-[#080B13]/95 border border-white/10 shadow-[0_25px_80px_rgba(0,0,0,0.95),inset_0_1px_0_0_rgba(255,255,255,0.15)] flex flex-col overflow-hidden z-10 transition-all duration-300 ${
+            mode === "quiz"
+              ? "max-w-3xl max-h-[90vh] h-auto my-auto"
+              : "max-w-[1400px] max-h-[94vh] h-full"
+          }`}
         >
           {/* ========================================================
               ШАПКА МОДАЛЬНОГО ОКНА (HEADER)
           ======================================================== */}
-          <div className="px-5 sm:px-8 py-4 border-b border-white/10 bg-[#06080F]/90 backdrop-blur-xl flex flex-wrap items-center justify-between gap-4 shrink-0">
+          <div className="px-4 sm:px-6 lg:px-8 py-3.5 border-b border-white/10 bg-[#06080F]/90 backdrop-blur-xl flex flex-wrap items-center justify-between gap-3 shrink-0">
             {/* Бренд и заголовок */}
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]">
@@ -338,7 +342,7 @@ ${isPrepayment ? "• Статус: Сборка от 100 000 ₽ (по пред
           {/* ========================================================
               ТЕЛО МОДАЛЬНОГО ОКНА (BODY)
           ======================================================== */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+          <div className={`flex-1 overflow-y-auto ${mode === "quiz" ? "p-4 sm:p-6" : "p-4 sm:p-6 lg:p-8"}`}>
             
             {/* РЕЖИМ 1: ПРОФЕССИОНАЛЬНЫЙ ПОШАГОВЫЙ КОНФИГУРАТОР */}
             {mode === "pro" && (
@@ -822,10 +826,10 @@ ${isPrepayment ? "• Статус: Сборка от 100 000 ₽ (по пред
               </div>
             )}
 
-            {/* РЕЖИМ 2: ЭКСПРЕСС-КВИЗ ЗА 1 МИНУТУ */}
+            {/* РЕЖИМ 2: ЭКСПРЕСС-КВИЗ ЗА 1 МИНУТУ (АВТОМАТИЧЕСКИЙ РАЗМЕР БЕЗ ПУСТЫХ ПОЛОС) */}
             {mode === "quiz" && (
-              <div className="max-w-3xl mx-auto space-y-6 py-4">
-                <div className="text-center mb-6">
+              <div className="w-full space-y-6 py-2">
+                <div className="text-center mb-5">
                   <span className="text-xs font-mono uppercase tracking-wider text-purple-400 px-3 py-1 rounded-full bg-purple-950/60 border border-purple-500/30">
                     ⚡ Экспресс-заявка за 5 простых вопросов
                   </span>
